@@ -280,7 +280,7 @@
 
 		<execute function="Open" locator1="http://localhost:8080/web/usersn/page-name?p_p_id=130&amp;p_p_state=maximized" />
 
-		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="This portlet has been undeployed. Please redeploy it or remove it from the page." />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class, 'alert-danger')]</td>
+	<td>//div[contains(@class, 'alert') and contains(@class,'alert-info')]</td>
 	<td></td>
 </tr>
 <tr>
