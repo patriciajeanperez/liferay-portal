@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>//div[contains(@class,'navbar')]/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'navbar')]/ul/li[1]/a</td>
 	<td></td>
 </tr>
 <tr>
