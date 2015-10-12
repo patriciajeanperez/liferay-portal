@@ -1,0 +1,29 @@
+<definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="Web Content Administration" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+<command name="SortByVersion" priority="5">
+	<execute macro="Page#gotoContentCP">
+		<var name="portletName" value="Web Content" />
+	</execute>
+
+	<execute macro="WebContentNavigator#gotoAddCP" />
+
+	<execute macro="WebContent#addCP">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+	</execute>
+
+	<execute macro="WebContent#publish" />
+
+	<execute macro="WebContent#expireSpecificWebContent">
+		<var name="webContentTitle" value="WC WebContent Title" />
+	</execute>
+
+	<execute macro="WebContent#sortViewHistoryWebContent">
+		<var name="orderBy" value="Version" />
+	</execute>
+</command>
