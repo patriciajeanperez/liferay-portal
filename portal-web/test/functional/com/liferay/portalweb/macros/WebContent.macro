@@ -922,14 +922,43 @@
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 		<execute function="AssertClick" locator1="Button#VIEW_HISTORY" value1="View History" />
 
-		<for list="${webContentList}" param="webContentTitle">
-			<var name="key_webContentTitle" value="${webContentTitle}" />
+			<for list="${webContentTitle}" param="webContentTitle">
+				<var name="key_webContentTitle" value="${webContentTitle}" />
 
-			<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
-		</for>
+				<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
+			</for>
 
-		<execute function="AssertClickNoError" locator1="Button#EXPIRE" value1="Expire" />
+		<execute function="AssertClickNoError" locator1="WCViewHistory#VERSIONS_EXPIRE"/>
 		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="expireSpecificWebContent">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertClick" locator1="Button#VIEW_HISTORY" value1="View History" />
+		<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
+		<execute function="AssertClick" locator1="WCViewHistory#VERSIONS_EXPIRE" value1="" />
+		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="expirePG">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertClick" locator1="Button#VIEW_HISTORY" value1="View History" />
+
+			<for list="${webContentTitle}" param="webContentTitle">
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+
+				<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
+			</for>
+
+		<execute function="AssertClickNoError" locator1="WCViewHistory#VERSIONS_EXPIRE"/>
+		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="gotoArticlePermissionsCP">
@@ -1059,6 +1088,15 @@
 		<execute function="Confirm" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute macro="WebContent#publish" />
+	</command>
+
+	<command name="sortViewHistoryWebContent">
+		<var name="orderBy" value="${orderBy}" />
+
+		<execute function="AssertClick" locator1="WCViewHistory#VERSIONS_ORDERBY" />
+		<execute function="AssertClick" locator1="WCViewHistory#VERSIONS_DROPDOWN" value1="${orderBy}" />
+		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1=
+		"Web Content is temporarily unavailable." />
 	</command>
 
 	<command name="tearDownCP">
