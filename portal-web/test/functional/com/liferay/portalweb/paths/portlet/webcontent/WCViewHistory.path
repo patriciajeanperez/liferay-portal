@@ -15,21 +15,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VERSIONS_TABLE_VERSION_1.0</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'1.0')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSIONS_TABLE_VERSION_1.1</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'1.1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERSIONS_TABLE_VERSION_1.2</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td[contains(.,'1.2')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VERSIONS_TABLE_STATUS</td>
 	<td>//span[@class='workflow-status']/strong[contains(.,'${key_historyStatus}')]</td>
 	<td></td>
@@ -52,6 +37,21 @@
 <tr>
 	<td>ACTIONS_MENULIST_EXPIRE</td>
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Expire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_EXPIRE</td>
+	<td>//a/span[contains(@class,'icon-time')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_DROPDOWN</td>
+	<td>//select[@class='form-control']/option[contains(.,'${orderBy}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_ORDERBY</td>
+	<td>//li/div/label[@class='control-label']</td>
 	<td></td>
 </tr>
 </tbody>
