@@ -292,8 +292,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -366,8 +367,9 @@
 			<var name="portletName" value="${portletName2}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -1582,8 +1584,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
@@ -1616,8 +1619,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -1653,8 +1657,9 @@
 			<var name="contentScopeName" value="${contentScopeName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -1692,8 +1697,9 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
@@ -1790,8 +1796,9 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
@@ -1853,8 +1860,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
@@ -1882,8 +1890,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Blogs" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
