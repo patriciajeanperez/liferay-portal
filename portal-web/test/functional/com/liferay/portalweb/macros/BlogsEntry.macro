@@ -1224,10 +1224,10 @@
 		<if>
 			<isset var="entryAuthor" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_AUTHOR" value1="${entryAuthor}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Blogs#ICON_VIEW_ENTRY_AUTHOR" value1="${entryAuthor}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_AUTHOR" value1="Test Test" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Blogs#ICON_VIEW_ENTRY_AUTHOR" value1="Test Test" />
 			</else>
 		</if>
 
