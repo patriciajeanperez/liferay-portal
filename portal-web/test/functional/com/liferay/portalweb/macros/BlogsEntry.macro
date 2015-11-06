@@ -1244,6 +1244,8 @@
 			</then>
 		</if>
 
+		<var name="key_entryContent" value="${entryContent}" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#WORKFLOW_STATUS" />
 	</command>
