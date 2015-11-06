@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CHECKBOX</td>
-	<td>//ul[contains(@id,'blogEntriesSearchContainer') and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//div/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
