@@ -50,6 +50,16 @@
 </tr>
 <!--ICON_VIEW-->
 <tr>
+	<td>ICON_VIEW_ENTRY_AUTHOR</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//div[@class='card-dm-text-small']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_VIEW_ENTRY_CREATE_DATE</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//div[@class='card-dm-text-small']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_VIEW_ENTRY_TITLE</td>
 	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//a/div[@class='card-dm-text-large']</td>
 	<td></td>
