@@ -199,7 +199,8 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategorySubcategoryThread" priority="4">
+	<command name="AddMBCategorySubcategoryThread" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryEnabled" value="true" />
@@ -263,7 +264,8 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadQuestion" priority="4">
+	<command name="AddMBCategoryThreadQuestion" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -310,7 +312,8 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadUTF8" priority="4">
+	<command name="AddMBCategoryThreadUTF8" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Thrèad Mèssagè Body" />
 		<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
@@ -358,6 +361,7 @@
 	</command>
 
 	<command name="AddMBThread" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -388,6 +392,7 @@
 	</command>
 
 	<command name="AddMBThreadGuestReply" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="replytoMessage" value="guest" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body As Guest" />
@@ -452,7 +457,8 @@
 		</execute>
 	</command>
 
-	<command name="AddMBThreadNullBody" priority="4">
+	<command name="AddMBThreadNullBody" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="threadBody" value="" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -483,6 +489,7 @@
 	</command>
 
 	<command name="AddMBThreadReply" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -545,6 +552,8 @@
 	</command>
 
 	<command name="CancelEditOnThread" priority="5">
+		<property name="portal.acceptance" value="test" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
@@ -617,7 +626,7 @@
 	</command>
 
 	<command name="DeleteMBThread" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="test" />
 
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -662,6 +671,8 @@
 	</command>
 
 	<command name="EditMBThreadBody" priority="5">
+		<property name="portal.acceptance" value="test" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -693,6 +704,8 @@
 	</command>
 
 	<command name="EditMBThreadSubject" priority="5">
+		<property name="portal.acceptance" value="test" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -724,6 +737,8 @@
 	</command>
 
 	<command name="EditMBThreadSubjectAndBody" priority="5">
+		<property name="portal.acceptance" value="test" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -756,7 +771,9 @@
 		</execute>
 	</command>
 
-	<command name="MoveMBCategory1ThreadToCategory2" priority="4">
+	<command name="MoveMBCategory1ThreadToCategory2" priority="5">
+		<property name="portal.acceptance" value="test" />
+
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="threadBody" value="MB Thread Message Body" />
@@ -824,7 +841,9 @@
 		</execute>
 	</command>
 
-	<command name="MoveMBCategory1ThreadWithExplanationPostToCategory2" priority="3">
+	<command name="MoveMBCategory1ThreadWithExplanationPostToCategory2" priority="5">
+		<property name="portal.acceptance" value="test" />
+
 		<var name="categoryName1" value="MB Category1 Name" />
 		<var name="categoryName2" value="MB Category2 Name" />
 		<var name="explanationBody" value="MB Explanation Post Body" />
@@ -925,7 +944,8 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_STATUS" value1="Draft" />
 	</command>
 
-	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="4">
+	<command name="ViewDefaultEmailFromConfigurationAndSubscriptionEmail" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<property name="custom.properties" value="message.boards.email.bulk=false" />
 		<property name="test.smtp.server.enabled" value="true" />
 
@@ -1022,8 +1042,10 @@
 		</execute>
 	</command>
 
-	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
+	<command name="ViewMBThreadAndReplyThreadInGmail" priority="5">
 		<property name="custom.properties" value="message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory${line.separator}mail.session.mail.pop3.socketFactory.class=javax.net.ssl.SSLSocketFactory" />
+
+		<property name="portal.acceptance" value="test" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -1181,8 +1203,9 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewMBThreadReplyViaMoreMessages" priority="4">
+	<command name="ViewMBThreadReplyViaMoreMessages" priority="5">
 		<property name="custom.properties" value="discussion.comments.delta.value=5" />
+		<property name="portal.acceptance" value="test" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
