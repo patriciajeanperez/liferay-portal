@@ -1111,7 +1111,8 @@
 		</execute>
 	</command>
 
-	<command name="ViewContentInLocationOrganizationSite" priority="4">
+	<command name="ViewContentInLocationOrganizationSite" priority="5">
+		<property name="portal.acceptance" value="test" />
 		<property name="custom.properties" value="organizations.types=organization,location${line.separator}organizations.rootable[location]=true${line.separator}organizations.children.types[organization]=organization,location" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
