@@ -81,7 +81,12 @@
 			</else>
 		</if>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
+
+		<execute function="AssertElementNotPresent" locator1="Panel#ENTRY_ATTACHMENTS" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+		
 	</command>
 
 	<command name="addPGAsAnonymous">
