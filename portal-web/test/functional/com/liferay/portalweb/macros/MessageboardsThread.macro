@@ -81,7 +81,12 @@
 			</else>
 		</if>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
+
+		<execute function="AssertElementPresent" locator1="MessageBoardsThread#MESSAGE_REPLY_1" value1="Reply to Main Thread" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+		
 	</command>
 
 	<command name="addPGAsAnonymous">
