@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>POST_BUTTON_DISABLED</td>
+	<td>//div[@class='button-holder']/button[contains(@id,'MicroblogsPortlet') and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATUS_FIELD</td>
 	<td>//div[contains(@class,'autocomplete')]//span[contains(.,'${key_status}')]</td>
 	<td></td>
