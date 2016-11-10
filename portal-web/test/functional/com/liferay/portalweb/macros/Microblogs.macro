@@ -22,7 +22,7 @@
 
 		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryContentEdit}" />
 
-		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
+		<execute function="AssertClick" locator1="Microblogs#POST_BUTTON" value1="Post" />
 	</command>
 
 	<command name="gotoMentionsTab">
@@ -51,7 +51,7 @@
 
 		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryComment}" />
 
-		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
+		<execute function="AssertClick" locator1="Microblogs#POST_BUTTON" value1="Post" />
 	</command>
 
 	<command name="updateStatus">
@@ -65,9 +65,9 @@
 
 		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryContent}" />
 
-		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
+		<execute function="AssertClick" locator1="Microblogs#POST_BUTTON" value1="Post" />
 
-		<execute function="AssertElementNotPresent" locator1="Button#POST" value1="Post" />
+		<execute function="AssertElementNotPresent" locator1="Microblogs#POST_BUTTON" value1="Post" />
 	</command>
 
 	<command name="viewEntry">
