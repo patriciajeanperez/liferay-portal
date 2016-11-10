@@ -489,11 +489,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>POST</td>
-	<td>//div[@class='button-holder']/button[contains(@id,'MicroblogsPortlet')]/span[contains(.,'Post')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>POST_NEW_THREAD</td>
 	<td>//span[contains(.,'Post New Thread')]</td>
 	<td></td>
