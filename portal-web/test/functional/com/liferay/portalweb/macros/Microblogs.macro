@@ -70,6 +70,20 @@
 		<execute function="AssertElementNotPresent" locator1="Microblogs#POST_BUTTON" value1="Post" />
 	</command>
 
+	<command name="updateStatusInvalid">
+		<execute function="AssertTextEquals" locator1="Microblogs#COUNTDOWN_HOLDER" value1="150" />
+
+		<var name="key_status" value="Update your status" />
+
+		<execute function="AssertClick" locator1="Microblogs#STATUS_FIELD" value1="Update your status..." />
+
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute function="Type#clickAtType" locator1="Microblogs#TEXT_AREA" value1="${entryContent}" />
+
+		<execute function="AssertElementPresent" locator1="Microblogs#POST_BUTTON_DISABLED" />
+	</command>
+
 	<command name="viewEntry">
 		<var name="key_entryContent" value="${entryContent}" />
 
