@@ -471,7 +471,7 @@
 	<command name="saveAsDraftAndWait">
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="Pause" locator1="3000" />
+		<execute function="Pause" locator1="1000" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
