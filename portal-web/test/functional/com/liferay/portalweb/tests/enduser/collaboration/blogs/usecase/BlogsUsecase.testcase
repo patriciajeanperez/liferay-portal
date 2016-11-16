@@ -84,7 +84,9 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryWithInlineImage" priority="4">
+	<command name="AddBlogsEntryWithInlineImage" priority="5">
+		<property name="portal.acceptance" value="true" />
+		
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1680,7 +1682,9 @@
 		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" value1="Document_2" />
 	</command>
 
-	<command name="ViewBlogsEntryWithCoverImageUploadedToDM" priority="3">
+	<command name="ViewBlogsEntryWithCoverImageUploadedToDM" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1987,7 +1991,9 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithUploadedCoverImage" priority="4">
+	<command name="ViewBlogsEntryWithUploadedCoverImage" priority="5">
+		<property name="portal.acceptance" value="true" />
+		
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
