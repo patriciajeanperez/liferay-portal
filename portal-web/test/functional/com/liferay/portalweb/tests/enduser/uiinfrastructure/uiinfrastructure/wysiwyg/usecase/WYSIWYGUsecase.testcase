@@ -25,6 +25,8 @@
 	</tear-down>
 
 	<command name="AddBlogsEntryWithImageViaBlogsImages" priority="4" >
+		<property name="pj" value="true" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
