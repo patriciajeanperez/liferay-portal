@@ -236,6 +236,8 @@
 	</command>
 
 	<command name="AddBlogsEntryWithInlineImageViaURL" priority="4">
+		<property name="pj" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -257,6 +259,8 @@
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="https://cdn.lfrs.sl/www.liferay.com/osb-community-theme/images/custom/heading.png" />
 		</execute>
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute macro="PortletEntry#publish" />
 

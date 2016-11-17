@@ -85,6 +85,8 @@
 	</command>
 
 	<command name="AddBlogsEntryWithInlineImage" priority="4">
+		<property name="pj" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
