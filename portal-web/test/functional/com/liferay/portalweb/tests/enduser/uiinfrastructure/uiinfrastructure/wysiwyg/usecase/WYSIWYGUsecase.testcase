@@ -25,6 +25,8 @@
 	</tear-down>
 
 	<command name="AddBlogsEntryWithImageViaBlogsImages" priority="4" >
+		<property name="pj" value="true" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -45,7 +47,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="BlogsEntry#saveAsDraftAndWait" />
+		<execute function="Pause" locator1="1000" />
+
+		<execute macro="BlogsEntry#saveAsDraft" />
 
 		<execute function="Click" locator1="BlogsEditEntry#DELETE_COVER_IMAGE_BUTTON" />
 
