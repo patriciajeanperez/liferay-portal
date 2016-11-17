@@ -1178,6 +1178,8 @@
 	</command>
 
 	<command name="EditContentWithTitleAndAllFieldsNull" priority="4">
+		<property name="pj" value="true" />
+		
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
