@@ -700,7 +700,7 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="PortletEntry#publishAndWait" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -770,7 +770,7 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="BlogsEntry#saveAsDraftAndWait" />
+		<execute macro="BlogsEntry#saveAsDraft" />
 
 		<execute function="Click" locator1="Icon#BACK" />
 
@@ -808,7 +808,7 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="PortletEntry#publishAndWait" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
