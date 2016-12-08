@@ -691,6 +691,7 @@
 
 	<command name="AddWikiPageFormatJSPWiki" priority="4">
 		<property name="osgi.modules.includes" value="wiki-engine-jspwiki" />
+		<property name="portal.acceptance" value="jspwiki" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
