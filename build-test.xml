@@ -4588,6 +4588,10 @@ go]]></replacevalue>
 		<delete dir="/tmp/sprite" />
 	</target>
 
+	<target name="delete-wiki-creole-module">
+		<delete file="${liferay.home}/osgi/modules/com.liferay.wiki.engine.creole.jar" />
+	</target>
+
 	<target name="deploy-extra-apps">
 		<get-testcase-property property.name="extraapps.plugins.includes" />
 
@@ -8803,6 +8807,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<start-test-smtp-server />
 			</then>
 		</if>
+
+		<antcall target="delete-wiki-creole-module" />
 
 		<antcall target="deploy-osgi-modules" />
 
