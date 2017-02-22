@@ -220,7 +220,8 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryWithInlineImageViaURL" priority="4">
+	<command name="AddBlogsEntryWithInlineImageViaURL" priority="5">
+		<property name="portal.acceptance" value="true" /> 
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -658,7 +659,9 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsImagesViaItemSelector" priority="3">
+	<command name="SearchBlogsImagesViaItemSelector" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -730,7 +733,9 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryDraftWithCoverImage" priority="3">
+	<command name="ViewBlogsEntryDraftWithCoverImage" priority="5">
+		<property name="portal.acceptance" value="true" />
+		
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
