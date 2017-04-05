@@ -20,6 +20,16 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="disableImageResolution">
+		<var name="key_imageName" value="${imageName}" />
+
+		<execute function="Click" locator1="AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#DISABLE" value1="Disable" />
+
+		<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#STATE" value1="Disabled" />
+	</command>
+
 	<command name="editImageResolution">
 		<var name="key_imageName" value="${imageName}" />
 		<var name="key_percentOptimized" value="${percentOptimized}" />
@@ -115,6 +125,13 @@
 		<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#NAME" value1="${imageName}" />
 
 		<var name="key_percentOptimized" value="${percentOptimized}" />
+
+		<if>
+			<isset var="state" />
+			<then>
+				<execute function="AssertTextEquals" locator1="AdaptiveMediaTable#PSTATE" value1="${state}" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="percentOptimized" />
