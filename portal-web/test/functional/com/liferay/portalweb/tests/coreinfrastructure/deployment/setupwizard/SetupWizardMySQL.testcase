@@ -5,6 +5,8 @@
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command name="MySQLtoMySQL" priority="4">
+		<property name="portal.acceptance.tomcat.mysql" value="sessionPersistenceTest" />
+
 		<execute macro="SetupWizard#configureDefaultPG" />
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -14,7 +16,7 @@
 
 	<command name="MySQLtoMySQLEditedAdministratorUser" priority="4">
 		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLEditAdministratorUser" />
+		<property name="portal.acceptance.tomcat.hypersonic" value="sessionPersistenceTest" />
 
 		<execute macro="SetupWizard#configureSampleDataPG">
 			<var name="addSampleData" value="false" />
@@ -115,8 +117,7 @@
 
 	<command name="MySQLtoMySQLLportal1SampleDataDisabled" priority="5">
 		<property name="databases.size" value="1" />
-		<property name="portal.acceptance.tomcat.mysql" value="true" />
-		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLLportal1SampleDataDisabled" />
+		<property name="portal.acceptance.tomcat.mysql" value="sessionPersistenceTest" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />
