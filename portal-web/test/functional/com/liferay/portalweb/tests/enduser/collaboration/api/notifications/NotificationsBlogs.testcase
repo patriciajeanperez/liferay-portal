@@ -78,6 +78,8 @@
 	</tear-down>
 
 	<command name="DeleteNotifications" priority="4">
+		<property name="notificationtest" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -144,6 +146,8 @@
 	</command>
 
 	<command name="MarkAllNotificationsAsRead" priority="4">
+		<property name="notificationtest" value="true" />
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

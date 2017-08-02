@@ -80,6 +80,8 @@
 	</tear-down>
 
 	<command name="FilterByReadAndUnread" priority="5">
+		<property name="notificationtest" value="true" />
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
