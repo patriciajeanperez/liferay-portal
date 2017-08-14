@@ -1157,6 +1157,8 @@ __JSPWiki Bold Text__]]></var>
 	</command>
 
 	<command name="EditDraftPage" priority="5">
+		<property name="flakywiki" value="true" />
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
