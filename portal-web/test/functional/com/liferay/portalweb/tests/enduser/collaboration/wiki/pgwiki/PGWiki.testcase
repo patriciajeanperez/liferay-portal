@@ -1158,6 +1158,8 @@
 	</command>
 
 	<command name="EditDraftPage" priority="5">
+		<property name="flakywiki" value="true" />
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1185,6 +1187,10 @@
 		<execute macro="WikiNavigator#gotoEntryEditViaPGTable">
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
 
 		<execute macro="WikiEntry#addPageContent">
 			<var name="wikiPageContent" value="Edited Wiki Page Content" />

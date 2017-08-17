@@ -286,6 +286,8 @@
 	</command>
 
 	<command name="CompareVersionsWikiPage" priority="4">
+		<property name="flakywiki" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
