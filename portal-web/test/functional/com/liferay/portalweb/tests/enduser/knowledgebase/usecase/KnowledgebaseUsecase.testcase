@@ -3097,6 +3097,7 @@
 		</execute>
 
 		<execute macro="KBArticle#editPGViaLocalizedKBDisplay">
+			<var name="key_editLocalized" value="Editar" />
 			<var name="kbArticleContentEdit" value="Knowledge Base Article Content Edited" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbArticleTitleEdit" value="Knowledge Base Article Title Edited" />
