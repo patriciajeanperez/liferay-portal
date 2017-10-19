@@ -977,6 +977,7 @@
 	</command>
 
 	<command name="EditAndDeleteGoogleDoc" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#EditAndDeleteGoogleDoc" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1391,6 +1392,7 @@
 	</command>
 
 	<command name="MoveGoogleDocToFolder" priority="5">
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#MoveGoogleDocToFolder" />
 
 		<execute macro="ProductMenu#gotoPortlet">
