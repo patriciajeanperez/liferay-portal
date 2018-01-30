@@ -2,7 +2,6 @@
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Polls" />
-
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 

@@ -238,6 +238,8 @@
 	</command>
 
 	<command name="AssertAdaptedImageInBlogsEntry" priority="5">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -280,6 +282,8 @@
 	</command>
 
 	<command name="AssertAdaptedImageInWebContent" priority="5">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
