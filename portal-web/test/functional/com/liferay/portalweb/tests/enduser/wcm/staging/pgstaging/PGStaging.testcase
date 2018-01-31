@@ -809,6 +809,8 @@
 	</command>
 
 	<command name="PublishWCIncludingTextsAndImages" priority="3">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

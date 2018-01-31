@@ -94,6 +94,8 @@
 	</command>
 
 	<command name="AddBlogsEntryWithInlineImage" priority="4">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -257,6 +259,8 @@
 	</command>
 
 	<command name="ChangeBlogsEntryCoverImage" priority="3">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1733,6 +1737,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithCoverImageFromDMFolders" priority="3">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -1859,6 +1865,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithCoverImageUploadedToDM" priority="3">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2105,6 +2113,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithImageEditedViaItemSelector" priority="4">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2193,6 +2203,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithUploadedCoverImage" priority="4">
+		<property name="testitemselector" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
