@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RSS</td>
+	<td>//a[contains(@href,'blogs') and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE_LINK</td>
 	<td>//div/a[contains(.,'Subscribe')]</td>
 	<td></td>
