@@ -21,7 +21,7 @@
 	</tear-down>
 
 	<command name="RightToLeftSmoke" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="test.name.skip.portal.instance" value="UIInfrastructureUsecase#RightToLeftSmoke" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -87,7 +87,7 @@
 	<command name="Smoke" priority="5">
 		<description message="Ensure that a user can access portlet options and drag and drop portlets." />
 
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -204,7 +204,7 @@
 	</command>
 
 	<command name="ViewSuccessMessageText" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

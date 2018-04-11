@@ -75,7 +75,7 @@
 	</command>
 
 	<command name="ValidateBeanIdentifierUserPermissions" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 		<var name="url" value="${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
@@ -133,7 +133,7 @@
 
 	<command name="ValidateForwardURLPG" priority="5">
 		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

@@ -772,7 +772,7 @@
 	</command>
 
 	<command name="DeleteSitePages" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Site Pages Administration" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -803,7 +803,7 @@
 	</command>
 
 	<command name="EditSitePage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">

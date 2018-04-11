@@ -26,7 +26,7 @@
 	</tear-down>
 
 	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales" />
 		<property name="testray.component.names" value="Site Localization" />
 

@@ -395,7 +395,7 @@
 	</command>
 
 	<command name="AddFormInGlobal" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
@@ -3052,7 +3052,7 @@
 	</command>
 
 	<command name="SubmitFormAfterEditingFields" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
@@ -3637,7 +3637,7 @@
 		<description message="This is a use case for LPS-60818." />
 		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
 		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -3753,7 +3753,7 @@
 	<command name="SubmitFormWithAllFieldTypesAndThreePages" priority="5">
 		<description message="This is a use case for LPS-64798." />
 
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
@@ -4860,7 +4860,7 @@
 	<command name="SubmitFormWithRequiredTextField" priority="5">
 		<description message="This is a use case for LPS-58829." />
 
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
