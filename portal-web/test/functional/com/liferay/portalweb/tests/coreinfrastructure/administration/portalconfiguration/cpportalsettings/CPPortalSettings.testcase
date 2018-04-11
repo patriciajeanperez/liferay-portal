@@ -296,7 +296,7 @@
 	</command>
 
 	<command name="EnterReservedEmailAddress" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EnterReservedEmailAddress" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -324,7 +324,7 @@
 	</command>
 
 	<command name="EnterReservedScreenName" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="test.name.skip.portal.instance" value="CPPortalSettings#EnterReservedScreenName" />
 
 		<execute macro="ProductMenu#gotoPortlet">
