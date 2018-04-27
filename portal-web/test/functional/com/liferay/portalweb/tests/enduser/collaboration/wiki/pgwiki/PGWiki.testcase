@@ -56,7 +56,7 @@
 	</tear-down>
 
 	<command name="AddChildSiteWikiFrontPageFormatHTML" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
@@ -169,6 +169,7 @@
 	</command>
 
 	<command name="AddWikiFrontPage" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -179,6 +180,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageAttachment" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -216,6 +218,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageAttachments" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -286,6 +289,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPage" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -328,7 +332,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPageFormatHTML" priority="4">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<var name="welcomeToLiferay">
 			<![CDATA[
@@ -381,6 +385,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPages" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -422,6 +427,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageChildPageWithInvalidTitle" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiNodeName" value="Main" />
 			<var name="wikiPageContent" value="Wiki FrontPage Content" />
@@ -571,6 +577,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageContentNoJavascript" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -606,6 +613,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageFormatCreole" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -634,7 +642,7 @@
 	</command>
 
 	<command name="AddWikiFrontPageFormatHTML" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#gotoPage">
@@ -669,6 +677,7 @@
 	</command>
 
 	<command name="AddWikiPage" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -698,6 +707,7 @@
 	</command>
 
 	<command name="AddWikiPageChildPage" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -742,6 +752,7 @@
 	</command>
 
 	<command name="AddWikiPageFormatHTML" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<var name="welcomeToLiferay">
 			<![CDATA[
 				<p><a href="http://www.liferay.com">Welcome to LIFERAY</a></p>
@@ -792,7 +803,7 @@
 	</command>
 
 	<command name="AddWikiPages" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#gotoPage">
@@ -830,6 +841,7 @@
 	</command>
 
 	<command name="AddWikiPageWithInlineImage" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -889,7 +901,7 @@
 	</command>
 
 	<command name="CancelAddPage" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
@@ -915,6 +927,7 @@
 	</command>
 
 	<command name="CancelEditPage" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -959,6 +972,7 @@
 	</command>
 
 	<command name="CompareVersionEditFrontPage" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1010,6 +1024,7 @@
 	</command>
 
 	<command name="CopyPage" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1068,7 +1083,7 @@
 	</command>
 
 	<command name="DeleteWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
@@ -1091,6 +1106,7 @@
 	</command>
 
 	<command name="DeleteWikiPage" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1124,6 +1140,7 @@
 	</command>
 
 	<command name="EditDraftPage" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1185,7 +1202,7 @@
 	</command>
 
 	<command name="EditWikiFrontPage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="tim-pak" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
@@ -1222,6 +1239,7 @@
 	</command>
 
 	<command name="EditWikiPageFormatMediaWiki" priority="5">
+		<property name="portal.acceptance" value="tim-pak" />
 		<property name="osgi.app.includes" value="wiki-engine-mediawiki" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
@@ -1305,6 +1323,7 @@
 	</command>
 
 	<command name="LinkWikiPage1toWikiPage2" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1362,6 +1381,7 @@
 	</command>
 
 	<command name="RemoveRedirectLinkFromWikiPage" priority="3">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1424,6 +1444,7 @@
 	</command>
 
 	<command name="RenameWikiPageTitle" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1474,6 +1495,7 @@
 	</command>
 
 	<command name="RevertChangeParentWikipage2toWikipage1" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1561,6 +1583,7 @@
 	</command>
 
 	<command name="RevertEditFrontpage" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
@@ -1629,6 +1652,7 @@
 	</command>
 
 	<command name="SaveEditedPageAsDraft" priority="4">
+		<property name="portal.acceptance" value="tim-pak" />
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
