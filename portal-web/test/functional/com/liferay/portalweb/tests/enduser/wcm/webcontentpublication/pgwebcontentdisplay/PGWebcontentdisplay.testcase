@@ -1099,6 +1099,7 @@
 	</command>
 
 	<command name="ViewWebContentDisplayPortletMessages" priority="4">
+		<property name="portal.acceptance" value="true" />
 		<property name="testray.component.names" value="Web Content Display" />
 
 		<execute macro="ProductMenu#gotoPortlet">

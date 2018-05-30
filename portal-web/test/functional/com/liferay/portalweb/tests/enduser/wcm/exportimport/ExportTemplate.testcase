@@ -32,6 +32,8 @@
 	</tear-down>
 
 	<command name="DeleteExportTemplate" priority="4">
+		<property name="portal.acceptance" value="true" />
+		
 		<execute macro="LAR#addExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
