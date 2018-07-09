@@ -56,7 +56,6 @@
 	</command>
 
 	<command name="AddBookmarks" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />
@@ -158,7 +157,6 @@
 	</command>
 
 	<command name="AddNullFolder" priority="5">
-		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -258,7 +256,6 @@
 	</command>
 
 	<command name="DeleteBookmark" priority="5">
-		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -338,7 +335,6 @@
 	</command>
 
 	<command name="EditBookmark" priority="5">
-		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -581,7 +577,6 @@
 	</command>
 
 	<command name="MoveToRecycleBinFolder" priority="5">
-		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Navigator#openURL" />
 
