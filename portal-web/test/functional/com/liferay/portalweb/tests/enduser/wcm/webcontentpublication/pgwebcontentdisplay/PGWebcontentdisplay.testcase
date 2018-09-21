@@ -783,6 +783,7 @@
 	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="4">
 		<property name="test.name.skip.portal.instance" value="PGWebcontentdisplay#ViewAllSettingsEnabledWCDConfiguration" />
 		<property name="testray.component.names" value="Web Content Display" />
+		<property name="testsubscribe" value="true" />
 
 		<execute macro="Navigator#openURL" />
 
