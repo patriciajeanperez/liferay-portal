@@ -2355,6 +2355,8 @@
 	</command>
 
 	<command name="ViewRelatedAssetViaDMPortlet" priority="3">
+		<property name="testsubscribe" value="true" />
+		
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
