@@ -295,6 +295,8 @@
 	</command>
 
 	<command name="ValidateDocumentOnSeparateNodes" priority="4">
+		<property name="testsubscribe" value="true" />
+		
 		<property name="test.name.skip.portal.instance" value="ClusteringCE#ValidateDocumentOnSeparateNodes" />
 
 		<execute macro="Clustering#viewClusterStatusInConsole" />
