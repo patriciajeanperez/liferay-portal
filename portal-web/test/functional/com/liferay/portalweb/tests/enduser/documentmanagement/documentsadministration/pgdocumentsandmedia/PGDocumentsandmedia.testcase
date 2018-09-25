@@ -70,8 +70,8 @@
 	</tear-down>
 
 	<command name="AddDocuments" priority="5">
-		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Training" />
+		<property name="testsubscribe" value="true" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -479,6 +479,8 @@
 	</command>
 
 	<command name="AddFolderImages" priority="4">
+		<property name="testsubscribe" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -565,6 +567,8 @@
 	</command>
 
 	<command name="AddSubFolderImageAndDocument" priority="4">
+		<property name="testsubscribe" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -834,6 +838,8 @@
 	</command>
 
 	<command name="DeleteDocumentWithSlashesInTitle" priority="4">
+		<property name="testsubscribe" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1126,6 +1132,8 @@
 	</command>
 
 	<command name="EditFolderDocument" priority="5">
+		<property name="testsubscribe" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1166,6 +1174,8 @@
 	</command>
 
 	<command name="EditFolderDocumentFile" priority="4">
+		<property name="testsubscribe" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1492,6 +1502,8 @@
 	</command>
 
 	<command name="RevertVersionFolderDocumentFile" priority="4">
+		<property name="testsubscribe" value="true" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -1711,6 +1723,8 @@
 	</command>
 
 	<command name="SubscribeToCommentAndViewEmailNotification" priority="5">
+		<property name="testsubscribe" value="true" />
+		
 		<description message="This is a use case for LPS-51280" />
 
 		<property name="test.smtp.server.enabled" value="true" />

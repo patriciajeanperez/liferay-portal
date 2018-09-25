@@ -1511,6 +1511,8 @@
 	</command>
 
 	<command name="SubscribeToBlogsEntryComment" priority="3">
+		<property name="testsubscribe" value="true" />
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

@@ -505,6 +505,8 @@
 	</command>
 
 	<command name="ViewWebsiteNotificationForNewCommentViaBlogs" priority="4">
+		<property name="testsubscribe" value="true" />
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
