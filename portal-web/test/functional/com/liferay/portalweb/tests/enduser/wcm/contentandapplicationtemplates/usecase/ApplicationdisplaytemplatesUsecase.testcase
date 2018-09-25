@@ -236,6 +236,7 @@
 
 	<command name="ADTAssetPublisher" priority="3">
 		<property name="testray.component.names" value="Asset Publisher,Content and Application Templates" />
+		<property name="testsubscribe" value="true" />
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
@@ -836,6 +837,7 @@
 
 	<command name="ADTWiki" priority="3">
 		<property name="testray.component.names" value="Content and Application Templates,Wiki" />
+		<property name="testsubscribe" value="true" />
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
