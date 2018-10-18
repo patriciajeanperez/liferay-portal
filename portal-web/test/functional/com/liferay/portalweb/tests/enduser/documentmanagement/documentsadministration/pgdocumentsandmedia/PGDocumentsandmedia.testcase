@@ -997,6 +997,7 @@
 
 	<command name="EditAndDeleteGoogleDoc" priority="5">
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#EditAndDeleteGoogleDoc" />
+		<property name="testgoogle" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -1416,6 +1417,7 @@
 
 	<command name="MoveGoogleDocToFolder" priority="5">
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#MoveGoogleDocToFolder" />
+		<property name="testgoogle" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
