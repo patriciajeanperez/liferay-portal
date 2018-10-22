@@ -1,9 +1,9 @@
 <definition component-name="portal-social-networking">
-	<property name="dummy.socket.proxy.disabled" value="true" />
 	<property name="osgi.app.includes" value="social-networking" />
 	<property name="portal.upstream" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="testray.main.component.name" value="Social Networking" />
+	<property name="testtwitter" value="true" />
 
 	<var name="pageName" value="Friends Directory Page" />
 	<var name="portletName" value="Friends Directory" />
