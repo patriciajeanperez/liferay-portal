@@ -1944,6 +1944,8 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntryWithImageEditedViaItemSelector {
+		property portal.acceptance = "true";
+		
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
