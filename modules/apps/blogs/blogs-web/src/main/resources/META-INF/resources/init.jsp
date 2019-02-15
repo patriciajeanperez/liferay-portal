@@ -24,14 +24,12 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
-taglib uri="http://liferay.com/tld/export-import-changeset" prefix="liferay-export-import-changeset" %><%@
 taglib uri="http://liferay.com/tld/flags" prefix="liferay-flags" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/reading-time" prefix="liferay-reading-time" %><%@
 taglib uri="http://liferay.com/tld/rss" prefix="liferay-rss" %><%@
-taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/social-bookmarks" prefix="liferay-social-bookmarks" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
@@ -62,6 +60,7 @@ page import="com.liferay.blogs.service.BlogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.blogs.settings.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.blogs.util.comparator.EntryModifiedDateComparator" %><%@
+page import="com.liferay.blogs.web.constants.BlogsWebConstants" %><%@
 page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@
@@ -72,6 +71,8 @@ page import="com.liferay.blogs.web.internal.display.context.BlogImagesManagement
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
+page import="com.liferay.blogs.web.internal.servlet.taglib.clay.BlogsEntryVerticalCard" %><%@
+page import="com.liferay.blogs.web.internal.servlet.taglib.util.BlogsEntryActionDropdownItemsProvider" %><%@
 page import="com.liferay.blogs.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsUtil" %><%@

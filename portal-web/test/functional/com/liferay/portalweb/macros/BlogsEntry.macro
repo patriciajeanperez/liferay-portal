@@ -379,7 +379,10 @@ definition {
 			value1 = "${entryTitle}"
 		);
 
-		Click(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN");
+		Click(
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
+			key_listEntry = "${entryTitle}"
+		);
 
 		PortletEntry.clickMoveToRecycleBin();
 
@@ -399,7 +402,10 @@ definition {
 			value1 = "Draft"
 		);
 
-		Click(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN");
+		Click(
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
+			key_listEntry = "${entryTitle}"
+		);
 
 		PortletEntry.clickMoveToRecycleBin();
 
@@ -420,7 +426,10 @@ definition {
 
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
+		LexiconList.clickEllipsisItem(
+			item = "Move to Recycle Bin",
+			listEntry = "${entryTitle}"
+		);
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

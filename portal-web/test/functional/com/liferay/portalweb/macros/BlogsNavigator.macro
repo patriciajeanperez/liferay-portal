@@ -19,9 +19,9 @@ definition {
 	}
 
 	macro gotoBlogsEntryPermissionsCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Permissions",
-			rowEntry = "${entryTitle}"
+		LexiconList.clickEllipsisItem(
+			item = "Permissions",
+			listEntry = "${entryTitle}"
 		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
@@ -30,7 +30,10 @@ definition {
 	macro gotoBlogsEntryPermissionsPG {
 		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
+		LexiconList.clickEllipsisItem(
+			item = "Permissions",
+			listEntry = "${entryTitle}"
+		);
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 	}
@@ -59,7 +62,10 @@ definition {
 			value1 = "${entryTitle}"
 		);
 
-		Click(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN");
+		Click(
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
+			key_listEntry = "${entryTitle}"
+		);
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -79,7 +85,10 @@ definition {
 		else {
 			Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
 
-			PortletEntry.clickEditFromEllipsis();
+			LexiconList.clickEllipsisItem(
+				item = "Edit",
+				listEntry = "${entryTitle}"
+			);
 		}
 
 		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");
@@ -161,7 +170,10 @@ definition {
 			value1 = "${entryTitle}"
 		);
 
-		Click(locator1 = "Blogs#DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN");
+		Click(
+			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS",
+			key_listEntry = "${entryTitle}"
+		);
 
 		PortletEntry.clickMoveToRecycleBin();
 
