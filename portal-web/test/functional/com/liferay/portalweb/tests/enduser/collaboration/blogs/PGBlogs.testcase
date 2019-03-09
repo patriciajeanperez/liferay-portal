@@ -1082,6 +1082,8 @@ definition {
 
 	@priority = "5"
 	test SaveBlogsEntryDraftAuto {
+		property portal.acceptance = "true";
+		
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addDraftViaAutoSave(

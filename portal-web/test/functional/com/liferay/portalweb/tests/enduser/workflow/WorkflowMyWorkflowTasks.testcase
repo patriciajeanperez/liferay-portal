@@ -223,6 +223,8 @@ definition {
 
 	@priority = "4"
 	test ApproveResubmitTaskByActions {
+		property portal.acceptance = "true";
+		
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
