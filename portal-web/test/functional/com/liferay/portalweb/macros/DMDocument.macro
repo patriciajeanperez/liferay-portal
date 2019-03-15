@@ -396,9 +396,8 @@ definition {
 
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
+		DMDocument.viewCardTitle(
+			dmDocumentTitle = "${dmDocumentTitle}"
 		);
 	}
 
@@ -892,11 +891,11 @@ definition {
 	}
 
 	macro expandInfo {
-		if (IsElementNotPresent(locator1 = "Icon#INFO_ACTIVE")) {
+		if (IsElementNotPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN")) {
 			Click(locator1 = "Icon#INFO");
 		}
 
-		AssertVisible(locator1 = "Icon#INFO_ACTIVE");
+		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN");
 	}
 
 	macro getDMLatestVersionURL {
@@ -917,6 +916,12 @@ definition {
 		echo("## * Document URL: ${dmDocumentURL}");
 
 		return "${dmDocumentURL}";
+	}
+
+	macro gotoEntry {
+		LexiconCard.clickCard(
+			card = "${dmDocumentTitle}"
+		);
 	}
 
 	macro linkImage {
@@ -1017,16 +1022,15 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
+		DMDocument.viewCardTitle(
+			dmDocumentTitle = "${dmDocumentTitle}"
 		);
 
 		MouseOver(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
-
-		Check(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX");
+		LexiconCard.checkCardCheckbox(
+			card = "${dmDocumentTitle}"
+		);
 
 		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
@@ -1388,10 +1392,7 @@ definition {
 				value1 = "${dmDocumentStatus}"
 			);
 
-			AssertClick(
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK",
-				value1 = "${dmDocumentTitle}"
-			);
+			DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitle}");
 
 			AssertTextEquals(locator1 = "TextInput#TITLE", value1 = "${dmDocumentTitle}");
 		}
@@ -1647,14 +1648,10 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT");
 
-		AssertClick(
-			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK",
-			value1 = "${dmDocumentTitleEdit}"
-		);
+		DMDocument.gotoEntry(dmDocumentTitle = "${dmDocumentTitleEdit}");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
-			value1 = "${dmDocumentTitleEdit}"
+		DMDocument.viewCardTitle(
+			dmDocumentTitle = "${dmDocumentTitleEdit}"
 		);
 
 		if (isSet(dmDocumentVersionNumber)) {
@@ -1952,9 +1949,8 @@ definition {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 
 		if ("${documentAdded}" == "true") {
-			AssertTextEquals(
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-				value1 = "${dmDocumentTitle}"
+			DMDocument.viewCardTitle(
+				dmDocumentTitle = "${dmDocumentTitle}"
 			);
 
 			AssertClick.assertPartialTextClickAt(
@@ -1962,9 +1958,8 @@ definition {
 				value1 = "Live"
 			);
 
-			AssertTextNotPresent(
-				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_TITLE",
-				value1 = "${dmDocumentTitle}"
+			LexiconCard.viewCardNotPresent(
+				card = "${dmDocumentTitle}"
 			);
 
 			AssertTextEquals(
@@ -2097,5 +2092,11 @@ definition {
 
 			AssertTextEquals(locator1 = "DocumentsAndMedia#TAG", value1 = "${tagName}");
 		}
+	}
+
+	macro viewCardTitle {
+		LexiconCard.viewCardTitle(
+			card = "${dmDocumentTitle}"
+		);
 	}
 }

@@ -32,12 +32,7 @@ definition {
 			);
 		}
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_TITLE",
-			value1 = "${dmFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 	}
 
 	macro addPG {
@@ -103,10 +98,7 @@ definition {
 
 		var key_mgFolderName = "${mgFolderName}";
 
-		AssertTextEquals(
-			locator1 = "MediaGallery#FOLDER_NAME",
-			value1 = "${mgFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderName}");
 	}
 
 	macro addSubfolderCP {
@@ -196,7 +188,9 @@ definition {
 	macro cannotViewCP {
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
+		LexiconCard.viewCardNotPresent(
+			card = "${dmFolderName}"
+		);
 	}
 
 	macro configureWorkflowCP {
@@ -303,12 +297,7 @@ definition {
 	macro editCP {
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${dmFolderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 
 		AssertElementPresent(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS"
@@ -324,12 +313,7 @@ definition {
 
 		PortletEntry.save();
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${dmFolderNameEdit}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 	}
 
 	macro editPG {
@@ -371,29 +355,29 @@ definition {
 
 		var key_mgFolderName = "${mgFolderName}";
 
-		AssertTextEquals(
-			locator1 = "MediaGallery#FOLDER_NAME",
-			value1 = "${mgFolderNameEdit}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${mgFolderNameEdit}");
 	}
 
 	macro gotoEditCP {
 		var key_dmFolderName = "${folderName}";
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-			value1 = "${folderName}"
-		);
+		DMFolder.viewEntryPresent(dmFolderName = "${folderName}");
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 	}
 
+	macro gotoEntry {
+		LexiconCard.clickCard(
+			card = "${dmFolderName}"
+		);
+	}
+
 	macro gotoPGViaMG {
 		var key_mgFolderName = "${mgFolderName}";
 
-		Click(locator1 = "MediaGallery#FOLDER_NAME");
+		DMFolder.gotoEntry(dmFolderName = "${mgFolderName}");
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#BREADCRUMB",
@@ -461,16 +445,16 @@ definition {
 	}
 
 	macro moveToRecycleBinCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		var key_dmFolderName = "${dmFolderName}";
 
-		AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
 		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "${dmFolderName}"
 		);
 
-		Click(locator1 = "DocumentsAndMedia#ICON_FOLDER_CHECKBOX");
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_CHECKBOX");
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
@@ -579,12 +563,7 @@ definition {
 			);
 		}
 		else {
-			AssertElementPresent(locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL");
-
-			AssertTextEquals(
-				locator1 = "DocumentsAndMedia#ICON_FOLDER_THUMBNAIL",
-				value1 = "${dmFolderName}"
-			);
+			DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
 		}
 
 		if ("${specificNameFolder}" == "true") {
@@ -618,6 +597,12 @@ definition {
 		);
 	}
 
+	macro viewEntryPresent {
+		LexiconCard.viewCardPresent(
+			card = "${dmFolderName}"
+		);
+	}
+
 	macro viewFolderPermissionsPG {
 		var key_dmFolderName = "${dmFolder}";
 		var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
@@ -643,7 +628,7 @@ definition {
 	macro viewPGViaMG {
 		var key_mgFolderName = "${mgFolderName}";
 
-		Click(locator1 = "MediaGallery#FOLDER_NAME");
+		DMFolder.gotoEntry(dmFolderName = "${mgFolderName}");
 
 		AssertTextEquals(
 			locator1 = "MediaGallery#FOLDER_HEADER_TITLE",
