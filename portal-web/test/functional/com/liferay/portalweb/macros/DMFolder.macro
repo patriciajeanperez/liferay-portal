@@ -445,13 +445,16 @@ definition {
 	}
 
 	macro moveToRecycleBinCP {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		var key_dmFolderName = "${dmFolderName}";
 
-		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
-
-		LexiconCard.checkCardCheckbox(
-			card = "${dmFolderName}"
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = "${dmFolderName}"
 		);
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_CHECKBOX");
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
