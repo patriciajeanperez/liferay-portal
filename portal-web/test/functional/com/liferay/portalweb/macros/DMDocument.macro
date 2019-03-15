@@ -891,11 +891,11 @@ definition {
 	}
 
 	macro expandInfo {
-		if (IsElementNotPresent(locator1 = "Icon#INFO_ACTIVE")) {
+		if (IsElementNotPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN")) {
 			Click(locator1 = "Icon#INFO");
 		}
 
-		AssertVisible(locator1 = "Icon#INFO_ACTIVE");
+		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN");
 	}
 
 	macro getDMLatestVersionURL {
