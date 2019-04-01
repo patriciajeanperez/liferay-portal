@@ -1334,10 +1334,6 @@ definition {
 
 		Navigator.gotoPage(pageName = "Document");
 
-		ManagementBar.changeDisplayStyle(
-			displayStyle = "List"
-		);
-
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
 		Navigator.gotoPage(pageName = "Message Boards");
@@ -1384,8 +1380,6 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 
 		Navigator.gotoPage(pageName = "Document");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.viewPG(dmDocumentTitle = "Document1");
 
