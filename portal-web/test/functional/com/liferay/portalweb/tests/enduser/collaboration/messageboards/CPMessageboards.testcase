@@ -27,6 +27,8 @@ definition {
 
 	@priority = "5"
 	test AddMBCategory {
+		property portal.acceptance = "true";
+		
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -46,6 +48,8 @@ definition {
 
 	@priority = "4"
 	test AddMBCategorySubcategory {
+		property portal.acceptance = "true";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

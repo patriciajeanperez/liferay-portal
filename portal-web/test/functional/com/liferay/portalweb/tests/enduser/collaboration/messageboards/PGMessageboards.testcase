@@ -102,6 +102,8 @@ definition {
 
 	@priority = "4"
 	test AddMBCategorySubcategory {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");
@@ -126,6 +128,8 @@ definition {
 
 	@priority = "4"
 	test AddMBCategorySubcategoryNullName {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");
@@ -149,6 +153,7 @@ definition {
 
 	@priority = "5"
 	test AddMBCategorySubcategoryThread {
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
@@ -1001,6 +1006,8 @@ definition {
 
 	@priority = "4"
 	test ViewSubcategorySubscriptionViaMySubscriptionsPage {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsCategory.addPG(categoryName = "MB Category Name");

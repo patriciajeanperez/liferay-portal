@@ -123,6 +123,7 @@ definition {
 	@priority = "4"
 	test DisableShowApplicationBreadcrumb {
 		property custom.properties = "default.layout.template.id=1_column";
+		property portal.acceptance = "true";
 		property testray.component.names = "Breadcrumb";
 
 		ProductMenu.gotoPortlet(
