@@ -109,8 +109,8 @@ definition {
 		var key_subCategoryName = "${subCategoryName}";
 
 		AssertClick(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY",
-			value1 = "${subCategoryName}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "${categoryName}"
 		);
 
 		AssertClick(locator1 = "Button#ADD_CATEGORY", value1 = "Add Category");
@@ -262,25 +262,20 @@ definition {
 		);
 
 		AssertElementNotPresent(
-			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_SUBCATEGORY_GENERIC"
+			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC"
 		);
 
-		var key_subcategoriesNumber = "${subcategoriesNumber}";
-		var key_threadsNumber = "${threadsNumber}";
+		var key_categoryCount = "${categoryCount}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORIES",
-			value1 = "0"
-		);
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "0"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
+			value1 = "0 Categories"
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_POSTS",
-			value1 = "0"
+			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+			value1 = "0 Threads"
 		);
 
 		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
@@ -290,10 +285,10 @@ definition {
 			value1 = "${categoryName}"
 		);
 
-		AssertElementNotPresent(locator1 = "MessageBoards#SUBCATEGORY_TABLE_PANEL");
+		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_PANEL");
 
 		AssertElementNotPresent(
-			locator1 = "MessageBoards#SUBCATEGORY_TABLE_CATEGORY_GENERIC"
+			locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC"
 		);
 	}
 
@@ -307,18 +302,18 @@ definition {
 			value1 = "${categoryName}"
 		);
 
-		var key_subcategoriesNumber = "${subcategoriesNumber}";
+		var key_categoryCount = "${categoryCount}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORIES",
-			value1 = "${subcategoriesNumber}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_COUNT",
+			value1 = "${categoryCount}"
 		);
 
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "${threadsNumber}"
+			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+			value1 = "${threadCount}"
 		);
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
@@ -382,24 +377,24 @@ definition {
 
 	macro viewPG {
 		var key_categoryName = "${categoryName}";
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
 			value1 = "${categoryName}"
 		);
 
-		if (isSet(threadsNumber)) {
-			var key_threadsNumber = "${threadsNumber}";
+		if (isSet(threadCount)) {
+			var key_threadCount = "${threadCount}";
 
 			AssertTextEquals(
-				locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-				value1 = "${threadsNumber} Threads"
+				locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+				value1 = "${threadCount} Threads"
 			);
 		}
 		else if ("${threadPostCount}" == "1") {
 			AssertTextEquals(
-				locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
+				locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
 				value1 = "1 Thread"
 			);
 		}
@@ -436,16 +431,16 @@ definition {
 		);
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY",
-			value1 = "${subCategoryName}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
+			value1 = "${categoryName}"
 		);
 
 		AssertTextEquals(
-			locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY_DESCRIPTION",
-			value1 = "${subCategoryDescription}"
+			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY_DESCRIPTION",
+			value1 = "${categoryDescription}"
 		);
 
-		Click(locator1 = "MessageBoards#CATEGORY_LIST_SUBCATEGORY");
+		Click(locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY");
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORIES_NAME_HEADER",
@@ -463,7 +458,7 @@ definition {
 
 		var key_categoryDescription = "${subCategoryDescription}";
 		var key_categoryName = "${subCategoryName}";
-		var key_threadsNumber = "${threadsNumber}";
+		var key_threadCount = "${threadCount}";
 
 		AssertTextEquals(
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
@@ -476,13 +471,8 @@ definition {
 		);
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_THREADS",
-			value1 = "${threadsNumber}"
-		);
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "MessageBoards#CATEGORY_LIST_POSTS",
-			value1 = "${threadsNumber}"
+			locator1 = "MessageBoards#CATEGORY_LIST_THREAD_COUNT",
+			value1 = "${threadCount}"
 		);
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_ACTIONS");
