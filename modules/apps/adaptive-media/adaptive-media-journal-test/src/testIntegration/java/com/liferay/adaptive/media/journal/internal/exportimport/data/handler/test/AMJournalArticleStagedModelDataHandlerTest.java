@@ -210,11 +210,14 @@ public class AMJournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group)
-		throws PortalException {
-
-		return _journalArticleLocalService.getJournalArticleByUuidAndGroupId(
-			uuid, group.getGroupId());
+	protected StagedModel getStagedModel(String uuid, Group group) {
+		try {
+			return _journalArticleLocalService.
+				getJournalArticleByUuidAndGroupId(uuid, group.getGroupId());
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
