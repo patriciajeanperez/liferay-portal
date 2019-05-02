@@ -182,11 +182,14 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group)
-		throws PortalException {
-
-		return _blogsEntryLocalService.getBlogsEntryByUuidAndGroupId(
-			uuid, group.getGroupId());
+	protected StagedModel getStagedModel(String uuid, Group group) {
+		try {
+			return _blogsEntryLocalService.getBlogsEntryByUuidAndGroupId(
+				uuid, group.getGroupId());
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
