@@ -1245,8 +1245,6 @@ definition {
 
 		DMDocument.viewDocumentToolbarCmdPG();
 
-		Click(locator1 = "Icon#INFO");
-
 		DMDocument.viewDocumentAuthorCmdPG(dmDocumentAuthor = "${dmDocumentAuthor}");
 
 		if (isSet(commentBody)) {
@@ -1704,22 +1702,17 @@ definition {
 
 		AssertClick(
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-		    value1 = "${dmDocumentTitle}"
-		);
+			value1 = "${dmDocumentTitle}");
 
 		DMDocument.expandInfo();
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
 		if ("${dmRepositoryName}" == "true") {
-			AssertElementNotPresent(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING"
-			);
+			AssertElementNotPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING");
 		}
 		else {
-			AssertElementPresent(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING"
-			);
+			AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_RATING");
 		}
 
 		if (isSet(dmDocumentDescription)) {
@@ -1727,32 +1720,27 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION",
-				value1 = "${dmDocumentDescription}"
-			);
+				value1 = "${dmDocumentDescription}");
 		}
 
 		if ("${dmDocumentFileType}" == "Image") {
-			AssertElementPresent(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW"
-			);
+			AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 		}
 
 		if (isSet(tagNameList)) {
 			for (var tagName : list "${tagNameList}") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TAGS",
-					value1 = "${tagName}"
-				);
+					value1 = "${tagName}");
 			}
 		}
 
 		if (isSet(categoryName)) {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
-				value1 = "Topic: ${categoryName}"
-			);
+				value1 = "Topic: ${categoryName}");
 		}
->>>>>>> parent of 408804fcc9eb... LRQA-47824 Temporarily remove DM info assertion
+		>>>>>>> parent of 408804fcc9eb... LRQA-47824 Temporarily remove DM info assertion
 	}
 
 	macro viewPGDetails {
