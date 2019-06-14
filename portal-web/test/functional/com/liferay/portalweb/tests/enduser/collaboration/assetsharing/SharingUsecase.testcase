@@ -10,56 +10,30 @@ definition {
 
 		User.firstLoginPG();
 
+		JSONGroup.addGroup(groupName = "Test Site");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Page");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
-		SitePages.addPublicPage(
-			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Documents and Media Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			DMDocument.tearDownCP();
-
-			DMFolder.tearDownCP();
-
-			User.logoutPG();
-		}
+		JSONGroup.deleteGroupByName(groupName = "Test Site");
 	}
 
 	@description = "This test ensures that Sharing can be disabled at the instance level."
@@ -80,7 +54,22 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
@@ -120,7 +109,22 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
@@ -145,6 +149,22 @@ definition {
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
 	test FilterByAssetType {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
@@ -190,6 +210,23 @@ definition {
 	@description = "This test ensures that users can Order By Shared Date in the Shared Content app."
 	@priority = "3"
 	test OrderBySharedDate {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site",
+			layoutName = "Test Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.addMultiplePG(
 			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
 			viewableBy = "Owner");
@@ -200,7 +237,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Test Site");
 
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_2.docx");
 
