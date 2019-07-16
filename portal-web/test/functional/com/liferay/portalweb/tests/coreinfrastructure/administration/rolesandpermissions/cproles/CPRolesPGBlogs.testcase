@@ -387,6 +387,8 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntrySiteRoleInline {
+		property portal.acceptance = "true";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -865,6 +867,8 @@ definition {
 
 	@priority = "4"
 	test DeleteBlogsEntryRegRole {
+		property portal.acceptance = "true";
+
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -929,7 +933,9 @@ definition {
 	}
 
 	@priority = "4"
-	test DeleteBlogsEntryRegRoleInline {
+	test DeleteBlogsEntryRegRoleInline{
+		property portal.acceptance = "true";
+		
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",

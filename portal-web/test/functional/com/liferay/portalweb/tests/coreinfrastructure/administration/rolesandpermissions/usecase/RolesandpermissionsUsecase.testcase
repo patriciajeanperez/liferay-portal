@@ -46,6 +46,8 @@ definition {
 
 	@priority = "4"
 	test EditTeamPermissions {
+		property portal.acceptance = "true";
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = "90",
@@ -960,6 +962,8 @@ definition {
 
 	@priority = "4"
 	test RolesSiteSearch {
+		property portal.acceptance = "true";
+		
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
