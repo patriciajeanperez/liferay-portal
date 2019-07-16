@@ -30,6 +30,12 @@ definition {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
+			Pause(locator1 = "3000");
+
+				if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN")) {
+					Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
+				}
+
 			AssertVisible(locator1 = "UserBar#USER_AVATAR_DROPDOWN_PORTAL_OPEN");
 
 			ScrollWebElementIntoView(locator1 = "UserBar#USER_AVATAR_DROPDOWN_SIGNOUT");
