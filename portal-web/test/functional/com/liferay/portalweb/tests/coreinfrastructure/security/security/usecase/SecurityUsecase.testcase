@@ -160,6 +160,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 	@priority = "4"
 	test ValidateCannotStealAdminAccount {
+		property portal.acceptance = "sharry";
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateCannotStealAdminAccount";
 		var pAuth = Api.getPAuth();
 		var portalURL = PropsUtil.get("portal.url");

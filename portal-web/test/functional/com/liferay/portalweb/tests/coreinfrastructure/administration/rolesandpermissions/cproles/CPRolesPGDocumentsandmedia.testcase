@@ -38,6 +38,7 @@ definition {
 
 	@priority = "5"
 	test AddDMDocumentRegRoleDefaultPermissions {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 
 		Permissions.setUpRegRolePG(
@@ -106,6 +107,7 @@ definition {
 
 	@priority = "4"
 	test AddDMDocumentSiteMemberRoleInline {
+		property portal.acceptance = "sharry";
 		Permissions.setUpSiteMemberRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Documents and Media Page",

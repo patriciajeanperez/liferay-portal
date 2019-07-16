@@ -299,6 +299,7 @@ definition {
 
 	@priority = "4"
 	test ConfigureAPPortletDisplaytemplateWithBookmarks {
+		property portal.acceptance = "sharry";
 		property portal.release = "false";
 		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates,Training";
 

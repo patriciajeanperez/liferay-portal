@@ -27,6 +27,7 @@ definition {
 
 	@priority = "5"
 	test CreateNewUserAccount {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 
 		Navigator.openURL();

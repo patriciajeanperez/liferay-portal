@@ -708,6 +708,7 @@ definition {
 
 	@priority = "4"
 	test ViewAvailableSiteLocaleAlternatives {
+		property portal.acceptance = "sharry";
 		property test.name.skip.portal.instance = "LocalizationWithSites#ViewAvailableSiteLocaleAlternatives";
 		property testray.component.names = "Site Localization";
 

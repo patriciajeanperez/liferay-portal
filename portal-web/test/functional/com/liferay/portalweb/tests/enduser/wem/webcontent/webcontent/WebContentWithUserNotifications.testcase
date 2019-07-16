@@ -64,6 +64,7 @@ definition {
 
 	@priority = "4"
 	test ViewArticleEmailNotification {
+		property portal.acceptance = "sharry";
 		property test.smtp.server.enabled = "true";
 		property testray.component.names = "Web Content Administration";
 

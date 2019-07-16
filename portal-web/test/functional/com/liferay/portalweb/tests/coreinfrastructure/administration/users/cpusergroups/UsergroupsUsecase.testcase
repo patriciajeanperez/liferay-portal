@@ -180,6 +180,7 @@ definition {
 
 	@priority = "4"
 	test UserGroupSiteOwnerPermissions {
+		property portal.acceptance = "sharry";
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "UsergroupsUsecase#UserGroupSiteOwnerPermissions";
 

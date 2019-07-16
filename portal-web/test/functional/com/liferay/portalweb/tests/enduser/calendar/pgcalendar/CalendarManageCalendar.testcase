@@ -120,6 +120,7 @@ definition {
 
 	@priority = "3"
 	test ChangeColorCalendarSiteCalendarsEventRegular {
+		property portal.acceptance = "sharry";
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		CalendarNavigator.gotoAddEvent();

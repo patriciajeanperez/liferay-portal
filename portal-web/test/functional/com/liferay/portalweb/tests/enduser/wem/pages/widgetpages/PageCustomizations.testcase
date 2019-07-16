@@ -220,6 +220,7 @@ definition {
 
 	@priority = "4"
 	test SiteMembershouldAddAndRemovePortletFromHisCustomizableView {
+		property portal.acceptance = "sharry";
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

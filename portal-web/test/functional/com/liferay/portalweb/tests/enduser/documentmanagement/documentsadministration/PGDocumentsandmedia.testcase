@@ -1262,6 +1262,7 @@ definition {
 	@description = "This is a use case for LPS-51280"
 	@priority = "5"
 	test SubscribeToCommentAndViewEmailNotification {
+		property portal.acceptance = "sharry";
 		property test.smtp.server.enabled = "true";
 
 		JSONUser.addUser(

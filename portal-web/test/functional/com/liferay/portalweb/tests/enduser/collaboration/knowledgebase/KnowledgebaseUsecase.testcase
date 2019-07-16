@@ -1744,6 +1744,7 @@ definition {
 
 	@priority = "4"
 	test ViewSuggestionsWithPermissions {
+		property portal.acceptance = "sharry";
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page");

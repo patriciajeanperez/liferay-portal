@@ -300,6 +300,7 @@ definition {
 
 	@priority = "4"
 	test ViewNoWebsiteNotificationForUpdatedBlogsEntry {
+		property portal.acceptance = "sharry";
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.subscribePG();

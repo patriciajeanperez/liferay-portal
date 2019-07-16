@@ -989,6 +989,7 @@ definition {
 
 	@priority = "4"
 	test ChangeUserPassword {
+		property portal.acceptance = "sharry";
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1803,6 +1804,7 @@ definition {
 
 	@priority = "4"
 	test ViewLoginForDeactivatedUserViaDeactivateButton {
+		property portal.acceptance = "sharry";
 		var portalURL = PropsUtil.get("portal.url");
 
 		ProductMenu.gotoPortlet(

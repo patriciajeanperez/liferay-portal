@@ -387,6 +387,7 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntrySiteRoleInline {
+		property portal.acceptance = "sharry";
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -471,6 +472,7 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntrySiteTeamRoleInline {
+		property portal.acceptance = "sharry";
 		Permissions.setUpSiteTeamRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -865,6 +867,7 @@ definition {
 
 	@priority = "4"
 	test DeleteBlogsEntryRegRole {
+		property portal.acceptance = "sharry";
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -930,6 +933,7 @@ definition {
 
 	@priority = "4"
 	test DeleteBlogsEntryRegRoleInline {
+		property portal.acceptance = "sharry";
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1354,6 +1358,7 @@ definition {
 
 	@priority = "5"
 	test SubscribeBlogsRegRole {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 
 		Permissions.setUpRegRoleLoginUserPG(
@@ -1404,6 +1409,7 @@ definition {
 
 	@priority = "4"
 	test SubscribeBlogsRegRoleInline {
+		property portal.acceptance = "sharry";
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
 			portletName = "Blogs",
@@ -1607,6 +1613,7 @@ definition {
 
 	@priority = "5"
 	test ViewBlogsPermissionsRegRole {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesPGBlogs#ViewBlogsPermissionsRegRole";
 
@@ -1840,6 +1847,7 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsPermissionsSiteRoleInline {
+		property portal.acceptance = "sharry";
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",

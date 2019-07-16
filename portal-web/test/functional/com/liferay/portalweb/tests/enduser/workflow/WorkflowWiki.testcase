@@ -58,6 +58,7 @@ definition {
 
 	@priority = "5"
 	test ApproveFrontPageUserEdit {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
@@ -150,6 +151,7 @@ definition {
 
 	@priority = "4"
 	test RejectFrontPageUserEdit {
+		property portal.acceptance = "sharry";
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

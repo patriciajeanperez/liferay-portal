@@ -83,6 +83,7 @@ definition {
 
 	@priority = "5"
 	test ViewMentionViaBlogsEntryComment {
+		property portal.acceptance = "sharry";
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",

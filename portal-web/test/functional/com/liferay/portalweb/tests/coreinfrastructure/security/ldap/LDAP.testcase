@@ -27,6 +27,7 @@ definition {
 	@description = "This is a use case for LPS-65498."
 	@priority = "5"
 	test ImportLDAPUserWithBlankPassword {
+		property portal.acceptance = "sharry";
 		property apacheds.blank.user.password.enabled = "true";
 		property apacheds.enabled = "true";
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

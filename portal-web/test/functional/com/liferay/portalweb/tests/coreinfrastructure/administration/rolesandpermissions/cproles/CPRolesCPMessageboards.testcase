@@ -75,6 +75,7 @@ definition {
 
 	@priority = "4"
 	test ViewMessageBoardsPortletSiteRole {
+		property portal.acceptance = "sharry";
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Blogs Page",
 			portletName = "Message Boards",

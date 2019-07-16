@@ -26,6 +26,7 @@ definition {
 
 	@priority = "4"
 	test AddCategorywithLocalization {
+		property portal.acceptance = "sharry";
 		property testray.component.names = "Categories,Localization";
 
 		JSONCategory.addVocabulary(

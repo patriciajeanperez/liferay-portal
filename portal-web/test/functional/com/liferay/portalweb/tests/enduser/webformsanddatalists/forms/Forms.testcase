@@ -403,6 +403,7 @@ definition {
 	@description = "This is a use case for LPS-68377."
 	@priority = "3"
 	test AddFormToUserSiteAndViewNoDuplicates {
+		property portal.acceptance = "sharry";
 		property test.name.skip.portal.instance = "Forms#AddFormToUserSiteAndViewNoDuplicates";
 		Navigator.openURL();
 

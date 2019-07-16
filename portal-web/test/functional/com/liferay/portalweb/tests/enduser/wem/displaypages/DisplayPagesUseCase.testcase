@@ -53,6 +53,7 @@ definition {
 	@description = "This is a test for LPS-90999. A user with permissions has access to edit the web content article or display page while viewing the article through its display page."
 	@priority = "5"
 	test EditWhenViewingInDisplayPageAsUser {
+		property portal.acceptance = "sharry";
 		task ("Add a display page with fragments mapped to Basic Web Content") {
 			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 

@@ -350,6 +350,7 @@ definition {
 	@priority = "4"
 	test LocalizeDefaultSiteTemplates {
 		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeDefaultSiteTemplates";
+		property portal.acceptance = "sharry";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",

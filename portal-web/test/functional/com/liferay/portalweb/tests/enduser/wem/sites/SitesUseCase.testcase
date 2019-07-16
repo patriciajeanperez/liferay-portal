@@ -690,6 +690,7 @@ definition {
 
 	@priority = "3"
 	test SiteFriendlyURLLayoutImporter {
+		property portal.acceptance = "sharry";
 		property testray.component.names = "Site Administration";
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -785,6 +786,7 @@ definition {
 
 	@priority = "3"
 	test SitesDeactivated {
+		property portal.acceptance = "sharry";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDeactivated";
 		property testray.component.names = "Site Administration";
 
@@ -897,6 +899,7 @@ definition {
 
 	@priority = "4"
 	test SitesDemoSiteManagement {
+		property portal.acceptance = "sharry";
 		property portal.release = "false";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
 		property testray.component.names = "Site Administration,Site Pages Administration";
@@ -1099,6 +1102,7 @@ definition {
 
 	@priority = "4"
 	test SiteTeamsPermissions {
+		property portal.acceptance = "sharry";
 		property testray.component.names = "Permissions,Site Administration";
 
 		ProductMenu.gotoPortlet(

@@ -65,6 +65,7 @@ definition {
 	@description = "Assert a default user can join a normal open site"
 	@priority = "4"
 	test JoinSiteOpen {
+		property portal.acceptance = "sharry";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		// Create an open site
@@ -109,6 +110,8 @@ definition {
 	@description = "Assert a default user cannot join a normal private site"
 	@priority = "5"
 	test JoinSitePrivateNo {
+		property portal.acceptance = "sharry";
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 

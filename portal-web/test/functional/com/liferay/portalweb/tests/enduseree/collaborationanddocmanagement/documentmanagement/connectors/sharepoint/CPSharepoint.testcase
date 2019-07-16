@@ -99,6 +99,7 @@ definition {
 
 	@priority = "4"
 	test CheckinDocument {
+		property portal.acceptance = "sharry";
 		property test.name.skip.portal.instance = "CPSharepoint#CheckinDocument";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");

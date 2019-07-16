@@ -36,6 +36,7 @@ definition {
 
 	@priority = "5"
 	test AddFolderSiteRoleDefaultPermission {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 
 		Permissions.setUpSiteRoleCP(
@@ -493,6 +494,7 @@ definition {
 
 	@priority = "5"
 	test AddWebContentSiteRoleDefinePermission {
+		property portal.acceptance = "sharry";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesCPWebcontent#AddWebContentSiteRoleDefinePermission";
 

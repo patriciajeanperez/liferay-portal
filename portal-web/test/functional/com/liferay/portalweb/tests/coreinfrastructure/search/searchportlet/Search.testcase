@@ -133,6 +133,7 @@ definition {
 	@description = "This is a use case for LPS-92008."
 	@priority = "3"
 	test AssertGuestCannotSeeEmptySearchWidgets {
+		property portal.acceptance = "sharry";
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Search Page");

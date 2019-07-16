@@ -815,6 +815,7 @@ definition {
 
 	@priority = "4"
 	test SearchDynamicDataListsRecordsAsUserWithNoPermissions {
+		property portal.acceptance = "sharry";
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

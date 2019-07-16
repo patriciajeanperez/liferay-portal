@@ -237,6 +237,7 @@ definition {
 	@description = "This is a use case for LPS-58754"
 	@priority = "2"
 	test WithdrawWorkflowSubmissionFromRemovedUser {
+		property portal.acceptance = "sharry";
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

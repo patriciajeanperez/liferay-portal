@@ -865,6 +865,7 @@ definition {
 	@description = "This is a use case for LPS-96155."
 	@priority = "4"
 	test PublishReviewedPageRevision {
+		property portal.acceptance = "sharry";
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page 1");
