@@ -2,6 +2,7 @@
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades User and System Management";
@@ -14,7 +15,14 @@ definition {
 		property portal.version = "6.2.5";
 		property setup.wizard.enabled = "true";
 
-		Upgrade.resetTestUserPassword();
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@description = "This is a use case for LPS-73277."
@@ -25,7 +33,14 @@ definition {
 		property portal.version = "7.0.4";
 		property setup.wizard.enabled = "true";
 
-		Upgrade.resetTestUserPassword();
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@description = "This is a use case for LPS-73277."
@@ -35,7 +50,14 @@ definition {
 		property portal.version = "7.1.10";
 		property setup.wizard.enabled = "true";
 
-		Upgrade.resetTestUserPassword();
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@description = "This is a use case for LPS-73277."
@@ -45,7 +67,14 @@ definition {
 		property portal.version = "7.0.10.6";
 		property setup.wizard.enabled = "true";
 
-		Upgrade.resetTestUserPassword();
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@description = "This is a use case for LPS-73277."
@@ -55,7 +84,14 @@ definition {
 		property portal.version = "6.2.10.15";
 		property setup.wizard.enabled = "true";
 
-		Upgrade.resetTestUserPassword();
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@description = "This is a use case for LPS-73277."
@@ -65,7 +101,14 @@ definition {
 		property portal.version = "6.2.10.21";
 		property setup.wizard.enabled = "true";
 
-		Upgrade.resetTestUserPassword();
+		SignIn.signIn();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -77,13 +120,11 @@ definition {
 		SignIn.signIn();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Password Policies");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		Upgrade.viewAndEditUser();
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -95,13 +136,11 @@ definition {
 		SignIn.signIn();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Password Policies");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		Upgrade.viewAndEditUser();
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -113,13 +152,11 @@ definition {
 		SignIn.signIn();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Password Policies");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		Upgrade.viewAndEditUser();
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -131,13 +168,11 @@ definition {
 		SignIn.signIn();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Password Policies");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		Upgrade.viewAndEditUser();
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -149,13 +184,11 @@ definition {
 		SignIn.signIn();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Password Policies");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		Upgrade.viewAndEditUser();
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -167,13 +200,11 @@ definition {
 		SignIn.signIn();
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Users",
 			panel = "Control Panel",
-			portlet = "Search");
+			portlet = "Password Policies");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		Upgrade.viewAndEditUser();
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 }

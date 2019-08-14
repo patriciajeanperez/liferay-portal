@@ -2,6 +2,7 @@
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Forms";
@@ -9,15 +10,6 @@ definition {
 
 	setUp {
 		SignIn.signIn();
-
-		Smoke.viewWelcomePage();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
 	@priority = "5"
@@ -26,7 +18,12 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 
-		Upgrade.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -35,7 +32,12 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 
-		Upgrade.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -43,7 +45,12 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
 
-		Upgrade.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -51,7 +58,12 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
 
-		Upgrade.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -59,7 +71,12 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
@@ -67,7 +84,12 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.addForm();
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 	}
 
 	@priority = "5"
