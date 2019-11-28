@@ -35,7 +35,7 @@ definition {
 
 		Depot.addDepot(
 			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
+			depotName = "Test Depot Name1");
 
 		DepotNavigator.openDepotAdmin();
 
