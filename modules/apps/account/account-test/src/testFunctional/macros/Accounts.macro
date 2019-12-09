@@ -50,7 +50,7 @@ definition {
 		}
 	}
 
-	macro addUsers {
+	macro addUser {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Add User");
