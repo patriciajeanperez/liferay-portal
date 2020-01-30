@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_USER</td>
+	<td>//span[contains(.,'${key_userFirstName}')]//..//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHARE</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-share')]]</td>
 	<td></td>
