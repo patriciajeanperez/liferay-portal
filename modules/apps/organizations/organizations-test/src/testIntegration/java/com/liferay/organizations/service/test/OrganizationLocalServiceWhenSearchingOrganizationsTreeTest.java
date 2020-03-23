@@ -104,6 +104,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
+	@Ignore
 	@Test
 	public void testShouldIncludeSuborganizationsAsAdminUser()
 		throws Exception {
@@ -115,6 +116,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 		_assertSearch(true);
 	}
 
+	@Ignore
 	@Test
 	public void testShouldIncludeSuborganizationsWitManageSuborganizationPermission()
 		throws Exception {
@@ -132,6 +134,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 		_assertSearch(true);
 	}
 
+	@Ignore
 	@Test
 	public void testShouldNotIncludeSuborganizationsWithoutManageSuborganizationPermission()
 		throws Exception {
