@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test AddAccountUser {
 		property portal.upstream = "quarantine";
 
