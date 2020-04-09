@@ -22,6 +22,7 @@ definition {
 
 	@priority = "5"
 	test RemoveNoGuestInlineView {
+		property portal.acceptance = "testchanges";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

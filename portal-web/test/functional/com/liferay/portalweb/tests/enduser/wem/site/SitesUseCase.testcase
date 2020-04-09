@@ -1092,6 +1092,7 @@ definition {
 
 	@priority = "4"
 	test SiteTeamsPermissions {
+		property portal.acceptance = "testchanges";
 		property testray.component.names = "Permissions,Site Administration";
 
 		ProductMenu.gotoPortlet(

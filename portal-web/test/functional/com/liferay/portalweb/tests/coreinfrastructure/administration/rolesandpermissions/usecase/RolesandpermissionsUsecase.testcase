@@ -374,6 +374,7 @@ definition {
 	@priority = "3"
 	test NoGuestRolePermissionsFromPrivateLayout {
 		property custom.properties = "permissions.check.guest.enabled=false";
+		property portal.acceptance = "testchanges";
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -1635,6 +1636,8 @@ definition {
 
 	@priority = "4"
 	test TeamPermissionsSite {
+		property portal.acceptance = "testchanges";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
