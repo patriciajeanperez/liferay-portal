@@ -1165,6 +1165,47 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPostUserAccountDuplicate() throws Exception {
+		UserAccount randomUserAccount = randomUserAccount();
+
+		assertHttpResponseStatusCode(
+			200,
+			userAccountResource.postUserAccountHttpResponse(
+				randomUserAccount));
+
+		assertHttpResponseStatusCode(
+			500,
+			userAccountResource.postUserAccountHttpResponse(
+				randomUserAccount));
+	}
+
+	@Test
+	public void testPostUserAccountDuplicateScreenName() throws Exception {
+		UserAccount userAccount1 = userAccountStaticName();
+		UserAccount userAccount2 = userAccountStaticName();
+
+		assertHttpResponseStatusCode(
+			200,
+			userAccountResource.postUserAccountHttpResponse(
+				userAccount1));
+
+		assertHttpResponseStatusCode(
+			500,
+			userAccountResource.postUserAccountHttpResponse(
+				userAccount2));
+	}
+
+	@Test
+	public void testPostUserAccountInvalidEmail() throws Exception {
+		UserAccount userAccount1 = randomUserAccountInvalidEmail();
+
+		assertHttpResponseStatusCode(
+			500,
+			userAccountResource.postUserAccountHttpResponse(
+				userAccount1));
+	}
+
+	@Test
 	public void testDeleteUserAccount() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
@@ -2290,6 +2331,73 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				alternateName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				birthDate = RandomTestUtil.nextDate();
+				dashboardURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay.com";
+				familyName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				givenName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				honorificPrefix = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				honorificSuffix = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				jobTitle = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				profileURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	protected UserAccount randomUserAccountInvalidEmail() throws Exception {
+		return new UserAccount() {
+			{
+				additionalName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				alternateName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				birthDate = RandomTestUtil.nextDate();
+				dashboardURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay";
+				familyName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				givenName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				honorificPrefix = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				honorificSuffix = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				jobTitle = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				profileURL = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	protected UserAccount userAccountStaticName() throws Exception {
+		return new UserAccount() {
+			{
+				additionalName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				alternateName = "TestName";
 				birthDate = RandomTestUtil.nextDate();
 				dashboardURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
