@@ -24,6 +24,8 @@ definition {
 
 	@priority = "4"
 	test AddAccountUser {
+	property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -235,8 +237,10 @@ definition {
 			rowStatus = "Inactive");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test DeleteAccount {
+	property portal.acceptance = "true";
+
 		for (var accountNumber : list "1,2,3") {
 			ProductMenu.gotoPortlet(
 				category = "Accounts",
@@ -537,6 +541,8 @@ definition {
 
 	@priority = "5"
 	test Smoke {
+	property portal.acceptance = "true";
+
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -558,8 +564,10 @@ definition {
 			rowStatus = "Active");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test UnassignOrganizationFromAccount {
+	property portal.acceptance = "true";
+
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",
 			organizationSite = "true");
