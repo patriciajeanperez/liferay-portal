@@ -227,10 +227,10 @@ definition {
 		Page.viewInactiveRequestMessage(resource = "instance");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ViewVirtualHostPrivateSitePage {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com,www.charlie.com";
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewVirtualHostPrivateSitePage";
 
 		PortalSettings.gotoConfiguration(
