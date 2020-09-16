@@ -284,6 +284,7 @@ definition {
 
 	@priority = "4"
 	test EditRepository {
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "CPSharepoint#EditRepository";
 
 		Navigator.openURL();
