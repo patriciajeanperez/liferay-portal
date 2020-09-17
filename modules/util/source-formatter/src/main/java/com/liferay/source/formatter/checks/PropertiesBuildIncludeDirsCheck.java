@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -94,8 +95,14 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 
 		File modulesDir = new File(getPortalDir(), "modules");
 
+		List<String> buildExcludeModuleNames = getAttributeValues(
+			_BUILD_EXCLUDE_MODULE_NAMES, absolutePath);
+
 		List<String> ignoredModuleNames = _getIgnoredModuleNames(
 			SourceUtil.getRootDirName(absolutePath));
+
+		List<String> skipModuleNames = ListUtil.concat(
+			buildExcludeModuleNames, ignoredModuleNames);
 
 		Set<String> buildIncludeDirs = new TreeSet<>();
 
@@ -116,7 +123,7 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 					}
 
 					String moduleDirName = _getModuleDirName(
-						dirPath, ignoredModuleNames);
+						dirPath, skipModuleNames);
 
 					if (moduleDirName == null) {
 						return FileVisitResult.CONTINUE;
@@ -163,8 +170,7 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 		return ignoredModuleNames;
 	}
 
-	private String _getModuleDirName(
-			Path dirPath, List<String> ignoredModuleNames)
+	private String _getModuleDirName(Path dirPath, List<String> skipModuleNames)
 		throws IOException {
 
 		String absolutePath = SourceUtil.getAbsolutePath(dirPath);
@@ -175,18 +181,16 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 			return null;
 		}
 
-		String directoryPath = absolutePath.substring(x + 9);
+		for (String skipModuleName : skipModuleNames) {
+			if (absolutePath.contains(skipModuleName + "/") ||
+				absolutePath.endsWith(skipModuleName)) {
 
-		for (String ignoredModuleName : ignoredModuleNames) {
-			String modulePath = "/modules/" + directoryPath + "/";
-
-			if (modulePath.startsWith(ignoredModuleName + "/")) {
 				return null;
 			}
 		}
 
 		String[] directoryNames = StringUtil.split(
-			directoryPath, CharPool.SLASH);
+			absolutePath.substring(x + 9), CharPool.SLASH);
 
 		if (directoryNames.length < 2) {
 			return null;
@@ -206,14 +210,17 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 		return null;
 	}
 
+	private static final String _BUILD_EXCLUDE_MODULE_NAMES =
+		"buildExcludeModuleNames";
+
 	private static final String _BUILD_INCLUDE_CATEGORY_NAMES =
 		"buildIncludeCategoryNames";
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".gradle", ".idea", ".m2", ".releng", ".settings", "bin",
 		"build", "classes", "dependencies", "node_modules",
-		"node_modules_cache", "osb", "private", "sql", "src", "test",
-		"test-classes", "test-coverage", "test-results", "tmp"
+		"node_modules_cache", "private", "sql", "src", "test", "test-classes",
+		"test-coverage", "test-results", "tmp"
 	};
 
 	private static final Pattern _ignoredModuleNamePattern = Pattern.compile(

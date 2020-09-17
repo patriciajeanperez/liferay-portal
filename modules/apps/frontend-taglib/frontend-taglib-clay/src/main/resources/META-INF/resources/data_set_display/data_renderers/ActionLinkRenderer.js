@@ -14,6 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -47,6 +48,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 				currentAction = {
 					...currentAction,
 					...itemData.actions[currentAction.data.id],
+					method: currentAction.method ?? currentAction.data?.method,
 				};
 			}
 		}
@@ -84,7 +86,16 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		) {
 			event.preventDefault();
 
-			executeAsyncItemAction(formattedHref, currentAction.method);
+			executeAsyncItemAction(formattedHref, currentAction.method).then(
+				() => {
+					openToast({
+						message:
+							currentAction.data?.successMessage ||
+							Liferay.Language.get('action-completed'),
+						type: 'success',
+					});
+				}
+			);
 		}
 		else if (currentAction.onClick) {
 			event.preventDefault();
@@ -119,11 +130,10 @@ ActionLinkRenderer.propTypes = {
 	actions: PropTypes.arrayOf(
 		PropTypes.shape({
 			data: PropTypes.shape({
-				href: PropTypes.string,
 				method: PropTypes.oneOf(['get', 'delete']),
 				permissionKey: PropTypes.string,
+				successMessage: PropTypes.string,
 			}),
-			disabled: PropTypes.bool,
 			href: PropTypes.string,
 			icon: PropTypes.string,
 			method: PropTypes.oneOf(['get', 'delete']),

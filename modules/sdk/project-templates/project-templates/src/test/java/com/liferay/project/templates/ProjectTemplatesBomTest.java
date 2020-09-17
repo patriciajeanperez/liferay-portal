@@ -177,10 +177,24 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 			modulesDir, template, template + "test");
 
 		testOutput(apiProjectDir, template, workspaceDir);
+
+		if (!template.contains("war")) {
+			_resolveProject(template, workspaceDir);
+		}
+	}
+
+	private void _resolveProject(String projectName, File workspaceDir)
+		throws Exception {
+
+		executeGradle(
+			workspaceDir, _gradleDistribution,
+			":modules:" + projectName + "test" + _GRADLE_TASK_PATH_RESOLVE);
 	}
 
 	private static final String _BOM_VERSION = System.getProperty(
 		"project.templates.bom.version");
+
+	private static final String _GRADLE_TASK_PATH_RESOLVE = ":resolve";
 
 	private static URI _gradleDistribution;
 

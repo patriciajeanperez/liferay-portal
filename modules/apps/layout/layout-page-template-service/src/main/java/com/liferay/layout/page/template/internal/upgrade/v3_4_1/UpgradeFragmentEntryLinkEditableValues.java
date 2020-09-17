@@ -74,6 +74,20 @@ public class UpgradeFragmentEntryLinkEditableValues extends UpgradeProcess {
 						configurationJSONObject.remove("borderColor"));
 				}
 
+				if (Objects.equals(rendererKey, "BASIC_COMPONENT-video")) {
+					if (configurationJSONObject.has("height")) {
+						configurationJSONObject.put(
+							"videoHeight",
+							configurationJSONObject.remove("height"));
+					}
+
+					if (configurationJSONObject.has("width")) {
+						configurationJSONObject.put(
+							"videoWidth",
+							configurationJSONObject.remove("width"));
+					}
+				}
+
 				ps2.setString(1, editablesJSONObject.toString());
 				ps2.setLong(2, rs.getLong("fragmentEntryLinkId"));
 

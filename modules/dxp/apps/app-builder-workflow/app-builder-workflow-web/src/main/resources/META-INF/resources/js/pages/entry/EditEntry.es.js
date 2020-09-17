@@ -16,6 +16,7 @@ import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/Contro
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
 import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
 import {getItem} from 'app-builder-web/js/utils/client.es';
+import {getLocalizedUserPreferenceValue} from 'app-builder-web/js/utils/lang.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {
@@ -33,6 +34,7 @@ import useDDMForms, {
 	useDDMFormsSubmit,
 	useDDMFormsValidation,
 } from '../../hooks/useDDMForms.es';
+import useDataLayouts from '../../hooks/useDataLayouts.es';
 import useDataRecordApps from '../../hooks/useDataRecordApps.es';
 import ReassignEntryModal from './ReassignEntryModal.es';
 
@@ -76,6 +78,7 @@ export default function EditEntry({
 		dataDefinitionId
 	);
 
+	const dataLayouts = useDataLayouts(dataLayoutIds);
 	const dataRecordApps = useDataRecordApps(
 		appId,
 		useMemo(() => [dataRecordId], [dataRecordId])
@@ -143,13 +146,8 @@ export default function EditEntry({
 				setLoading(false);
 			}
 		}
-	}, [
-		appVersion,
-		appWorkflowDefinitionId,
-		appWorkflowTasks,
-		dataRecordId,
-		isEdit,
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [appWorkflowDefinitionId, dataRecordId, isEdit]);
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
@@ -252,15 +250,35 @@ export default function EditEntry({
 	useDDMFormsSubmit(ddmForms, onSubmit);
 
 	useEffect(() => {
-		ddmForms.forEach((ddmForm) => {
-			const ddmReactForm = ddmForm.reactComponentRef.current;
+		if (dataLayoutIds.length === ddmForms.length) {
+			ddmForms.forEach((ddmForm) => {
+				const ddmReactForm = ddmForm.reactComponentRef.current;
 
-			ddmReactForm.updateEditingLanguageId({
-				editingLanguageId: userLanguageId,
-				preserveValue: true,
+				ddmReactForm.updateEditingLanguageId({
+					editingLanguageId: userLanguageId,
+					preserveValue: true,
+				});
 			});
-		});
-	}, [ddmForms, userLanguageId]);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ddmForms.length, userLanguageId]);
+
+	useEffect(() => {
+		if (dataLayoutIds.length === dataLayouts.length) {
+			dataLayouts.forEach(({id, name}) => {
+				const formName = document.getElementById(`${id}_name`);
+
+				if (formName) {
+					formName.innerText = getLocalizedUserPreferenceValue(
+						name,
+						userLanguageId,
+						defaultLanguageId
+					);
+				}
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dataLayouts.length, userLanguageId]);
 
 	useEffect(() => {
 		doFetch();

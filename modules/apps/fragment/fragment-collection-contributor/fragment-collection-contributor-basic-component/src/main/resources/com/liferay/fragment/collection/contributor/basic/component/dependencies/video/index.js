@@ -5,24 +5,26 @@ let videoContainer = null;
 let errorMessage = null;
 let loadingIndicator = null;
 
-function isPixelUnit(value) {
-	return /px$/.test(value);
-}
+let height = configuration.videoHeight ?
+	configuration.videoHeight.replace('px', '') : configuration.videoHeight;
+let width = configuration.videoWidth ?
+	configuration.videoWidth.replace('px', '') : configuration.videoWidth;
 
 function resize() {
-	content.style.width = '';
 	content.style.height = '';
+	content.style.width = '';
 
 	requestAnimationFrame(function() {
 		try {
 			const boundingClientRect = content.getBoundingClientRect();
 
-			const width = configuration.width || boundingClientRect.width;
-			const height =
-				configuration.height || width.toString().replace('px', '') * 0.5625;
+			const contentWidth = width || boundingClientRect.width;
 
-			content.style.height = isPixelUnit(height) ? height : height + 'px';
-			content.style.width = isPixelUnit(width) ? width : width + 'px';
+			const contentHeight =
+				height || contentWidth * 0.5625;
+
+			content.style.height = contentHeight + 'px';
+			content.style.width = contentWidth + 'px';
 		} catch (error) {
 			window.removeEventListener('resize', resize);
 		}
@@ -96,8 +98,8 @@ const youtubeProvider = {
 	showVideo: function(parameters) {
 		const handleAPIReady = function () {
 			const player = new YT.Player(videoContainer, {
-				height: configuration.height,
-				width: configuration.width,
+				height: height,
+				width: width,
 				videoId: parameters.videoId,
 				playerVars: {
 					autoplay: configuration.autoPlay,

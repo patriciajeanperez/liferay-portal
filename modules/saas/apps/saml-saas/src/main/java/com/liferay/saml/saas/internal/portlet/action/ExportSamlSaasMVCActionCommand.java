@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"javax.portlet.name=" + SamlPortletKeys.SAML_ADMIN,
-		"mvc.command.name=/admin/saas/saml/export"
+		"mvc.command.name=/saml/saas/admin/export"
 	},
 	service = MVCActionCommand.class
 )
@@ -155,9 +155,10 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		jsonObject.put(
-			"samlProviderConfiguration", _getSamlProviderConfiguration()
+			"samlProviderConfiguration",
+			_getSamlProviderConfigurationJSONObject()
 		).put(
-			"samlSpIdpConnections", _getSpIdpConnections(companyId)
+			"samlSpIdpConnections", _getSamlSpIdpConnectionsJSONArray(companyId)
 		);
 
 		try {
@@ -185,7 +186,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		return Base64.encode(byteArrayOutputStream.toByteArray());
 	}
 
-	private JSONObject _getSamlProviderConfiguration() {
+	private JSONObject _getSamlProviderConfigurationJSONObject() {
 		SamlProviderConfiguration samlProviderConfiguration =
 			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
@@ -232,7 +233,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		);
 	}
 
-	private JSONObject _getSpIdpConnectionExpandoValues(
+	private JSONObject _getSamlSpIdpConnectionExpandoValuesJSONObject(
 		SamlSpIdpConnection samlSpIdpConnection) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -250,8 +251,8 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		return jsonObject;
 	}
 
-	private JSONArray _getSpIdpConnections(long companyId) {
-		JSONArray samlSpIdpConnectionsJsonArray =
+	private JSONArray _getSamlSpIdpConnectionsJSONArray(long companyId) {
+		JSONArray samlSpIdpConnectionsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
 		List<SamlSpIdpConnection> samlSpIdpConnectionsList =
@@ -260,7 +261,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 		for (SamlSpIdpConnection samlSpIdpConnection :
 				samlSpIdpConnectionsList) {
 
-			samlSpIdpConnectionsJsonArray.put(
+			samlSpIdpConnectionsJSONArray.put(
 				JSONUtil.put(
 					"assertionSignatureRequired",
 					samlSpIdpConnection.isAssertionSignatureRequired()
@@ -270,7 +271,8 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 					"enabled", samlSpIdpConnection.isEnabled()
 				).put(
 					"expandoValues",
-					_getSpIdpConnectionExpandoValues(samlSpIdpConnection)
+					_getSamlSpIdpConnectionExpandoValuesJSONObject(
+						samlSpIdpConnection)
 				).put(
 					"forceAuthn", samlSpIdpConnection.isForceAuthn()
 				).put(
@@ -300,7 +302,7 @@ public class ExportSamlSaasMVCActionCommand extends BaseMVCActionCommand {
 				));
 		}
 
-		return samlSpIdpConnectionsJsonArray;
+		return samlSpIdpConnectionsJSONArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

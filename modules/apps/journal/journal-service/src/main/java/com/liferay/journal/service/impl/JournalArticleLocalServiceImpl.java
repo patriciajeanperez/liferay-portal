@@ -41,6 +41,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
@@ -2017,12 +2018,13 @@ public class JournalArticleLocalServiceImpl
 		OrderByComparator<JournalArticle> orderByComparator =
 			new ArticleVersionComparator();
 
-		int[] statuses = {
-			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
-		};
-
 		List<JournalArticle> articles = journalArticlePersistence.findByR_I_S(
-			resourcePrimKey, true, statuses, 0, 1, orderByComparator);
+			resourcePrimKey, true,
+			new int[] {
+				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_IN_TRASH
+			},
+			0, 1, orderByComparator);
 
 		if (articles.isEmpty()) {
 			return null;
@@ -4205,8 +4207,18 @@ public class JournalArticleLocalServiceImpl
 				article.getGroupId(), JournalArticle.class,
 				article.getUrlTitle());
 
-		friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
-			friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+		if (friendlyURLEntry == null) {
+			return article;
+		}
+
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+
+		if (friendlyURLEntryLocalization != null) {
+			friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+				friendlyURLEntry.getFriendlyURLEntryId(), languageId);
+		}
 
 		return article;
 	}

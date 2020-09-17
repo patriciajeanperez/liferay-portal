@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="/admin/saas/saml/export" var="exportSamlUrl">
+<portlet:actionURL name="/saml/saas/admin/export" var="exportURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin" />
 </portlet:actionURL>
 
@@ -32,7 +32,7 @@
 			<liferay-ui:message key="the-saml-configuration-of-your-production-instance-will-be-completely-overwritten" />
 		</div>
 
-		<aui:form action="<%= exportSamlUrl %>" method="post" name="fm">
+		<aui:form action="<%= exportURL %>" method="post" name="fm">
 			<aui:button type="submit" value="export-saml-configuration" />
 		</aui:form>
 	</div>

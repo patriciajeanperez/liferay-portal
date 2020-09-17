@@ -215,20 +215,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 </aui:form>
 
 <aui:script>
-	function getMetalJsFormData(metalJsForm) {
-		if (!metalJsForm) {
-			return [];
-		}
-
-		var renderer = Object.values(metalJsForm.refs)[0];
-
-		return Object.values(renderer.refs).map(function (option) {
-			return {
-				key: option.fieldName,
-				value: option.value,
-			};
-		});
-	}
+	var fieldValues = [];
 
 	Liferay.componentReady(
 		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
@@ -236,8 +223,25 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 		if (!ddmForm.on) {
 			return;
 		}
-		ddmForm.on('fieldEdited', function () {
-			var fieldValues = getMetalJsFormData(ddmForm);
+		ddmForm.on('fieldEdited', function (e) {
+			var key = e.fieldInstance.fieldName;
+			var updatedItem = {
+				key: e.fieldInstance.fieldName,
+				value: e.value,
+			};
+
+			var itemFound = fieldValues.find(function (item) {
+				return item.key === key;
+			});
+
+			if (itemFound) {
+				fieldValues = fieldValues.reduce(function (acc, item) {
+					return acc.concat(item.key === key ? updatedItem : item);
+				}, []);
+			}
+			else {
+				fieldValues.push(updatedItem);
+			}
 
 			var form = window.document['<portlet:namespace />fm'];
 			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(

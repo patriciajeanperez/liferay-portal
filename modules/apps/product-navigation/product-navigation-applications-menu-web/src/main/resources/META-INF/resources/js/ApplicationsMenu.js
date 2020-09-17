@@ -22,14 +22,14 @@ import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
 import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 import '../css/ApplicationsMenu.scss';
 
-const OPEN_MENU_TITLE_TPL =
+const getOpenMenuTooltip = (keyLabel) =>
 	`<div>${Liferay.Language.get('open-menu')}</div>` +
 	'<kbd class="c-kbd c-kbd-dark">' +
-	'<kbd class="c-kbd">⌘</kbd>' +
+	`<kbd class="c-kbd">${keyLabel}</kbd>` +
 	'<span class="c-kbd-separator">+</span>' +
 	'<kbd class="c-kbd">⇧</kbd>' +
 	'<span class="c-kbd-separator">+</span>' +
@@ -39,7 +39,7 @@ const OPEN_MENU_TITLE_TPL =
 const SitesPanel = ({portletNamespace, sites, virtualInstance}) => {
 	return (
 		<div className="applications-menu-sites c-p-3 c-px-md-4">
-			<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0">
+			<h2 className="applications-menu-sites-label c-mt-2 c-mt-md-0 text-uppercase">
 				{Liferay.Language.get('sites')}
 			</h2>
 
@@ -391,6 +391,12 @@ const ApplicationsMenu = ({
 		onClose: () => setVisible(false),
 	});
 
+	const buttonTitle = useMemo(() => {
+		const keyLabel = Liferay.Browser.isMac() ? '⌘' : 'Ctrl';
+
+		return getOpenMenuTooltip(keyLabel);
+	}, []);
+
 	useEventListener(
 		'keydown',
 		(event) => {
@@ -473,7 +479,7 @@ const ApplicationsMenu = ({
 				onMouseOver={fetchCategories}
 				small
 				symbol="grid"
-				title={OPEN_MENU_TITLE_TPL}
+				title={buttonTitle}
 			/>
 		</>
 	);

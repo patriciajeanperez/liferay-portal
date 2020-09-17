@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML OpenSAML Integration
 Bundle-SymbolicName: com.liferay.saml.opensaml.integration
-Bundle-Version: 4.0.18
+Bundle-Version: 4.0.19
 Export-Package: com.liferay.saml.opensaml.integration.resolver
 Import-Package:\
 	!bsh,\
@@ -34,6 +34,7 @@ Import-Package:\
 	\
 	!org.apache.axis.*,\
 	!org.apache.commons.configuration,\
+	!org.apache.commons.httpclient.*,\
 	!org.apache.commons.ssl,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\

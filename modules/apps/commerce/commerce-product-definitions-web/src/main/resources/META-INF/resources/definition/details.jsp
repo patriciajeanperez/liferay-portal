@@ -197,12 +197,8 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 			<div class="col-12">
 				<div id="item-finder-root"></div>
 
-				<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events">
-					var headers = new Headers({
-						Accept: 'application/json',
-						'Content-Type': 'application/json',
-					});
-
+				<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/index as utilities">
+					var headers = utilities.fetchParams.headers;
 					var id = <%= cpDefinitionsDisplayContext.getCPDefinitionId() %>;
 					var productId = <%= cpDefinition.getCProductId() %>;
 

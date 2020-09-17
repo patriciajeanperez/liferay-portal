@@ -1,7 +1,7 @@
 Bundle-Activator: com.liferay.portal.remote.axis.extender.internal.activator.AxisExtenderBundleActivator
 Bundle-Name: Liferay Portal Remote Axis Extender
 Bundle-SymbolicName: com.liferay.portal.remote.axis.extender
-Bundle-Version: 4.0.9
+Bundle-Version: 4.0.10
 DynamicImport-Package: com.liferay.portal.kernel.*
 Import-Package:\
 	!com.ibm.*,\
@@ -13,6 +13,7 @@ Import-Package:\
 	!javax.swing.*,\
 	\
 	!org.apache.bsf.*,\
+	!org.apache.commons.httpclient.*,\
 	!org.apache.commons.net.*,\
 	\
 	!org.exolab.castor.xml.*,\

@@ -40,13 +40,13 @@
 				{
 					"defaultValue": "",
 					"label": "Width",
-					"name": "width",
+					"name": "videoWidth",
 					"type": "text"
 				},
 				{
 					"defaultValue": "",
 					"label": "Height",
-					"name": "height",
+					"name": "videoHeight",
 					"type": "text"
 				},
 				{
