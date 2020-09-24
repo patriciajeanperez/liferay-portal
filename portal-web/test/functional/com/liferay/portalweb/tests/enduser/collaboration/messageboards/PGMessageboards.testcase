@@ -323,6 +323,7 @@ definition {
 
 	@priority = "4"
 	test AddMBThreadWithInvalidAttachmentSize {
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "PGMessageboards#AddMBThreadWithInvalidAttachmentSize";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");

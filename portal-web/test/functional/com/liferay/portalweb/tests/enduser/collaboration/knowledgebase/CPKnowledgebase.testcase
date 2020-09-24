@@ -243,6 +243,7 @@ definition {
 
 	@priority = "3"
 	test AddKBArticleWithInvalidAttachmentSize {
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize";
 
 		SystemSettings.openSystemSettingsAdmin();
