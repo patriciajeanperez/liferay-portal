@@ -53,12 +53,6 @@ public class StyleBookPanelApp extends BasePanelApp {
 			return false;
 		}
 
-		if (_stagingGroupHelper.isLocalLiveGroup(group) ||
-			_stagingGroupHelper.isRemoteLiveGroup(group)) {
-
-			return false;
-		}
-
 		return super.isShow(permissionChecker, group);
 	}
 

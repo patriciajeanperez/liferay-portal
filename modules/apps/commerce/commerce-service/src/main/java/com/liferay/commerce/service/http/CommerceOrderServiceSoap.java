@@ -1117,6 +1117,11 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement.
+	 See CommercePaymentEngine.updateOrderPaymentStatus.
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderSoap
 			updatePaymentStatus(long commerceOrderId, int paymentStatus)
 		throws RemoteException {
@@ -1136,6 +1141,11 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement.
+	 See CommercePaymentEngine.updateOrderPaymentStatus.
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderSoap
 			updatePaymentStatusAndTransactionId(
 				long commerceOrderId, int paymentStatus, String transactionId)

@@ -58,6 +58,10 @@ public class VariableNameCheck extends BaseCheck {
 
 		String name = _getVariableName(detailAST);
 
+		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+			_checkTypo(detailAST, name);
+		}
+
 		_checkCaps(detailAST, name);
 		_checkIsVariableName(detailAST, name);
 
@@ -77,7 +81,7 @@ public class VariableNameCheck extends BaseCheck {
 				_checkExceptionVariableName(detailAST, name, typeName);
 				_checkInstanceVariableName(detailAST, name, typeName);
 				_checkTypeName(detailAST, name, typeName);
-				_checkTypo(detailAST, name, typeName);
+				_checkTypo(detailAST, name, typeName, true);
 			}
 		}
 
@@ -124,7 +128,7 @@ public class VariableNameCheck extends BaseCheck {
 			}
 
 			if (methodName.matches("get[A-Z].*")) {
-				_checkTypo(detailAST, name, methodName.substring(3));
+				_checkTypo(detailAST, name, methodName.substring(3), false);
 			}
 		}
 	}
@@ -478,13 +482,51 @@ public class VariableNameCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkTypo(DetailAST detailAST, String variableName) {
+		List<DetailAST> stringLiteralDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.STRING_LITERAL);
+
+		for (DetailAST stringLiteralDetailAST : stringLiteralDetailASTList) {
+			String expectedVariableName = _getExpectedVariableName(
+				stringLiteralDetailAST.getText());
+
+			if (SourceUtil.hasTypo(
+					StringUtil.toLowerCase(variableName),
+					StringUtil.toLowerCase(expectedVariableName))) {
+
+				log(
+					detailAST, _MSG_TYPO_VARIABLE, variableName,
+					expectedVariableName);
+			}
+		}
+	}
+
 	private void _checkTypo(
-		DetailAST detailAST, String variableName, String typeName) {
+		DetailAST detailAST, String variableName, String typeName,
+		boolean checkCaseSensitive) {
 
 		if (StringUtil.isUpperCase(variableName) ||
 			typeName.contains(StringPool.UNDERLINE)) {
 
 			return;
+		}
+
+		if (checkCaseSensitive && StringUtil.endsWith(variableName, typeName) &&
+			!variableName.endsWith(typeName)) {
+
+			String variableEnding = variableName.substring(
+				variableName.length() - typeName.length());
+
+			if (Character.isUpperCase(typeName.charAt(0)) &&
+				Character.isUpperCase(variableEnding.charAt(0))) {
+
+				log(
+					detailAST, _MSG_TYPO_VARIABLE, variableName,
+					StringUtil.replaceLast(
+						variableName, variableEnding, typeName));
+
+				return;
+			}
 		}
 
 		List<String> allowedVariableNames = getAttributeValues(
@@ -608,6 +650,33 @@ public class VariableNameCheck extends BaseCheck {
 
 				return detailAST;
 			}
+		}
+
+		return null;
+	}
+
+	private String _getExpectedVariableName(String literalString) {
+		String s = literalString.substring(1, literalString.length() - 1);
+
+		if (s.matches("_?[a-z][A-Za-z0-9]+")) {
+			return StringUtil.removeChar(s, '_');
+		}
+
+		if (s.matches("[A-Z0-9_]+")) {
+			return TextFormatter.format(
+				StringUtil.replace(StringUtil.toLowerCase(s), '_', '-'),
+				TextFormatter.M);
+		}
+
+		if (s.matches("[A-Z][A-Za-z0-9]+")) {
+			return TextFormatter.format(s, TextFormatter.L);
+		}
+
+		if (s.matches("[a-z0-9 ._-]+")) {
+			return TextFormatter.format(
+				StringUtil.replace(
+					s, new char[] {'_', ' ', '.'}, new char[] {'-', '-', '-'}),
+				TextFormatter.M);
 		}
 
 		return null;

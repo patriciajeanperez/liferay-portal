@@ -20,6 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,14 +30,18 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.type.DefaultSiteNavigationMenuItemTypeContext;
@@ -46,7 +53,9 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -243,6 +252,62 @@ public class SiteNavigationAdminDisplayContext {
 		return _searchContainer;
 	}
 
+	public Map<String, Object> getSiteNavigationContext() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"addFragmentEntryLinkCommentURL",
+			() -> {
+				PortletURL actionURL =
+					_liferayPortletResponse.createActionURL();
+
+				actionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/navigation_menu/edit_site_navigation_menu_item_parent");
+
+				actionURL.setParameter(
+					"redirect",
+					PortalUtil.getCurrentURL(_liferayPortletRequest));
+
+				return actionURL.toString();
+			}
+		).put(
+			"editSiteNavigationMenuItemURL",
+			() -> {
+				PortletURL renderURL =
+					_liferayPortletResponse.createRenderURL();
+
+				renderURL.setParameter(
+					"mvcPath", "/edit_site_navigation_menu_item.jsp");
+
+				renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				return renderURL.toString();
+			}
+		).put(
+			"editSiteNavigationMenuSettingsURL",
+			() -> {
+				PortletURL renderURL =
+					_liferayPortletResponse.createRenderURL();
+
+				renderURL.setParameter(
+					"mvcPath", "/site_navigation_menu_settings.jsp");
+
+				renderURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+				return renderURL.toString();
+			}
+		).put(
+			"id", _liferayPortletResponse.getNamespace() + "sidebar"
+		).put(
+			"redirect", PortalUtil.getCurrentURL(_liferayPortletRequest)
+		).put(
+			"siteNavigationMenuId", getSiteNavigationMenuId()
+		).put(
+			"siteNavigationMenuItems", _getSiteNavigationMenuItemsJSONArray(0)
+		).put(
+			"siteNavigationMenuName", getSiteNavigationMenuName()
+		).build();
+	}
+
 	public SiteNavigationMenu getSiteNavigationMenu() throws PortalException {
 		if (getSiteNavigationMenuId() == 0) {
 			return null;
@@ -354,6 +419,51 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return addURL.toString();
+	}
+
+	private JSONArray _getSiteNavigationMenuItemsJSONArray(
+		long parentSiteNavigationMenuItemId) {
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				getSiteNavigationMenuId(), parentSiteNavigationMenuItemId);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONArray siteNavigationMenuItemsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			long siteNavigationMenuItemId =
+				siteNavigationMenuItem.getSiteNavigationMenuItemId();
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(
+						siteNavigationMenuItem.getType());
+
+			siteNavigationMenuItemsJSONArray.put(
+				JSONUtil.put(
+					"children",
+					_getSiteNavigationMenuItemsJSONArray(
+						siteNavigationMenuItemId)
+				).put(
+					"siteNavigationMenuItemId", siteNavigationMenuItemId
+				).put(
+					"title",
+					siteNavigationMenuItemType.getTitle(
+						siteNavigationMenuItem, themeDisplay.getLocale())
+				).put(
+					"type",
+					siteNavigationMenuItemType.getSubtitle(
+						siteNavigationMenuItem, themeDisplay.getLocale())
+				));
+		}
+
+		return siteNavigationMenuItemsJSONArray;
 	}
 
 	private String _displayStyle;

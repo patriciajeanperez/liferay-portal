@@ -35,7 +35,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -147,21 +146,26 @@ public class ConfigurationEntryRetrieverImpl
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		Set<ConfigurationScreen> configurationScreens = getConfigurationScreens(
-			configurationCategory);
+		List<ConfigurationScreen> configurationScreens =
+			_configurationScreensServiceTrackerMap.getService(
+				configurationCategory);
 
-		for (ConfigurationScreen configurationScreen : configurationScreens) {
-			if (!scope.equals(configurationScreen.getScope()) ||
-				!configurationScreen.isVisible()) {
+		if (configurationScreens != null) {
+			for (ConfigurationScreen configurationScreen :
+					configurationScreens) {
 
-				continue;
+				if (!scope.equals(configurationScreen.getScope()) ||
+					!configurationScreen.isVisible()) {
+
+					continue;
+				}
+
+				ConfigurationEntry configurationEntry =
+					new ConfigurationScreenConfigurationEntry(
+						configurationScreen, locale);
+
+				configurationEntries.add(configurationEntry);
 			}
-
-			ConfigurationEntry configurationEntry =
-				new ConfigurationScreenConfigurationEntry(
-					configurationScreen, locale);
-
-			configurationEntries.add(configurationEntry);
 		}
 
 		Set<ConfigurationModel> configurationModels =
@@ -194,15 +198,6 @@ public class ConfigurationEntryRetrieverImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_configurationCategoriesServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ConfigurationCategory.class, null,
-				(serviceReference, emitter) -> {
-					ConfigurationCategory configurationCategory =
-						bundleContext.getService(serviceReference);
-
-					emitter.emit(configurationCategory.getCategorySection());
-				});
 		_configurationCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ConfigurationCategory.class, null,
@@ -235,7 +230,6 @@ public class ConfigurationEntryRetrieverImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_configurationCategoriesServiceTrackerMap.close();
 		_configurationCategoryServiceTrackerMap.close();
 		_configurationScreenServiceTrackerMap.close();
 		_configurationScreensServiceTrackerMap.close();
@@ -247,23 +241,6 @@ public class ConfigurationEntryRetrieverImpl
 
 	protected Comparator<ConfigurationEntry> getConfigurationEntryComparator() {
 		return new ConfigurationEntryComparator();
-	}
-
-	protected Set<ConfigurationScreen> getConfigurationScreens(
-		String configurationCategoryKey) {
-
-		Set<ConfigurationScreen> configurationCategoriesSet =
-			Collections.emptySet();
-
-		List<ConfigurationScreen> configurationCategories =
-			_configurationScreensServiceTrackerMap.getService(
-				configurationCategoryKey);
-
-		if (configurationCategories != null) {
-			configurationCategoriesSet = new HashSet<>(configurationCategories);
-		}
-
-		return configurationCategoriesSet;
 	}
 
 	private void _populateConfigurationCategorySectionDisplay(
@@ -315,8 +292,6 @@ public class ConfigurationEntryRetrieverImpl
 	}
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<String, List<ConfigurationCategory>>
-		_configurationCategoriesServiceTrackerMap;
 	private final Set<ServiceRegistration<ConfigurationCategory>>
 		_configurationCategoryServiceRegistrations = new HashSet<>();
 	private ServiceTrackerMap<String, ConfigurationCategory>

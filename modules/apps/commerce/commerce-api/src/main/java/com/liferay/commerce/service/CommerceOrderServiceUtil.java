@@ -577,6 +577,11 @@ public class CommerceOrderServiceUtil {
 			orderDateHour, orderDateMinute, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement.
+	 See CommercePaymentEngine.updateOrderPaymentStatus.
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
 			long commerceOrderId, int paymentStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -584,6 +589,11 @@ public class CommerceOrderServiceUtil {
 		return getService().updatePaymentStatus(commerceOrderId, paymentStatus);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement.
+	 See CommercePaymentEngine.updateOrderPaymentStatus.
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrder
 			updatePaymentStatusAndTransactionId(
 				long commerceOrderId, int paymentStatus, String transactionId)

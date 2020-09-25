@@ -456,7 +456,75 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="deploy-release-dependency-modules">
+	<macrodef name="deploy-release-dependency-modules-post-startup">
+		<sequential>
+			<get-release-dependency-modules
+				post.startup.modules.only="true"
+			/>
+
+			<for list="${release.dependency.modules}" param="release.dependency.module">
+				<sequential>
+					<if>
+						<available file="@{release.dependency.module}" />
+						<then>
+							<echo>Deploying post-startup module: @{release.dependency.module}</echo>
+
+							<gradle-execute dir="@{release.dependency.module}" forcedcacheenabled="false" task="deploy" />
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="deploy-release-dependency-modules-pre-startup">
+		<sequential>
+			<get-release-dependency-modules
+				pre.startup.modules.only="true"
+			/>
+
+			<for list="${release.dependency.modules}" param="release.dependency.module">
+				<sequential>
+					<if>
+						<available file="@{release.dependency.module}" />
+						<then>
+							<echo>Deploying pre-startup module: @{release.dependency.module}</echo>
+
+							<gradle-execute dir="@{release.dependency.module}" forcedcacheenabled="false" task="deploy" />
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="diagnose-database-start">
+		<attribute name="database.type" />
+		<attribute name="exec.result" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{database.type}" arg2="db2" />
+				<then>
+					<if>
+						<not>
+							<equals arg1="@{exec.result}" arg2="0" />
+						</not>
+						<then>
+							<exec executable="db2diag">
+								<arg line="-H 1d" />
+							</exec>
+						</then>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-release-dependency-modules">
+		<attribute default="false" name="post.startup.modules.only" />
+		<attribute default="false" name="pre.startup.modules.only" />
+
 		<sequential>
 			<beanshell>
 				<![CDATA[
@@ -465,6 +533,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					import org.apache.commons.lang.StringUtils;
 
 					String projectDir = project.getProperty("project.dir");
+
+					boolean postStartupModulesOnly = Boolean.parseBoolean("@{post.startup.modules.only}");
+					boolean preStartupModulesOnly = Boolean.parseBoolean("@{pre.startup.modules.only}");
+
+					List postStartupTestUtilModules = new ArrayList();
+
+					String testReleasePostStartupDependencyModules = project.getProperty("test.release.post.startup.dependency.modules");
+
+					if (testReleasePostStartupDependencyModules != null) {
+						postStartupTestUtilModules = Arrays.asList(testReleasePostStartupDependencyModules.split(","));
+					}
 
 					public List findFiles(File baseDir, String regex) {
 						List files = new ArrayList();
@@ -558,6 +637,18 @@ mariadb.executable=${mariadb.executable}]]></echo>
 									continue;
 								}
 
+								if (postStartupModulesOnly && !isPostStartupTestUtilModule(testUtilModule)) {
+									System.out.println("Ignoring " + testUtilModule.replace(projectDir + "/", ""));
+
+									continue;
+								}
+
+								if (preStartupModulesOnly && isPostStartupTestUtilModule(testUtilModule)) {
+									System.out.println("Ignoring " + testUtilModule.replace(projectDir + "/", ""));
+
+									continue;
+								}
+
 								testUtilModule = testUtilModule.replace(projectDir + "/", "");
 
 								testUtilModules.add(testUtilModule);
@@ -565,6 +656,16 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						}
 
 						return testUtilModules;
+					}
+
+					public boolean isPostStartupTestUtilModule(String testUtilModule) {
+						for (String postStartupTestUtilModule: postStartupTestUtilModules) {
+							if (testUtilModule.contains(postStartupTestUtilModule)) {
+								return true;
+							}
+						}
+
+						return false;
 					}
 
 					Set releaseDependentModules = new TreeSet();
@@ -580,42 +681,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					project.setProperty("release.dependency.modules", StringUtils.join(releaseDependentModules, ','));
 				]]>
 			</beanshell>
-
-			<for list="${release.dependency.modules}" param="release.dependency.module">
-				<sequential>
-					<if>
-						<available file="@{release.dependency.module}" />
-						<then>
-							<echo>Deploying @{release.dependency.module}</echo>
-
-							<gradle-execute dir="@{release.dependency.module}" forcedcacheenabled="false" task="deploy" />
-						</then>
-					</if>
-				</sequential>
-			</for>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="diagnose-database-start">
-		<attribute name="database.type" />
-		<attribute name="exec.result" />
-
-		<sequential>
-			<if>
-				<equals arg1="@{database.type}" arg2="db2" />
-				<then>
-					<if>
-						<not>
-							<equals arg1="@{exec.result}" arg2="0" />
-						</not>
-						<then>
-							<exec executable="db2diag">
-								<arg line="-H 1d" />
-							</exec>
-						</then>
-					</if>
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -2714,6 +2779,8 @@ log.sanitizer.enabled=false</echo>
 
 							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home" />
 
+							<deploy-release-dependency-modules-post-startup />
+
 							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
 								<arg value="--continue" />
 								<arg value="-Dbuild.exclude.ant.plugin=true" />
@@ -2841,7 +2908,7 @@ log.sanitizer.enabled=false</echo>
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${test.app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
 
-							<deploy-release-dependency-modules />
+							<deploy-release-dependency-modules-pre-startup />
 						</then>
 						<elseif>
 							<and>

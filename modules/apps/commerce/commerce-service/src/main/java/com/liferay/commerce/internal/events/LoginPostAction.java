@@ -48,6 +48,10 @@ public class LoginPostAction extends Action {
 
 			Cookie[] cookies = httpServletRequest.getCookies();
 
+			if (cookies == null) {
+				return;
+			}
+
 			for (Cookie cookie : cookies) {
 				String name = cookie.getName();
 

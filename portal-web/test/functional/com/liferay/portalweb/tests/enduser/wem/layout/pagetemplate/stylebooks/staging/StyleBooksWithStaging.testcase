@@ -795,12 +795,12 @@ definition {
 				value1 = "24px");
 		}
 
-		task ("Assert the Style Books portlet is not shown in Live site") {
+		task ("Assert the Style Books portlet is shown in Live site") {
 			ProductMenuHelper.openProductMenu();
 
 			ProductMenuHelper.expandCategory(category = "Design");
 
-			AssertElementNotPresent(
+			AssertVisible(
 				key_portlet = "Style Books",
 				locator1 = "ProductMenu#PORTLET");
 		}

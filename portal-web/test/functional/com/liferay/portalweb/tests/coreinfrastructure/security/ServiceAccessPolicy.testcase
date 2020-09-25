@@ -27,7 +27,7 @@ definition {
 	@priority = "5"
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "json.service.auth.token.hosts.allowed=";
-		property portal.upstream = "quarantine";
+		property custom.properties = "json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "ServiceAccessPolicy#ServiceAccessPolicySmoke";
 
 		var companyId = JSONCompany.getCompanyId();

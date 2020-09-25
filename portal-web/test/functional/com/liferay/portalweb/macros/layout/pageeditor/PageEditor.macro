@@ -80,13 +80,24 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 			if (isSet(targetFragmentName)) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_collectionName = "${collectionName}",
-					key_fragmentName = "${fragmentName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
-					value1 = "");
+				if ("${height}" == "Short") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "");
+				}
+				else if ("${height}" == "Tall") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+						key_collectionName = "${collectionName}",
+						key_fragmentName = "${fragmentName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "");
+				}
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
@@ -115,12 +126,22 @@ definition {
 				value1 = "${portletName}");
 
 			if (isSet(targetFragmentName)) {
-				DragAndDrop.javaScriptDragAndDropToBottom(
-					key_fragmentName = "${portletName}",
-					key_targetFragmentName = "${targetFragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
-					value1 = "");
+				if ("${height}" == "Short") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
+						key_portletName = "${portletName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "${portletName}");
+				}
+				else if ("${height}" == "Tall") {
+					DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
+						key_portletName = "${portletName}",
+						key_targetFragmentName = "${targetFragmentName}",
+						locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+						locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+						value1 = "${portletName}");
+				}
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
@@ -203,6 +224,66 @@ definition {
 				key_elementType = "Container",
 				key_position = "${position}",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+			PageEditor.gotoTab(tabName = "Contents");
+
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+		}
+	}
+
+	macro addElementToTab {
+		PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+
+		AssertVisible(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "${position}",
+			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		if ("${navTab}" == "Fragments") {
+			Navigator.gotoNavTab(navTab = "${navTab}");
+
+			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				key_index = "${index}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+				value1 = "");
+
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_inFragmentName = "Tabs",
+				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+		}
+		else if ("${navTab}" == "Widgets") {
+			Navigator.gotoNavTab(navTab = "${navTab}");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "${portletName}");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_index = "${index}",
+				key_portletName = "${portletName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+				value1 = "${portletName}");
+
+			Pause(locator1 = "5000");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_fragmentName = "${portletName}",
+				key_inFragmentName = "Tabs",
+				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 
 			PageEditor.gotoTab(tabName = "Contents");
 
@@ -1442,13 +1523,39 @@ definition {
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
 				value1 = "Link");
 
-			Type(
-				locator1 = "PageEditorEditableLink#URL",
-				value1 = "${url}");
+			if ("${link}" == "From Content Field") {
+				Select(
+					key_fieldLabel = "Link",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${link}");
 
-			Click(
-				key_sidebarButton = "Selection",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+				Pause(locator1 = "3000");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "${entryTitle}",
+					navItem = "${navItem}");
+
+				Select(
+					key_fieldLabel = "Field",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${field}");
+
+				PageEditor.waitForAutoSave();
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Field",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${field}");
+			}
+			else {
+				Type(
+					locator1 = "PageEditorEditableLink#URL",
+					value1 = "${url}");
+
+				Click(
+					key_sidebarButton = "Selection",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
 
 			if (isSet(target)) {
 				Select(
@@ -1458,8 +1565,6 @@ definition {
 
 				Pause(locator1 = "3000");
 			}
-
-			PageEditor.waitForAutoSave();
 		}
 
 		PageEditor.waitForAutoSave();

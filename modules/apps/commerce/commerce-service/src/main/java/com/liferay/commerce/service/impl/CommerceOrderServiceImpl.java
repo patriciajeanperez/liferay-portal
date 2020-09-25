@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -798,33 +797,30 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			orderDateHour, orderDateMinute, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement.
+	 * See CommercePaymentEngine.updateOrderPaymentStatus.
+	 */
+	@Deprecated
 	@Override
 	public CommerceOrder updatePaymentStatus(
 			long commerceOrderId, int paymentStatus)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		_commerceOrderModelResourcePermission.check(
-			permissionChecker, commerceOrderId, ActionKeys.UPDATE);
-
-		return commerceOrderLocalService.updatePaymentStatus(
-			permissionChecker.getUserId(), commerceOrderId, paymentStatus);
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement.
+	 * See CommercePaymentEngine.updateOrderPaymentStatus.
+	 */
+	@Deprecated
 	@Override
 	public CommerceOrder updatePaymentStatusAndTransactionId(
 			long commerceOrderId, int paymentStatus, String transactionId)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		_commerceOrderModelResourcePermission.check(
-			permissionChecker, commerceOrderId, ActionKeys.UPDATE);
-
-		return commerceOrderLocalService.updatePaymentStatusAndTransactionId(
-			permissionChecker.getUserId(), commerceOrderId, paymentStatus,
-			transactionId);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

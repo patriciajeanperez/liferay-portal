@@ -272,14 +272,18 @@ definition {
 		property test.name.skip.portal.instance = "WidgetPagesUseCase#SitesPrivatePagesPermissions";
 		property testray.component.names = "Permissions,Roles,Site Pages Administration,Training";
 
+		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addCommunityCP(
+		Site.addCP(
 			membershipType = "Private",
-			siteName = "Site Name");
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name",
+			siteType = "Site Template");
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
