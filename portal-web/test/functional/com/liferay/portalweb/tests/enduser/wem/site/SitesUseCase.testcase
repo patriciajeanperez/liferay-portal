@@ -35,7 +35,7 @@ definition {
 	@priority = "5"
 	test AddChildSiteFromImportedSiteTemplate {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
 		property testray.component.names = "Training";
 
@@ -155,6 +155,7 @@ definition {
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "SitesUseCase#AddOrganizationSitesAndDeactivate";
 		property testray.component.names = "Site Administration,Training,Users and Organizations";
 
@@ -281,6 +282,7 @@ definition {
 
 	@priority = "3"
 	test MySitesDropDownDoesNotShowUserOrganizationOnTop {
+		property portal.upstream = "patty";
 		property testray.component.names = "Site Administration,Users and Organization";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");

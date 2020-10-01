@@ -123,6 +123,7 @@ definition {
 
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "CPPortalSettings#EditDefaultUserAssociationsOrganizationSites";
 
 		ApplicationsMenu.gotoPortlet(

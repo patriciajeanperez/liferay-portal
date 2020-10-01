@@ -413,6 +413,7 @@ definition {
 	@priority = "4"
 	test RolesOrganizationSearch {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.upstream = "patty";
 
 		JSONRole.addOrganizationRole(roleTitle = "Roles Orgrole Name");
 
@@ -1059,6 +1060,8 @@ definition {
 	@ignore
 	@priority = "4"
 	test RolesSitesPermissionsInheritance {
+		property portal.upstream = "patty";
+
 		for (var userNumber : list "1,2,3") {
 			JSONUser.addUser(
 				userEmailAddress = "userea${userNumber}@liferay.com",

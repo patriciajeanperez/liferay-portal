@@ -32,6 +32,7 @@ definition {
 	@priority = "5"
 	test StagingOrganizations {
 		property portal.acceptance = "true";
+		property portal.upstream = "patty";
 		property test.name.skip.portal.instance = "StagingUsecaseWithOrganizatiton#StagingOrganizations";
 		property testray.component.names = "Training";
 
