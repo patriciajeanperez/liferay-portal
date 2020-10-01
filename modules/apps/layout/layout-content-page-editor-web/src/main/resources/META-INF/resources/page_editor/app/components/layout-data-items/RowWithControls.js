@@ -20,15 +20,17 @@ import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../store/index';
+import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import Row from './Row';
 
+const ROW_SIZE = 12;
+
 const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	const [resizing, setResizing] = useState(false);
 	const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
-	const [customRow, setCustomRow] = useState(false);
 
 	const canUpdateItemConfiguration = useSelector(
 		selectCanUpdateItemConfiguration
@@ -46,7 +48,7 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	);
 
 	const [setRef, itemElement] = useSetRef(ref);
-	const {modulesPerRow, verticalAlignment} = rowResponsiveConfig;
+	const {verticalAlignment} = rowResponsiveConfig;
 
 	const {height, maxWidth, minWidth, width} = item.config.styles;
 
@@ -65,12 +67,11 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 					'align-bottom': verticalAlignment === 'bottom',
 					'align-middle': verticalAlignment === 'middle',
 					empty:
-						item.config.numberOfColumns === modulesPerRow &&
-						!item.children.some(
-							(childId) =>
-								layoutData.items[childId].children.length
-						) &&
-						!height,
+						isSomeRowEmpty(
+							item,
+							layoutData,
+							selectedViewportSize
+						) && !height,
 					'page-editor__row': canUpdateItemConfiguration,
 					'page-editor__row-overlay-grid': resizing,
 				})}
@@ -79,9 +80,7 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 			>
 				<ResizeContextProvider
 					value={{
-						customRow,
 						resizing,
-						setCustomRow,
 						setResizing,
 						setUpdatedLayoutData,
 						updatedLayoutData,
@@ -93,6 +92,42 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 		</Topper>
 	);
 });
+
+/**
+ * Group children item by row and then check that if some row is empty
+ */
+function isSomeRowEmpty(item, layoutData, selectedViewportSize) {
+	const rows = groupItemsByRow(item, layoutData, selectedViewportSize);
+
+	return rows.some((row) => row.every((item) => item.children.length === 0));
+}
+
+function groupItemsByRow(item, layoutData, selectedViewportSize) {
+	const rows = [];
+	let row = [];
+	let columnSum = 0;
+
+	item.children.forEach((childId) => {
+		const child = layoutData.items[childId];
+
+		const columnSize = getResponsiveColumnSize(
+			child.config,
+			selectedViewportSize
+		);
+
+		columnSum = columnSum + columnSize;
+
+		row.push(child);
+
+		if (columnSum === ROW_SIZE) {
+			rows.push(row);
+			row = [];
+			columnSum = 0;
+		}
+	});
+
+	return rows;
+}
 
 RowWithControls.propTypes = {
 	item: getLayoutDataItemPropTypes({

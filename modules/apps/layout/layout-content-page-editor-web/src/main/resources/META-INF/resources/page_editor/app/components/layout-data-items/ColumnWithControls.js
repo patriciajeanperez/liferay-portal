@@ -24,11 +24,11 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {useIsActive} from '../Controls';
 import {useGlobalContext} from '../GlobalContext';
 import {
 	useResizeContext,
-	useSetCustomRowContext,
 	useSetResizeContext,
 	useSetUpdatedLayoutDataContext,
 	useUpdatedLayoutDataContext,
@@ -93,7 +93,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	);
 
 	const resizing = useResizeContext();
-	const setCustomRow = useSetCustomRowContext();
 	const setResizing = useSetResizeContext();
 	const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
 	const updatedLayoutData = useUpdatedLayoutDataContext();
@@ -166,7 +165,6 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 	const handleMouseDown = (event) => {
 		setColumnSelected(item);
 		setResizing(true);
-		setCustomRow(true);
 
 		let columns = null;
 		const leftColumn =
@@ -401,6 +399,16 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const firstColumnOfRow = isFirstColumnOfRow(columnIndex);
 
+	const responsiveRowConfig = getResponsiveConfig(
+		parentItem.config,
+		selectedViewportSize
+	);
+
+	const isReverseOrder =
+		responsiveRowConfig.reverseOrder &&
+		parentItem.config.numberOfColumns === 2 &&
+		responsiveRowConfig.modulesPerRow === 1;
+
 	return (
 		<TopperEmpty item={item}>
 			<Column
@@ -416,7 +424,8 @@ const ColumnWithControls = React.forwardRef(({children, item}, ref) => {
 			>
 				{(canUpdatePageStructure || canUpdateItemConfiguration) &&
 					parentItemIsActive &&
-					columnIndex !== 0 && (
+					columnIndex !== 0 &&
+					!isReverseOrder && (
 						<button
 							className={classNames(
 								'btn-primary page-editor__col__resizer',

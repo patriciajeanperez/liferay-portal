@@ -12,11 +12,6 @@
  * details.
  */
 
-import FormBuilderWithLayoutProvider from './components/FormBuilder/FormBuilderWithLayoutProvider.es';
-import RulesSupport from './components/RuleBuilder/RulesSupport.es';
-import RuleEditor from './components/RuleEditor/RuleEditor.es';
-import * as FieldSupport from './util/fieldSupport.es';
+export const DEFAULT_FIELD_NAME_REGEX = /^Field[0-9]{8}$/;
 
-export default FormBuilderWithLayoutProvider;
-
-export {FieldSupport, RuleEditor, RulesSupport};
+export const EMPTY_FIELD_REGEX = /\[\]/g;

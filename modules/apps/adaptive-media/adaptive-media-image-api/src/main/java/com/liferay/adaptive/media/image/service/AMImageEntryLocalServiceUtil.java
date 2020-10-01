@@ -355,6 +355,20 @@ public class AMImageEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the list of adaptive media image entries generated for the
+	 * file version.
+	 *
+	 * @param fileVersionId the primary key of the file version
+	 * @return the list of adaptive media image entries in the file version
+	 */
+	public static java.util.List
+		<com.liferay.adaptive.media.image.model.AMImageEntry> getAMImageEntries(
+			long fileVersionId) {
+
+		return getService().getAMImageEntries(fileVersionId);
+	}
+
+	/**
 	 * Returns all the am image entries matching the UUID and company.
 	 *
 	 * @param uuid the UUID of the am image entries

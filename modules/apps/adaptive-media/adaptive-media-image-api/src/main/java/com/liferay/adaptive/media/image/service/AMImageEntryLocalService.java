@@ -302,6 +302,16 @@ public interface AMImageEntryLocalService
 	public List<AMImageEntry> getAMImageEntries(int start, int end);
 
 	/**
+	 * Returns the list of adaptive media image entries generated for the
+	 * file version.
+	 *
+	 * @param fileVersionId the primary key of the file version
+	 * @return the list of adaptive media image entries in the file version
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AMImageEntry> getAMImageEntries(long fileVersionId);
+
+	/**
 	 * Returns all the am image entries matching the UUID and company.
 	 *
 	 * @param uuid the UUID of the am image entries

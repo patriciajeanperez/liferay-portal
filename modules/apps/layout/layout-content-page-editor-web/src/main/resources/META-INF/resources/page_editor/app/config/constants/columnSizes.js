@@ -12,11 +12,32 @@
  * details.
  */
 
-import FormBuilderWithLayoutProvider from './components/FormBuilder/FormBuilderWithLayoutProvider.es';
-import RulesSupport from './components/RuleBuilder/RulesSupport.es';
-import RuleEditor from './components/RuleEditor/RuleEditor.es';
-import * as FieldSupport from './util/fieldSupport.es';
-
-export default FormBuilderWithLayoutProvider;
-
-export {FieldSupport, RuleEditor, RulesSupport};
+export const COLUMN_SIZE_MODULE_PER_ROW_SIZES = {
+	1: {
+		1: [12],
+	},
+	2: {
+		1: [12, 12],
+		2: [6, 6],
+	},
+	3: {
+		1: [12, 12, 12],
+		3: [4, 4, 4],
+	},
+	4: {
+		1: [12, 12, 12, 12],
+		2: [6, 6, 6, 6],
+		4: [3, 3, 3, 3],
+	},
+	5: {
+		1: [12, 12, 12, 12, 12],
+		2: [6, 6, 4, 4, 4],
+		5: [2, 2, 4, 2, 2],
+	},
+	6: {
+		1: [12, 12, 12, 12, 12, 12],
+		2: [6, 6, 6, 6, 6, 6],
+		3: [4, 4, 4, 4, 4, 4],
+		6: [2, 2, 2, 2, 2, 2],
+	},
+};

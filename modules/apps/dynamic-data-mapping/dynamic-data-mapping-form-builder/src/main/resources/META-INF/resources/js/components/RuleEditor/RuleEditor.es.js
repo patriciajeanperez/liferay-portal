@@ -30,6 +30,7 @@ import {Config} from 'metal-state';
 
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import RulesSupport from '../RuleBuilder/RulesSupport.es';
 import templates from './RuleEditor.soy';
 
 const fieldOptionStructure = Config.shapeOf({
@@ -170,19 +171,6 @@ class RuleEditor extends Component {
 		return promise;
 	}
 
-	getFieldOptions(fieldName) {
-		let options = [];
-		const visitor = new PagesVisitor(this.pages);
-
-		const field = visitor.findField((field) => {
-			return field.fieldName === fieldName;
-		});
-
-		options = field ? field.options : [];
-
-		return options;
-	}
-
 	getFieldsByTypes(fields, types) {
 		return fields.filter((field) =>
 			types.some((fieldType) => field.type == fieldType)
@@ -308,7 +296,10 @@ class RuleEditor extends Component {
 
 				operators = this._getOperatorsByFieldType(dataType);
 
-				firstOperandOptions = this.getFieldOptions(fieldName);
+				firstOperandOptions = RulesSupport.getFieldOptions(
+					fieldName,
+					pages
+				);
 			}
 
 			return {
@@ -602,12 +593,6 @@ class RuleEditor extends Component {
 		});
 
 		return fields;
-	}
-
-	_getFieldType(fieldName) {
-		const pages = this.pages;
-
-		return getFieldProperty(pages, fieldName, 'type');
 	}
 
 	_getFieldTypeByFieldName(fieldName) {
@@ -1211,7 +1196,7 @@ class RuleEditor extends Component {
 	}
 
 	_prepareRuleEditor() {
-		const {rule} = this;
+		const {pages, rule} = this;
 
 		const newRule = rule;
 
@@ -1230,7 +1215,10 @@ class RuleEditor extends Component {
 			const {operands} = newCondition;
 
 			if (operands[1] && operands[1].type !== 'field') {
-				const fieldType = this._getFieldType(operands[0].value);
+				const fieldType = RulesSupport.getFieldType(
+					operands[0].value,
+					pages
+				);
 
 				if (
 					fieldType === 'checkbox_multiple' ||

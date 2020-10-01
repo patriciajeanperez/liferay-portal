@@ -298,7 +298,7 @@
 <!--DELETE_OBJECT-->
 <tr>
 	<td>DELETE_OBJECT_LABEL_CANCEL_BUTTON</td>
-	<td>//div[@class='btn-group-item']//*[contains(text(),'Cancel')]</td>
+	<td>//div[contains(@class,'modal d-block show')]//div[@class='btn-group-item']//*[contains(text(),'Cancel')]</td>
 	<td></td>
 </tr>
 
@@ -355,7 +355,7 @@
 
 <tr>
 	<td>DELETE_OBJECT_LABEL_DELETE_BUTTON</td>
-	<td>//button[contains(@class,'btn btn-primary')][contains(text(),'Delete')]</td>
+	<td>//div[contains(@class,'modal d-block show')]//button[contains(@class,'btn btn-primary')][contains(text(),'Delete')]</td>
 	<td></td>
 </tr>
 
