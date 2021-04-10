@@ -93,6 +93,7 @@ definition {
 	@priority = "5"
 	test AddPageWithPageVersioningEnabled {
 		property portal.acceptance = "true";
+		property portal.upstream = "helloworld";
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 

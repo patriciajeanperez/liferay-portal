@@ -23,6 +23,7 @@ definition {
 	@priority = "5"
 	test ConfigureLookAndFeelSettingsSinglePage {
 		property portal.acceptance = "true";
+		property portal.upstream = "helloworld";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

@@ -37,6 +37,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property portal.acceptance = "false";
+		property portal.upstream = "helloworld";
 		property testray.component.names = "Training";
 
 		Smoke.viewWelcomeContentPage();
@@ -58,6 +59,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration";
 		property osgi.module.configurations = "cacheEnabled=&quot;false&quot;";
 		property portal.smoke = "false";
+		property portal.upstream = "helloworld";
 
 		Smoke.viewWelcomeContentPage();
 
@@ -70,6 +72,7 @@ definition {
 		property database.jndi.enabled = "true";
 		property database.types = "mariadb,mysql";
 		property portal.smoke = "false";
+		property portal.upstream = "helloworld";
 
 		Smoke.viewWelcomeContentPage();
 

@@ -116,6 +116,7 @@ definition {
 
 	@priority = "5"
 	test ViewDeactivatedPortalInstance {
+		property portal.upstream = "helloworld";
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewDeactivatedPortalInstance";
 
 		ApplicationsMenu.gotoPortlet(

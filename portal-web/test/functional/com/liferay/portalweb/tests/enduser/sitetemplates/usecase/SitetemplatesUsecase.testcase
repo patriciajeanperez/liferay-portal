@@ -225,6 +225,8 @@ definition {
 	@description = "This is a use case for LPS-81629"
 	@priority = "4"
 	test PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage {
+		property portal.upstream = "helloworld";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");

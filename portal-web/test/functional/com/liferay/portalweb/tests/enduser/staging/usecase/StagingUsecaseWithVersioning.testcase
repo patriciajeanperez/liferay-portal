@@ -153,6 +153,8 @@ definition {
 	@description = "This is a use case for LPS-78292."
 	@priority = "4"
 	test PublicationWithoutReadyForPublication {
+		property portal.upstream = "helloworld";
+
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPublicPage(pageName = "Staging Test Page 2");

@@ -48,6 +48,7 @@ definition {
 	@priority = "4"
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
 		property portal.acceptance = "true";
+		property portal.upstream = "helloworld";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -113,6 +114,7 @@ definition {
 	@priority = "4"
 	test AdminCanControlWhenPropagateSiteTemplateChanges {
 		property portal.acceptance = "true";
+		property portal.upstream = "helloworld";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
