@@ -45,6 +45,55 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test AppManagerFilterAndOrder {
+		property test.name.skip.portal.instance = "AppManagement#AppManagerFilterAndOrder";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		ManagementBar.setFilterAndOrder(orderBy = "Title");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Users Admin");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Communication");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Blogs");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Utility");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Account");
+	}
+
+	@priority = "3"
+	test AppManagerLocalization {
+		property test.name.skip.portal.instance = "AppManagement#AppManagerLocalization";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(
+			currentPortalLanguages = "Spanish (Spain)",
+			defaultPortalLanguage = "Spanish (Spain)");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sistema",
+			panel = "Panel de control",
+			portlet = "Gestor de aplicaciones");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Gestor de aplicaciones");
+	}
+
 	@description = "This is a test for LPS-102506."
 	@ignore = "true"
 	@priority = "3"
@@ -61,6 +110,8 @@ definition {
 			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Users Admin");
 
 		var key_appName = "Independent Modules";
 
