@@ -813,6 +813,7 @@ definition {
 	@priority = "5"
 	test ChangingPasswordIsSuccessfulViaPasswordResetLink {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property portal.upstream = "passwordpolicies";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -1806,6 +1807,7 @@ definition {
 	@priority = "4"
 	test SpecificErrorMessageDisplaysWhenPasswordsDoNotMatch {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property portal.upstream = "passwordpolicies";
 		property test.smtp.server.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
