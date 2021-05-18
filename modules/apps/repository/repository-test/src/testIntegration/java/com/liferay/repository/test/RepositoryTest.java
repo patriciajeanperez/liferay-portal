@@ -150,10 +150,11 @@ public class RepositoryTest {
 	@Test
 	public void testDeleteGroupRepository() throws Exception {
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0],
+			StringUtil.randomString(), new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DLFileShortcutLocalServiceUtil.addFileShortcut(
@@ -367,11 +368,12 @@ public class RepositoryTest {
 			RepositoryProviderUtil.getLocalRepository(repositoryId);
 
 		FileEntry fileEntry = localRepository.addFileEntry(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			inputStream, _TEST_CONTENT.length(), new ServiceContext());
+			inputStream, _TEST_CONTENT.length(), null, null,
+			new ServiceContext());
 
 		Folder folder = localRepository.addFolder(
 			TestPropsValues.getUserId(),
@@ -380,10 +382,11 @@ public class RepositoryTest {
 			new ServiceContext());
 
 		FileEntry folderFileEntry = localRepository.addFileEntry(
-			TestPropsValues.getUserId(), folder.getFolderId(),
+			null, TestPropsValues.getUserId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			inputStream, _TEST_CONTENT.length(), new ServiceContext());
+			inputStream, _TEST_CONTENT.length(), null, null,
+			new ServiceContext());
 
 		return new long[] {
 			fileEntry.getFileEntryId(), folder.getFolderId(),

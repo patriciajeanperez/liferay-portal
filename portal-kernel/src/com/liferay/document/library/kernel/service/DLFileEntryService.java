@@ -36,6 +36,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +71,7 @@ public interface DLFileEntryService extends BaseService {
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, long, String, String,
 	 String, String, String, long, Map, File, InputStream, long,
-	 ServiceContext)}
+	 Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	public DLFileEntry addFileEntry(
@@ -86,7 +87,8 @@ public interface DLFileEntryService extends BaseService {
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	public DLFileVersion cancelCheckOut(long fileEntryId)

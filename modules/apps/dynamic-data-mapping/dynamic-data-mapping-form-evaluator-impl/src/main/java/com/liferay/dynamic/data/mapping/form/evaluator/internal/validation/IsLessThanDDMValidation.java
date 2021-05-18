@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.validation;
 
 import com.liferay.dynamic.data.mapping.form.validation.DDMValidation;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
@@ -25,19 +26,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true, property = "ddm.validation.name=is-less-than",
+	immediate = true, property = "ddm.validation.data.type=numeric",
 	service = DDMValidation.class
 )
 public class IsLessThanDDMValidation implements DDMValidation {
 
 	@Override
-	public String getDataType() {
-		return "numeric";
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "is-less-than");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				locale, getClass()),
+			"is-less-than");
 	}
 
 	@Override
@@ -47,7 +46,10 @@ public class IsLessThanDDMValidation implements DDMValidation {
 
 	@Override
 	public String getParameterMessage(Locale locale) {
-		return LanguageUtil.get(locale, "number-placeholder");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				locale, getClass()),
+			"number-placeholder");
 	}
 
 	@Override

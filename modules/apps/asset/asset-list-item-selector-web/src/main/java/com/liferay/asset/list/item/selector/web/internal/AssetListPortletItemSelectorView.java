@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -335,31 +334,26 @@ public class AssetListPortletItemSelectorView
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
-							keywords, searchContainer.getStart(),
-							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator());
-
-					assetListEntriesCount =
-						_assetListEntryService.getAssetListEntriesCount(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
-							keywords);
-				}
-				else {
-					assetListEntries =
-						_assetListEntryService.getAssetListEntries(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							themeDisplay.getScopeGroupId(), keywords,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator());
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()));
+							themeDisplay.getScopeGroupId(), keywords);
+				}
+				else {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							themeDisplay.getScopeGroupId(),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							themeDisplay.getScopeGroupId());
 				}
 			}
 			else if (Validator.isNull(
@@ -368,8 +362,7 @@ public class AssetListPortletItemSelectorView
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							keywords, itemTypes.toArray(new String[0]),
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
@@ -377,15 +370,13 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							keywords, itemTypes.toArray(new String[0]));
 				}
 				else {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							itemTypes.toArray(new String[0]),
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
@@ -393,8 +384,7 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							itemTypes.toArray(new String[0]));
 				}
 			}
@@ -402,8 +392,7 @@ public class AssetListPortletItemSelectorView
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							keywords,
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType(),
@@ -413,8 +402,7 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							keywords,
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType());
@@ -422,8 +410,7 @@ public class AssetListPortletItemSelectorView
 				else {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType(),
 							searchContainer.getStart(),
@@ -432,8 +419,7 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							PortalUtil.getCurrentAndAncestorSiteGroupIds(
-								themeDisplay.getScopeGroupId()),
+							new long[] {themeDisplay.getScopeGroupId()},
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType());
 				}

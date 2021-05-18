@@ -44,6 +44,7 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.io.File;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -163,6 +164,7 @@ public class LiferayDynamicCapabilityTest {
 								long folderId, String sourceFileName,
 								String mimeType, String title,
 								String description, String changeLog, File file,
+								Date expirationDate, Date reviewDate,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;
@@ -327,6 +329,7 @@ public class LiferayDynamicCapabilityTest {
 								long folderId, String sourceFileName,
 								String mimeType, String title,
 								String description, String changeLog, File file,
+								Date expirationDate, Date reviewDate,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;
@@ -381,6 +384,7 @@ public class LiferayDynamicCapabilityTest {
 								long folderId, String sourceFileName,
 								String mimeType, String title,
 								String description, String changeLog, File file,
+								Date expirationDate, Date reviewDate,
 								ServiceContext serviceContext) {
 
 								return fileEntry1;
@@ -411,10 +415,10 @@ public class LiferayDynamicCapabilityTest {
 		throws PortalException {
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 	}
 
 	private Map<String, Object> _getCapabilityProperties(

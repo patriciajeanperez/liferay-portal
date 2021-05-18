@@ -17,14 +17,17 @@ package com.liferay.digital.signature.internal.manager;
 import com.liferay.digital.signature.internal.http.DSHttp;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSEnvelope;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,31 +41,12 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public DSEnvelope addDSEnvelope(long groupId, DSEnvelope dsEnvelope) {
-		try {
-			dsEnvelope = _toDSEnvelope(
-				_dsHttp.post(groupId, "envelopes", _toJSONObject(dsEnvelope)));
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Added digital signature envelope ID " +
-						dsEnvelope.getDSEnvelopeId());
-			}
-
-			return dsEnvelope;
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
-	}
-
-	@Override
-	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId) {
-		DSEnvelope dsEnvelope = _toDSEnvelope(
-			_dsHttp.get(groupId, "envelopes/" + dsEnvelopeId));
+		dsEnvelope = _toDSEnvelope(
+			_dsHttp.post(groupId, "envelopes", _toJSONObject(dsEnvelope)));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Retrieved digital signature envelope ID " +
+				"Added digital signature envelope ID " +
 					dsEnvelope.getDSEnvelopeId());
 		}
 
@@ -70,34 +54,44 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	@Override
+	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId) {
+		JSONObject jsonObject = _dsHttp.get(
+			groupId,
+			StringBundler.concat(
+				"envelopes/", dsEnvelopeId, "?include=documents,recipients"));
+
+		return _toDSEnvelope(jsonObject);
+	}
+
+	@Override
 	public List<DSEnvelope> getDSEnvelopes(
 		long groupId, List<String> dsEnvelopeIds) {
 
-		// LPS-132126
+		JSONObject jsonObject = _dsHttp.get(
+			groupId,
+			StringBundler.concat(
+				"envelopes/?envelope_ids=",
+				ListUtil.toString(dsEnvelopeIds, StringPool.BLANK),
+				"&include=documents,recipients"));
 
-		// envelopes?envelopeIds=
-
-		return Collections.emptyList();
+		return JSONUtil.toList(
+			jsonObject.getJSONArray("envelopes"),
+			evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject), _log);
 	}
 
 	@Override
 	public List<DSEnvelope> getDSEnvelopes(
 		long groupId, String fromDateString) {
 
-		try {
-			JSONObject jsonObject = _dsHttp.get(
-				groupId,
-				StringBundler.concat(
-					"envelopes?from_date=", fromDateString,
-					"&include=recipients,documents&order=desc"));
+		JSONObject jsonObject = _dsHttp.get(
+			groupId,
+			StringBundler.concat(
+				"envelopes?from_date=", fromDateString,
+				"&include=recipients,documents&order=desc"));
 
-			return JSONUtil.toList(
-				jsonObject.getJSONArray("envelopes"),
-				evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject));
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		return JSONUtil.toList(
+			jsonObject.getJSONArray("envelopes"),
+			evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject), _log);
 	}
 
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {
@@ -107,14 +101,17 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 		return new DSEnvelope() {
 			{
+				createdLocalDateTime = _toLocalDateTime(
+					jsonObject.getString("createdDateTime"));
 				dsEnvelopeId = jsonObject.getString("envelopeId");
+				emailBlurb = jsonObject.getString("emailBlurb");
 				emailSubject = jsonObject.getString("emailSubject");
 				status = jsonObject.getString("status");
 			}
 		};
 	}
 
-	private JSONObject _toJSONObject(DSEnvelope dsEnvelope) throws Exception {
+	private JSONObject _toJSONObject(DSEnvelope dsEnvelope) {
 		return JSONUtil.put(
 			"documents",
 			JSONUtil.toJSONArray(
@@ -125,7 +122,8 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 					"documentId", dsDocument.getDSDocumentId()
 				).put(
 					"name", dsDocument.getName()
-				))
+				),
+				_log)
 		).put(
 			"emailBlurb", dsEnvelope.getEmailBlurb()
 		).put(
@@ -144,10 +142,26 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 						"name", dsRecipient.getName()
 					).put(
 						"recipientId", dsRecipient.getDSRecipientId()
-					)))
+					),
+					_log))
 		).put(
 			"status", dsEnvelope.getStatus()
 		);
+	}
+
+	private LocalDateTime _toLocalDateTime(String localDateTimeString) {
+		try {
+			return LocalDateTime.parse(
+				localDateTimeString,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSX"));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Invalid local date time " + localDateTimeString);
+			}
+
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

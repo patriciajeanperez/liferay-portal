@@ -17,9 +17,12 @@ package com.liferay.portal.search.internal.permission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -35,6 +38,8 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -47,6 +52,7 @@ import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilt
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -119,6 +125,7 @@ public class DefaultSearchResultPermissionFilter
 	}
 
 	protected void filterHits(Hits hits, SearchContext searchContext) {
+		Map<String, Boolean> companyScopeViewPermissions = new HashMap<>();
 		List<Document> docs = new ArrayList<>();
 		List<Document> excludeDocs = new ArrayList<>();
 		List<Float> scores = new ArrayList<>();
@@ -134,7 +141,7 @@ public class DefaultSearchResultPermissionFilter
 		for (int i = 0; i < documents.length; i++) {
 			if (_isIncludeDocument(
 					documents[i], _permissionChecker.getCompanyId(),
-					companyAdmin, status)) {
+					companyAdmin, status, companyScopeViewPermissions)) {
 
 				docs.add(documents[i]);
 				scores.add(hits.score(i));
@@ -217,8 +224,50 @@ public class DefaultSearchResultPermissionFilter
 				PropsKeys.INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR));
 	}
 
+	private Boolean _hasCompanyScopeViewPermission(String className) {
+		try {
+			ResourcePermissionLocalService resourcePermissionLocalService =
+				ResourcePermissionLocalServiceUtil.getService();
+
+			if (resourcePermissionLocalService == null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping company resource check because resource " +
+							"permission service is not available");
+				}
+
+				return false;
+			}
+
+			if (resourcePermissionLocalService.hasResourcePermission(
+					_permissionChecker.getCompanyId(), className,
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(_permissionChecker.getCompanyId()),
+					_permissionChecker.getRoleIds(
+						_permissionChecker.getUserId(), 0),
+					ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+		catch (NoSuchResourceActionException noSuchResourceActionException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No company scoped resource permissions found for class " +
+						"name " + className,
+					noSuchResourceActionException);
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return false;
+	}
+
 	private boolean _isIncludeDocument(
-		Document document, long companyId, boolean companyAdmin, int status) {
+		Document document, long companyId, boolean companyAdmin, int status,
+		Map<String, Boolean> companyScopeViewPermissions) {
 
 		long entryCompanyId = GetterUtil.getLong(
 			document.get(Field.COMPANY_ID));
@@ -232,6 +281,14 @@ public class DefaultSearchResultPermissionFilter
 		}
 
 		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+
+		boolean hasCompanyScopeViewPermission =
+			companyScopeViewPermissions.computeIfAbsent(
+				entryClassName, this::_hasCompanyScopeViewPermission);
+
+		if (hasCompanyScopeViewPermission) {
+			return true;
+		}
 
 		Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 

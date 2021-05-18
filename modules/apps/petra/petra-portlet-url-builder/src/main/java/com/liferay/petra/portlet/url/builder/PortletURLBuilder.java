@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -292,6 +293,17 @@ public class PortletURLBuilder {
 
 		@Override
 		public AfterMVCRenderCommandNameStep setMVCRenderCommandName(
+			String value, boolean allowNull) {
+
+			if (allowNull || Validator.isNotNull(value)) {
+				_setParameter("mvcRenderCommandName", value, false);
+			}
+
+			return this;
+		}
+
+		@Override
+		public AfterMVCRenderCommandNameStep setMVCRenderCommandName(
 			UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 			_setParameter("mvcRenderCommandName", valueUnsafeSupplier, false);
@@ -323,6 +335,15 @@ public class PortletURLBuilder {
 		}
 
 		@Override
+		public AfterParameterStep setParameter(
+			String name, Object value, boolean allowNullValue) {
+
+			setParameter(name, String.valueOf(value), allowNullValue);
+
+			return this;
+		}
+
+		@Override
 		public AfterParameterStep setParameter(String key, String value) {
 			_setParameter(key, value, true);
 
@@ -332,6 +353,17 @@ public class PortletURLBuilder {
 		@Override
 		public AfterParameterStep setParameter(String key, String... values) {
 			_portletURL.setParameter(key, values);
+
+			return this;
+		}
+
+		@Override
+		public AfterParameterStep setParameter(
+			String name, String value, boolean allowNullValue) {
+
+			if (allowNullValue || Validator.isNotNull(value)) {
+				_setParameter(name, value, true);
+			}
 
 			return this;
 		}
@@ -638,6 +670,9 @@ public class PortletURLBuilder {
 			String value);
 
 		public AfterMVCRenderCommandNameStep setMVCRenderCommandName(
+			String value, boolean allowNull);
+
+		public AfterMVCRenderCommandNameStep setMVCRenderCommandName(
 			UnsafeSupplier<Object, Exception> valueUnsafeSupplier);
 
 	}
@@ -655,9 +690,15 @@ public class PortletURLBuilder {
 
 		public AfterParameterStep setParameter(String key, Object value);
 
+		public AfterParameterStep setParameter(
+			String key, Object value, boolean allowNull);
+
 		public AfterParameterStep setParameter(String key, String value);
 
 		public AfterParameterStep setParameter(String key, String... values);
+
+		public AfterParameterStep setParameter(
+			String key, String value, boolean allowNull);
 
 		public AfterParameterStep setParameter(
 			String key, UnsafeSupplier<Object, Exception> valueUnsafeSupplier);

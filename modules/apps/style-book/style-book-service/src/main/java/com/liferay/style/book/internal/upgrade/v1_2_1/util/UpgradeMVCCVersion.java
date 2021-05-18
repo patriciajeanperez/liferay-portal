@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.asset.categories.item.selector.web.internal.constants;
+package com.liferay.style.book.internal.upgrade.v1_2_1.util;
 
 /**
- * @author Rubén Pulido
+ * @author Víctor Galán
  */
-public class AssetCategoryTreeNodeItemSelectorWebKeys {
+public class UpgradeMVCCVersion
+	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
 
-	public static final String
-		SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT =
-			"SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-	public static final String SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT =
-		"SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT";
+	@Override
+	protected String[] getModuleTableNames() {
+		return new String[] {"StyleBookEntryVersion"};
+	}
 
 }

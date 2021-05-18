@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.validation;
 import com.liferay.dynamic.data.mapping.form.validation.DDMValidation;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
@@ -26,19 +27,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true, property = "ddm.validation.name=is-url",
+	immediate = true, property = "ddm.validation.data.type=string",
 	service = DDMValidation.class
 )
 public class IsURLDDMValidation implements DDMValidation {
 
 	@Override
-	public String getDataType() {
-		return "string";
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "is-url");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				locale, getClass()),
+			"is-url");
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class IsURLDDMValidation implements DDMValidation {
 
 	@Override
 	public String getParameterMessage(Locale locale) {
-		return LanguageUtil.get(locale, StringPool.BLANK);
+		return StringPool.BLANK;
 	}
 
 	@Override

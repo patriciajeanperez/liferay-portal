@@ -101,12 +101,8 @@ public class PaymentProcessCommerceCheckoutStep
 				(HttpServletResponse)httpServletResponseWrapper.getResponse();
 		}
 
-		String paymentServletURL =
-			originalHttpServletResponse.encodeRedirectURL(
-				paymentProcessCheckoutStepDisplayContext.
-					getPaymentServletUrl());
-
-		String redirect = _portal.escapeRedirect(paymentServletURL);
+		String redirect = _portal.escapeRedirect(
+			paymentProcessCheckoutStepDisplayContext.getPaymentServletUrl());
 
 		if (Validator.isNotNull(redirect) &&
 			!originalHttpServletResponse.isCommitted()) {

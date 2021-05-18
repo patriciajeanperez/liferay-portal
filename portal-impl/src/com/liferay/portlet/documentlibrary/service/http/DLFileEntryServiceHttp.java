@@ -115,6 +115,7 @@ public class DLFileEntryServiceHttp {
 					 com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 						ddmFormValuesMap,
 				java.io.File file, java.io.InputStream inputStream, long size,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -127,7 +128,7 @@ public class DLFileEntryServiceHttp {
 				methodKey, externalReferenceCode, groupId, repositoryId,
 				folderId, sourceFileName, mimeType, title, description,
 				changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream,
-				size, serviceContext);
+				size, expirationDate, reviewDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -2072,7 +2073,8 @@ public class DLFileEntryServiceHttp {
 		String.class, long.class, long.class, long.class, String.class,
 		String.class, String.class, String.class, String.class, long.class,
 		java.util.Map.class, java.io.File.class, java.io.InputStream.class,
-		long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		long.class, java.util.Date.class, java.util.Date.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _cancelCheckOutParameterTypes2 =
 		new Class[] {long.class};

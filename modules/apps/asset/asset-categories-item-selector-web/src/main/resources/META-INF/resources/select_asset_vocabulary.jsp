@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (SelectAssetVocabularyDisplayContext)request.getAttribute(AssetCategoryTreeNodeItemSelectorWebKeys.SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT);
+SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (SelectAssetVocabularyDisplayContext)request.getAttribute(AssetCategoryItemSelectorWebKeys.SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT);
 %>
 
 <c:choose>
@@ -26,11 +26,9 @@ SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (Selec
 	</c:when>
 	<c:otherwise>
 		<div class="container-fluid container-fluid-max-xl p-4">
-			<c:if test="<%= selectAssetVocabularyDisplayContext.isShowInfoMessage() %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
-				</div>
-			</c:if>
+			<div class="alert alert-info">
+				<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
+			</div>
 
 			<div class="align-items-center d-flex justify-content-between">
 				<liferay-site-navigation:breadcrumb
