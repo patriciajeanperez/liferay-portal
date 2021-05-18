@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +63,14 @@ public class HashMapBuilder<K, V> extends BaseMapBuilder {
 		HashMapWrapper<K, V> hashMapWrapper = new HashMapWrapper<>();
 
 		return hashMapWrapper.put(keyUnsafeSupplier, value);
+	}
+
+	public static <K, V> HashMapWrapper<K, V> putAll(
+		Dictionary<? extends K, ? extends V> dictionary) {
+
+		HashMapWrapper<K, V> hashMapWrapper = new HashMapWrapper<>();
+
+		return hashMapWrapper.putAll(dictionary);
 	}
 
 	public static <K, V> HashMapWrapper<K, V> putAll(
@@ -114,6 +124,24 @@ public class HashMapBuilder<K, V> extends BaseMapBuilder {
 			UnsafeSupplier<K, Exception> keyUnsafeSupplier, V value) {
 
 			doPut(keyUnsafeSupplier, value);
+
+			return this;
+		}
+
+		public HashMapWrapper<K, V> putAll(
+			Dictionary<? extends K, ? extends V> dictionary) {
+
+			if (dictionary == null) {
+				return this;
+			}
+
+			Enumeration<? extends K> enumeration = dictionary.keys();
+
+			while (enumeration.hasMoreElements()) {
+				K key = enumeration.nextElement();
+
+				_hashMap.put(key, dictionary.get(key));
+			}
 
 			return this;
 		}

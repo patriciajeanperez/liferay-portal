@@ -17,15 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayContext = (SelectAssetCategoryTreeNodeDisplayContext)request.getAttribute(AssetCategoryTreeNodeItemSelectorWebKeys.SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT);
+SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayContext = (SelectAssetCategoryTreeNodeDisplayContext)request.getAttribute(AssetCategoryItemSelectorWebKeys.SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT);
 %>
 
 <div class="container-fluid container-fluid-max-xl p-4" id="<portlet:namespace />assetCategoryTreeNodeSelector">
-	<c:if test="<%= selectAssetCategoryTreeNodeDisplayContext.isShowInfoMessage() %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
-		</div>
-	</c:if>
+	<div class="alert alert-info">
+		<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
+	</div>
 
 	<div class="align-items-center d-flex justify-content-between">
 		<liferay-site-navigation:breadcrumb
@@ -36,11 +34,7 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 			cssClass="asset-category-tree-node-selector"
 			data-category-tree-node-id="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeId() %>"
 			data-category-tree-node-type="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeType() %>"
-			data-class-name="<%= AssetCategory.class.getName() %>"
-			data-class-name-id="<%= PortalUtil.getClassNameId(AssetCategory.class.getName()) %>"
-			data-class-pk="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeId() %>"
 			data-title="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeName() %>"
-			disabled="<%= selectAssetCategoryTreeNodeDisplayContext.isDisabledSelectThisLevelButton() %>"
 			displayType="primary"
 			label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'
 			small="<%= true %>"

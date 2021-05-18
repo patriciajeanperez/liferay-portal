@@ -41,6 +41,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				"setDataType('predefinedValue', getValue('dataType'))",
 				"setValidationDataType('validation', getValue('dataType'))",
 				"setValidationFieldName('validation', getValue('name'))",
+				"setVisible('characterOptions', getValue('inputMask'))",
 				"setVisible('confirmationErrorMessage', getValue('requireConfirmation'))",
 				"setVisible('confirmationLabel', getValue('requireConfirmation'))",
 				"setVisible('direction', getValue('requireConfirmation'))",
@@ -86,7 +87,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"requireConfirmation", "direction",
 								"confirmationLabel", "confirmationErrorMessage",
 								"validation", "tooltip", "inputMask",
-								"inputMaskFormat"
+								"inputMaskFormat", "characterOptions"
 							}
 						)
 					}
@@ -97,6 +98,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 )
 public interface NumericDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(label = "%character-options", type = "help_text")
+	public boolean characterOptions();
 
 	@DDMFormField(
 		dataType = "string", label = "%error-message",
@@ -129,7 +133,7 @@ public interface NumericDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%input-mask", properties = "showAsSwitcher=true",
-		visibilityExpression = "FALSE"
+		visibilityExpression = "TRUE"
 	)
 	public boolean inputMask();
 

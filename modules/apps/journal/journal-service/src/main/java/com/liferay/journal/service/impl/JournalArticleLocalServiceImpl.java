@@ -7139,6 +7139,10 @@ public class JournalArticleLocalServiceImpl
 			String articleURL = _portal.getControlPanelFullURL(
 				article.getGroupId(), portletId, null);
 
+			articleURL = _http.addParameter(
+				articleURL, _portal.getPortletNamespace(portletId) + "mvcPath",
+				"/edit_article.jsp");
+
 			articleURL = buildArticleURL(
 				articleURL, article.getGroupId(), article.getFolderId(),
 				article.getArticleId());

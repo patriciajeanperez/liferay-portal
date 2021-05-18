@@ -196,7 +196,8 @@ public class DLAppServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long repositoryId, long folderId, String sourceFileName,
 				String mimeType, String title, String description,
-				String changeLog, byte[] bytes,
+				String changeLog, byte[] bytes, java.util.Date expirationDate,
+				java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -208,7 +209,7 @@ public class DLAppServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, repositoryId, folderId,
 				sourceFileName, mimeType, title, description, changeLog, bytes,
-				serviceContext);
+				expirationDate, reviewDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -245,6 +246,7 @@ public class DLAppServiceHttp {
 				long repositoryId, long folderId, String sourceFileName,
 				String mimeType, String title, String description,
 				String changeLog, java.io.File file,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -256,7 +258,7 @@ public class DLAppServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, repositoryId, folderId,
 				sourceFileName, mimeType, title, description, changeLog, file,
-				serviceContext);
+				expirationDate, reviewDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -293,6 +295,7 @@ public class DLAppServiceHttp {
 				long repositoryId, long folderId, String sourceFileName,
 				String mimeType, String title, String description,
 				String changeLog, java.io.InputStream inputStream, long size,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -304,7 +307,7 @@ public class DLAppServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, repositoryId, folderId,
 				sourceFileName, mimeType, title, description, changeLog,
-				inputStream, size, serviceContext);
+				inputStream, size, expirationDate, reviewDate, serviceContext);
 
 			Object returnObj = null;
 
@@ -4655,17 +4658,20 @@ public class DLAppServiceHttp {
 	private static final Class<?>[] _addFileEntryParameterTypes3 = new Class[] {
 		String.class, long.class, long.class, String.class, String.class,
 		String.class, String.class, String.class, byte[].class,
+		java.util.Date.class, java.util.Date.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addFileEntryParameterTypes4 = new Class[] {
 		String.class, long.class, long.class, String.class, String.class,
 		String.class, String.class, String.class, java.io.File.class,
+		java.util.Date.class, java.util.Date.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addFileEntryParameterTypes5 = new Class[] {
 		String.class, long.class, long.class, String.class, String.class,
 		String.class, String.class, String.class, java.io.InputStream.class,
-		long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		long.class, java.util.Date.class, java.util.Date.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addFileShortcutParameterTypes6 =
 		new Class[] {

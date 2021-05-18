@@ -15,59 +15,110 @@
 package com.liferay.portal.crypto.hash.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.IOException;
+
 import java.nio.charset.StandardCharsets;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ManagedServiceFactory;
+
 /**
  * @author Carlos Sierra Andrés
  */
 @RunWith(Arquillian.class)
-public class CryptoHashTest extends BaseCryptoHashTest {
+public class CryptoHashTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(CryptoHashTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+	}
+
+	@After
+	public void tearDown() {
+		ListIterator<AutoCloseable> listIterator = _autoCloseables.listIterator(
+			_autoCloseables.size());
+
+		while (listIterator.hasPrevious()) {
+			AutoCloseable autoCloseable = listIterator.previous();
+
+			try {
+				autoCloseable.close();
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
+		}
+	}
+
 	@Test
 	public void testCryptoHashGeneratorWithConfiguration() throws Exception {
-		createFactoryConfiguration(
+		_createFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
-			new HashMapDictionary<>(
-				HashMapBuilder.<String, Object>put(
-					"crypto.hash.provider.configuration.name",
-					"test-message-digest"
-				).put(
-					"message.digest.algorithm", "SHA-256"
-				).put(
-					"salt.size", "32"
-				).build()));
+			HashMapDictionaryBuilder.<String, Object>put(
+				"crypto.hash.provider.configuration.name", "test-message-digest"
+			).put(
+				"message.digest.algorithm", "SHA-256"
+			).put(
+				"salt.size", "32"
+			).build());
 
-		byte[] randomBytes = randomBytes();
+		byte[] randomBytes = RandomTestUtil.randomBytes();
 
-		CryptoHashResponse cryptoHashResponse = callService(
-			bundleContext, CryptoHashGenerator.class,
+		CryptoHashResponse cryptoHashResponse = _callService(
+			CryptoHashGenerator.class,
 			"(crypto.hash.provider.configuration.name=test-message-digest)",
 			cryptoHashGenerator -> {
 				Assert.assertNotNull(cryptoHashGenerator);
@@ -85,34 +136,31 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 	public void testCryptoHashGeneratorWithMultipleConfigurations()
 		throws Exception {
 
-		createFactoryConfiguration(
+		_createFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
-			new HashMapDictionary<>(
-				HashMapBuilder.<String, Object>put(
-					"crypto.hash.provider.configuration.name",
-					"test-message-digest-1"
-				).put(
-					"message.digest.algorithm", "SHA-256"
-				).put(
-					"message.digest.salt.size", "32"
-				).build()));
-
-		createFactoryConfiguration(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"crypto.hash.provider.configuration.name",
+				"test-message-digest-1"
+			).put(
+				"message.digest.algorithm", "SHA-256"
+			).put(
+				"message.digest.salt.size", "32"
+			).build());
+		_createFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.bcrypt.internal." +
 				"configuration.BCryptCryptoHashProviderConfiguration",
-			new HashMapDictionary<>(
-				HashMapBuilder.<String, Object>put(
-					"bcrypt.rounds", "5"
-				).put(
-					"crypto.hash.provider.configuration.name",
-					"test-message-digest-2"
-				).build()));
+			HashMapDictionaryBuilder.<String, Object>put(
+				"bcrypt.rounds", "5"
+			).put(
+				"crypto.hash.provider.configuration.name",
+				"test-message-digest-2"
+			).build());
 
-		byte[] randomBytes = randomBytes();
+		byte[] randomBytes = RandomTestUtil.randomBytes();
 
-		CryptoHashResponse cryptoHashResponse1 = callService(
-			bundleContext, CryptoHashGenerator.class,
+		CryptoHashResponse cryptoHashResponse1 = _callService(
+			CryptoHashGenerator.class,
 			"(crypto.hash.provider.configuration.name=test-message-digest-1)",
 			cryptoHashGenerator -> {
 				Assert.assertNotNull(cryptoHashGenerator);
@@ -120,8 +168,8 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 				return cryptoHashGenerator.generate(randomBytes);
 			});
 
-		CryptoHashResponse cryptoHashResponse2 = callService(
-			bundleContext, CryptoHashGenerator.class,
+		CryptoHashResponse cryptoHashResponse2 = _callService(
+			CryptoHashGenerator.class,
 			"(&(bcrypt.rounds=5)(crypto.hash.provider.factory.name=BCrypt))",
 			cryptoHashGenerator -> {
 				Assert.assertNotNull(cryptoHashGenerator);
@@ -139,9 +187,9 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 	}
 
 	@Test
-	public void testCryptoHashGeneratorWithNoConfiguration() throws Exception {
-		callService(
-			bundleContext, CryptoHashGenerator.class,
+	public void testCryptoHashGeneratorWithNoConfigurations() throws Exception {
+		_callService(
+			CryptoHashGenerator.class,
 			"(crypto.hash.provider.configuration.name=test-message-digest)",
 			object -> {
 				Assert.assertNull(object);
@@ -152,40 +200,38 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 
 	@Test
 	public void testCryptoHashVerifierWithNoConfigurations() throws Exception {
-		createFactoryConfiguration(
+		_createFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
-			new HashMapDictionary<>(
-				HashMapBuilder.<String, Object>put(
-					"crypto.hash.provider.configuration.name",
-					"test-message-digest-1"
-				).put(
-					"message.digest.algorithm", "SHA-256"
-				).put(
-					"message.digest.salt.size", "32"
-				).build()));
+			HashMapDictionaryBuilder.<String, Object>put(
+				"crypto.hash.provider.configuration.name",
+				"test-message-digest-1"
+			).put(
+				"message.digest.algorithm", "SHA-256"
+			).put(
+				"message.digest.salt.size", "32"
+			).build());
 
-		AutoCloseable autoCloseable1 = autoCloseables.remove(
-			autoCloseables.size() - 1);
+		AutoCloseable autoCloseable1 = _autoCloseables.remove(
+			_autoCloseables.size() - 1);
 
-		createFactoryConfiguration(
+		_createFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.bcrypt.internal." +
 				"configuration.BCryptCryptoHashProviderConfiguration",
-			new HashMapDictionary<>(
-				HashMapBuilder.<String, Object>put(
-					"bcrypt.rounds", "5"
-				).put(
-					"crypto.hash.provider.configuration.name",
-					"test-message-digest-2"
-				).build()));
+			HashMapDictionaryBuilder.<String, Object>put(
+				"bcrypt.rounds", "5"
+			).put(
+				"crypto.hash.provider.configuration.name",
+				"test-message-digest-2"
+			).build());
 
-		AutoCloseable autoCloseable2 = autoCloseables.remove(
-			autoCloseables.size() - 1);
+		AutoCloseable autoCloseable2 = _autoCloseables.remove(
+			_autoCloseables.size() - 1);
 
-		byte[] randomBytes = randomBytes();
+		byte[] randomBytes = RandomTestUtil.randomBytes();
 
-		CryptoHashResponse cryptoHashResponse1 = callService(
-			bundleContext, CryptoHashGenerator.class,
+		CryptoHashResponse cryptoHashResponse1 = _callService(
+			CryptoHashGenerator.class,
 			"(crypto.hash.provider.configuration.name=test-message-digest-1)",
 			cryptoHashGenerator -> {
 				Assert.assertNotNull(cryptoHashGenerator);
@@ -193,8 +239,8 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 				return cryptoHashGenerator.generate(randomBytes);
 			});
 
-		CryptoHashResponse cryptoHashResponse2 = callService(
-			bundleContext, CryptoHashGenerator.class,
+		CryptoHashResponse cryptoHashResponse2 = _callService(
+			CryptoHashGenerator.class,
 			"(crypto.hash.provider.configuration.name=test-message-digest-2)",
 			cryptoHashGenerator -> {
 				Assert.assertNotNull(cryptoHashGenerator);
@@ -203,8 +249,8 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 					cryptoHashResponse1.getHash());
 			});
 
-		autoCloseable2.close();
 		autoCloseable1.close();
+		autoCloseable2.close();
 
 		Assert.assertTrue(
 			_cryptoHashVerifier.verify(
@@ -277,6 +323,160 @@ public class CryptoHashTest extends BaseCryptoHashTest {
 					Base64.decode(
 						"JDJhJDEwJHVxZVh5YjF1dUdHZjZ2UWtvalljU08="))));
 	}
+
+	private <S, R, E extends Throwable> R _callService(
+		Class<S> serviceClass, String filterString,
+		UnsafeFunction<S, R, E> unsafeFunction) {
+
+		ServiceReference<S>[] serviceReferences = null;
+
+		try {
+			serviceReferences =
+				(ServiceReference<S>[])_bundleContext.getAllServiceReferences(
+					serviceClass.getName(), filterString);
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			ReflectionUtil.throwException(invalidSyntaxException);
+		}
+
+		try {
+			if (serviceReferences == null) {
+				return unsafeFunction.apply(null);
+			}
+
+			if (ArrayUtil.isEmpty(serviceReferences)) {
+				return unsafeFunction.apply(null);
+			}
+		}
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
+		}
+
+		ServiceReference<S> serviceReference = serviceReferences[0];
+
+		try {
+			return unsafeFunction.apply(
+				_bundleContext.getService(serviceReference));
+		}
+		catch (Throwable throwable) {
+			ReflectionUtil.throwException(throwable);
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		return null;
+	}
+
+	private Configuration _createFactoryConfiguration(
+		String factoryPid, Dictionary<String, ?> properties) {
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		Dictionary<String, String> registrationProperties =
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID, factoryPid
+			).build();
+
+		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
+			_bundleContext.registerService(
+				ManagedServiceFactory.class,
+				new ManagedServiceFactory() {
+
+					@Override
+					public void deleted(String pid) {
+					}
+
+					@Override
+					public String getName() {
+						return "Test managed service factory for PID " +
+							factoryPid;
+					}
+
+					@Override
+					public void updated(
+						String pid, Dictionary<String, ?> updatedProperties) {
+
+						if (updatedProperties == null) {
+							return;
+						}
+
+						if (_isIncluded(properties, updatedProperties)) {
+							countDownLatch.countDown();
+						}
+					}
+
+				},
+				registrationProperties);
+
+		try {
+			ServiceReference<ConfigurationAdmin> serviceReference =
+				_bundleContext.getServiceReference(ConfigurationAdmin.class);
+
+			ConfigurationAdmin configurationAdmin = _bundleContext.getService(
+				serviceReference);
+
+			Configuration configuration = null;
+
+			try {
+				configuration = configurationAdmin.createFactoryConfiguration(
+					factoryPid, StringPool.QUESTION);
+
+				configuration.update(properties);
+
+				countDownLatch.await(5, TimeUnit.MINUTES);
+
+				return configuration;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+			catch (InterruptedException interruptedException) {
+				try {
+					configuration.delete();
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+
+				throw new RuntimeException(interruptedException);
+			}
+			finally {
+				_bundleContext.ungetService(serviceReference);
+			}
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	private boolean _isIncluded(
+		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
+
+		if (properties1.size() > properties2.size()) {
+			return false;
+		}
+
+		Enumeration<String> enumeration = properties1.keys();
+
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+
+			if (!Objects.deepEquals(
+					properties1.get(key), properties2.get(key))) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CryptoHashTest.class);
+
+	private static BundleContext _bundleContext;
+
+	private final List<AutoCloseable> _autoCloseables = new ArrayList<>();
 
 	@Inject
 	private CryptoHashVerifier _cryptoHashVerifier;

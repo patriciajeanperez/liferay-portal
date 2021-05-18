@@ -12,17 +12,37 @@
  * details.
  */
 
-package com.liferay.style.book.internal.upgrade.v1_3_0.util;
+const ACTIONS = {
+	deleteGroupOrganizations(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			submitForm(document.hrefFm, itemData.deleteGroupOrganizationsURL);
+		}
+	},
+};
+export default function propsTransformer({
+	actions,
+	portletNamespace,
+	...props
+}) {
+	return {
+		...props,
+		actions: actions.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
 
-/**
- * @author Víctor Galán
- */
-public class UpgradeMVCCVersion
-	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
+					if (action) {
+						event.preventDefault();
 
-	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {"StyleBookEntryVersion"};
-	}
-
+						ACTIONS[action](item.data, portletNamespace);
+					}
+				},
+			};
+		}),
+	};
 }

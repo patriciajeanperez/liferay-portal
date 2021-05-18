@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -120,9 +121,11 @@ public class PermissionsPortletConfigurationIcon
 			portletId = portletDisplay.getPortletResource();
 		}
 
-		boolean showPermissionsIcon = false;
-
 		Layout layout = themeDisplay.getLayout();
+
+		if (!SitesUtil.isLayoutUpdateable(layout)) {
+			return false;
+		}
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -130,9 +133,12 @@ public class PermissionsPortletConfigurationIcon
 			try {
 				if (PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(), layout, portletId,
-						ActionKeys.PERMISSIONS)) {
+						ActionKeys.PERMISSIONS) &&
+					!layout.isLayoutPrototypeLinkActive() &&
+					!layout.isTypeControlPanel() &&
+					!isEmbeddedPersonalApplicationLayout(layout)) {
 
-					showPermissionsIcon = true;
+					return true;
 				}
 			}
 			catch (PortalException portalException) {
@@ -142,24 +148,10 @@ public class PermissionsPortletConfigurationIcon
 				if (_log.isDebugEnabled()) {
 					_log.debug(portalException, portalException);
 				}
-
-				showPermissionsIcon = false;
 			}
 		}
 
-		if (layout.isLayoutPrototypeLinkActive()) {
-			showPermissionsIcon = false;
-		}
-
-		if (layout.isTypeControlPanel()) {
-			showPermissionsIcon = false;
-		}
-
-		if (isEmbeddedPersonalApplicationLayout(layout)) {
-			showPermissionsIcon = false;
-		}
-
-		return showPermissionsIcon;
+		return false;
 	}
 
 	@Override

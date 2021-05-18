@@ -51,6 +51,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addFileEntry(String, long, long, long, String, String,
 	 *             String, String, String, long, Map, File, InputStream, long,
-	 *             ServiceContext)}
+	 *             Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -83,7 +84,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return addFileEntry(
 			null, groupId, repositoryId, folderId, sourceFileName, mimeType,
 			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
-			file, inputStream, size, serviceContext);
+			file, inputStream, size, null, null, serviceContext);
 	}
 
 	@Override
@@ -92,7 +93,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -102,8 +104,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.addFileEntry(
 			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, null,
-			null, serviceContext);
+			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override

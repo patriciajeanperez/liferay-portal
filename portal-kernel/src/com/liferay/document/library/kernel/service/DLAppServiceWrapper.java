@@ -62,7 +62,7 @@ public class DLAppServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, byte[], ServiceContext)}
+	 String, String, byte[], Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -110,7 +110,7 @@ public class DLAppServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, File, ServiceContext)}
+	 String, String, File, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -159,7 +159,8 @@ public class DLAppServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, InputStream, long, ServiceContext)}
+	 String, String, InputStream, long, Date, Date,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -198,6 +199,9 @@ public class DLAppServiceWrapper
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param bytes the file's data (optionally <code>null</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null
+	 </code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -212,12 +216,14 @@ public class DLAppServiceWrapper
 			String externalReferenceCode, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, byte[] bytes,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppService.addFileEntry(
 			externalReferenceCode, repositoryId, folderId, sourceFileName,
-			mimeType, title, description, changeLog, bytes, serviceContext);
+			mimeType, title, description, changeLog, bytes, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	/**
@@ -243,6 +249,9 @@ public class DLAppServiceWrapper
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param file the file's data (optionally <code>null</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null
+	 </code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -257,12 +266,14 @@ public class DLAppServiceWrapper
 			String externalReferenceCode, long repositoryId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, java.io.File file,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppService.addFileEntry(
 			externalReferenceCode, repositoryId, folderId, sourceFileName,
-			mimeType, title, description, changeLog, file, serviceContext);
+			mimeType, title, description, changeLog, file, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	/**
@@ -289,6 +300,8 @@ public class DLAppServiceWrapper
 	 * @param changeLog the file's version change log
 	 * @param inputStream the file's data (optionally <code>null</code>)
 	 * @param size the file's size (optionally <code>0</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null</code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -304,13 +317,14 @@ public class DLAppServiceWrapper
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog,
 			java.io.InputStream inputStream, long size,
+			java.util.Date expirationDate, java.util.Date reviewDate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlAppService.addFileEntry(
 			externalReferenceCode, repositoryId, folderId, sourceFileName,
 			mimeType, title, description, changeLog, inputStream, size,
-			serviceContext);
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	/**

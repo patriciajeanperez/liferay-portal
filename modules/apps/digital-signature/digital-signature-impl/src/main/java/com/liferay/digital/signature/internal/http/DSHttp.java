@@ -44,6 +44,15 @@ public class DSHttp {
 		}
 	}
 
+	public byte[] getAsBytes(long groupId, String location) {
+		try {
+			return _invokeAsBytes(groupId, location, Http.Method.GET, null);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	public JSONObject post(
 		long groupId, String location, JSONObject bodyJSONObject) {
 
@@ -68,6 +77,21 @@ public class DSHttp {
 	}
 
 	private JSONObject _invoke(
+			long groupId, String location, Http.Method method,
+			JSONObject bodyJSONObject)
+		throws Exception {
+
+		byte[] bytes = _invokeAsBytes(
+			groupId, location, method, bodyJSONObject);
+
+		if (bytes == null) {
+			return _jsonFactory.createJSONObject();
+		}
+
+		return _jsonFactory.createJSONObject(new String(bytes));
+	}
+
+	private byte[] _invokeAsBytes(
 			long groupId, String location, Http.Method method,
 			JSONObject bodyJSONObject)
 		throws Exception {
@@ -100,7 +124,7 @@ public class DSHttp {
 				digitalSignatureConfiguration.apiAccountId(), "/", location));
 		options.setMethod(method);
 
-		return _jsonFactory.createJSONObject(_http.URLtoString(options));
+		return _http.URLtoByteArray(options);
 	}
 
 	@Reference

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.json;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collector;
 
 /**
@@ -286,6 +288,26 @@ public class JSONUtil {
 		return list.toArray((T[])Array.newInstance(clazz, 0));
 	}
 
+	public static <T> T[] toArray(
+		JSONArray jsonArray,
+		UnsafeFunction<JSONObject, T, Exception> unsafeFunction,
+		Consumer<Exception> exceptionConsumer, Class<?> clazz) {
+
+		List<T> list = toList(jsonArray, unsafeFunction, exceptionConsumer);
+
+		return list.toArray((T[])Array.newInstance(clazz, 0));
+	}
+
+	public static <T> T[] toArray(
+		JSONArray jsonArray,
+		UnsafeFunction<JSONObject, T, Exception> unsafeFunction, Log log,
+		Class<?> clazz) {
+
+		List<T> list = toList(jsonArray, unsafeFunction, log);
+
+		return list.toArray((T[])Array.newInstance(clazz, 0));
+	}
+
 	public static <T> JSONArray toJSONArray(
 			List<T> list, UnsafeFunction<T, Object, Exception> unsafeFunction)
 		throws Exception {
@@ -301,6 +323,41 @@ public class JSONUtil {
 		}
 
 		return jsonArray;
+	}
+
+	public static <T> JSONArray toJSONArray(
+		List<T> list, UnsafeFunction<T, Object, Exception> unsafeFunction,
+		Consumer<Exception> exceptionConsumer) {
+
+		JSONArray jsonArray = _createJSONArray();
+
+		if (list == null) {
+			return jsonArray;
+		}
+
+		for (T t : list) {
+			try {
+				jsonArray.put(unsafeFunction.apply(t));
+			}
+			catch (Exception exception) {
+				exceptionConsumer.accept(exception);
+			}
+		}
+
+		return jsonArray;
+	}
+
+	public static <T> JSONArray toJSONArray(
+		List<T> list, UnsafeFunction<T, Object, Exception> unsafeFunction,
+		Log log) {
+
+		return toJSONArray(
+			list, unsafeFunction,
+			exception -> {
+				if (log.isWarnEnabled()) {
+					log.warn(exception, exception);
+				}
+			});
 	}
 
 	public static <T> JSONArray toJSONArray(
@@ -321,6 +378,41 @@ public class JSONUtil {
 	}
 
 	public static <T> JSONArray toJSONArray(
+		Set<T> set, UnsafeFunction<T, Object, Exception> unsafeFunction,
+		Consumer<Exception> exceptionConsumer) {
+
+		JSONArray jsonArray = _createJSONArray();
+
+		if (set == null) {
+			return jsonArray;
+		}
+
+		for (T t : set) {
+			try {
+				jsonArray.put(unsafeFunction.apply(t));
+			}
+			catch (Exception exception) {
+				exceptionConsumer.accept(exception);
+			}
+		}
+
+		return jsonArray;
+	}
+
+	public static <T> JSONArray toJSONArray(
+		Set<T> set, UnsafeFunction<T, Object, Exception> unsafeFunction,
+		Log log) {
+
+		return toJSONArray(
+			set, unsafeFunction,
+			exception -> {
+				if (log.isWarnEnabled()) {
+					log.warn(exception, exception);
+				}
+			});
+	}
+
+	public static <T> JSONArray toJSONArray(
 			T[] array, UnsafeFunction<T, Object, Exception> unsafeFunction)
 		throws Exception {
 
@@ -335,6 +427,41 @@ public class JSONUtil {
 		}
 
 		return jsonArray;
+	}
+
+	public static <T> JSONArray toJSONArray(
+		T[] array, UnsafeFunction<T, Object, Exception> unsafeFunction,
+		Consumer<Exception> exceptionConsumer) {
+
+		JSONArray jsonArray = _createJSONArray();
+
+		if (array == null) {
+			return jsonArray;
+		}
+
+		for (T t : array) {
+			try {
+				jsonArray.put(unsafeFunction.apply(t));
+			}
+			catch (Exception exception) {
+				exceptionConsumer.accept(exception);
+			}
+		}
+
+		return jsonArray;
+	}
+
+	public static <T> JSONArray toJSONArray(
+		T[] array, UnsafeFunction<T, Object, Exception> unsafeFunction,
+		Log log) {
+
+		return toJSONArray(
+			array, unsafeFunction,
+			exception -> {
+				if (log.isWarnEnabled()) {
+					log.warn(exception, exception);
+				}
+			});
 	}
 
 	public static Map<String, JSONObject> toJSONObjectMap(
@@ -367,6 +494,42 @@ public class JSONUtil {
 		}
 
 		return values;
+	}
+
+	public static <T> List<T> toList(
+		JSONArray jsonArray,
+		UnsafeFunction<JSONObject, T, Exception> unsafeFunction,
+		Consumer<Exception> exceptionConsumer) {
+
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<T> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			try {
+				values.add(unsafeFunction.apply(jsonArray.getJSONObject(i)));
+			}
+			catch (Exception exception) {
+				exceptionConsumer.accept(exception);
+			}
+		}
+
+		return values;
+	}
+
+	public static <T> List<T> toList(
+		JSONArray jsonArray,
+		UnsafeFunction<JSONObject, T, Exception> unsafeFunction, Log log) {
+
+		return toList(
+			jsonArray, unsafeFunction,
+			exception -> {
+				if (log.isWarnEnabled()) {
+					log.warn(exception, exception);
+				}
+			});
 	}
 
 	public static long[] toLongArray(JSONArray jsonArray) {

@@ -85,7 +85,7 @@ public class DLAppServiceSoap {
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, byte[], ServiceContext)}
+	 String, String, byte[], Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.repository.model.FileEntrySoap
@@ -135,6 +135,9 @@ public class DLAppServiceSoap {
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param bytes the file's data (optionally <code>null</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null
+	 </code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -149,6 +152,7 @@ public class DLAppServiceSoap {
 				String externalReferenceCode, long repositoryId, long folderId,
 				String sourceFileName, String mimeType, String title,
 				String description, String changeLog, byte[] bytes,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -157,7 +161,7 @@ public class DLAppServiceSoap {
 				DLAppServiceUtil.addFileEntry(
 					externalReferenceCode, repositoryId, folderId,
 					sourceFileName, mimeType, title, description, changeLog,
-					bytes, serviceContext);
+					bytes, expirationDate, reviewDate, serviceContext);
 
 			return com.liferay.portal.kernel.repository.model.FileEntrySoap.
 				toSoapModel(returnValue);

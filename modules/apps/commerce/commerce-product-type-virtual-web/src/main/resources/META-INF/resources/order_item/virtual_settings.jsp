@@ -78,8 +78,8 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 						<span id="<portlet:namespace />fileEntryNameInput">
 							<c:choose>
 								<c:when test="<%= fileEntry != null %>">
-									<a href="<%= commerceVirtualOrderItemEditDisplayContext.getDownloadFileEntryURL() %>">
-										<%= fileEntry.getFileName() %>
+									<a href="<%= HtmlUtil.escapeHREF(commerceVirtualOrderItemEditDisplayContext.getDownloadFileEntryURL()) %>">
+										<%= HtmlUtil.escape(fileEntry.getFileName()) %>
 									</a>
 								</c:when>
 								<c:otherwise>
@@ -167,7 +167,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 							fileEntryRemove.classList.remove('hide');
 
 							fileEntryNameInput.innerHTML =
-								'<a>' + value.title + '</a>';
+								'<a>' + Liferay.Util.escape(value.title) + '</a>';
 						}
 					},
 				},
@@ -196,7 +196,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 				.querySelector('#lfr-virtual-order-item-button-row-message')
 				.classList.remove('hide');
 
-			fileEntryNameInput.innerHTML = '<liferay-ui:message key="none" />';
+			fileEntryNameInput.innerText = '<liferay-ui:message key="none" />';
 
 			fileEntryRemove.classList.add('hide');
 		});

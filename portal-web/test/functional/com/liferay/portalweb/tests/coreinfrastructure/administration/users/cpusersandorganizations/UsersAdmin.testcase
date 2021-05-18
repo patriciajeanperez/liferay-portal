@@ -1884,6 +1884,23 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#ALERT",
 			value1 = "Please enter the same value again.");
+  }
+
+	@priority = "3"
+	test TestRequiredFields {
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
+			FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+
+		Button.clickSave();
+
+		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
 	}
 
 	@description = "This is a use case for LPS-104643."
@@ -1932,6 +1949,15 @@ definition {
 			userFirstName = "Test",
 			userLastName = "Test",
 			userScreenName = "testscreen");
+
+		JSONUser.updateUser(
+			creatorEmailAddress = "testadmin@liferay.com",
+			creatorPassword = "test",
+			screenNameUpdate = "test",
+			userEmailAddress = "testadmin@liferay.com",
+			userEmailAddressUpdate = "test@liferay.com",
+			userFirstName = "Test",
+			userLastName = "Test");
 	}
 
 	@priority = "4"

@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,7 +104,7 @@ public class DLFileEntryModelDocumentContributor
 			if (indexContent) {
 				if (inputStream != null) {
 					try {
-						Locale defaultLocale = portal.getSiteDefaultLocale(
+						Locale defaultLocale = _portal.getSiteDefaultLocale(
 							dlFileEntry.getGroupId());
 
 						String localizedField = Field.getLocalizedName(
@@ -138,7 +137,7 @@ public class DLFileEntryModelDocumentContributor
 			String title = dlFileEntry.getTitle();
 
 			if (dlFileEntry.isInTrash()) {
-				title = trashHelper.getOriginalTitle(title);
+				title = _trashHelper.getOriginalTitle(title);
 			}
 
 			document.addText(Field.TITLE, title);
@@ -152,10 +151,12 @@ public class DLFileEntryModelDocumentContributor
 			//todo inputStream this necessary?
 			document.addText(
 				"ddmContent",
-				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
-			document.addTextSortable("extension", dlFileEntry.getExtension());
+				_extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
+			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
+			document.addTextSortable(
+				"fileExtension", dlFileEntry.getExtension());
 			document.addText("fileName", dlFileEntry.getFileName());
 			document.addTextSortable(
 				"mimeType",
@@ -165,11 +166,11 @@ public class DLFileEntryModelDocumentContributor
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
 			document.addNumber("size", dlFileEntry.getSize());
 
-			addFileEntryTypeAttributes(document, dlFileVersion);
+			_addFileEntryTypeAttributes(document, dlFileVersion);
 
 			if (dlFileEntry.isInHiddenFolder()) {
 				List<RelatedEntryIndexer> relatedEntryIndexers =
-					relatedEntryIndexerRegistry.getRelatedEntryIndexers(
+					_relatedEntryIndexerRegistry.getRelatedEntryIndexers(
 						dlFileEntry.getClassName());
 
 				if (ListUtil.isNotEmpty(relatedEntryIndexers)) {
@@ -183,7 +184,7 @@ public class DLFileEntryModelDocumentContributor
 							document);
 
 						documentHelper.setAttachmentOwnerKey(
-							portal.getClassNameId(dlFileEntry.getClassName()),
+							_portal.getClassNameId(dlFileEntry.getClassName()),
 							dlFileEntry.getClassPK());
 
 						document.addKeyword(Field.RELATED_ENTRY, true);
@@ -212,22 +213,21 @@ public class DLFileEntryModelDocumentContributor
 		}
 	}
 
-	protected void addFileEntryTypeAttributes(
-			Document document, DLFileVersion dlFileVersion)
-		throws PortalException {
+	private void _addFileEntryTypeAttributes(
+		Document document, DLFileVersion dlFileVersion) {
 
 		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
+			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
 				dlFileVersion.getFileVersionId());
 
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			try {
 				DDMFormValues ddmFormValues =
-					storageEngineManager.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId());
 
 				if (ddmFormValues != null) {
-					ddmStructureManager.addAttributes(
+					_ddmStructureManager.addAttributes(
 						dlFileEntryMetadata.getDDMStructureId(), document,
 						ddmFormValues);
 				}
@@ -240,12 +240,11 @@ public class DLFileEntryModelDocumentContributor
 		}
 	}
 
-	protected String extractDDMContent(
-			DLFileVersion dlFileVersion, Locale locale)
-		throws Exception {
+	private String _extractDDMContent(
+		DLFileVersion dlFileVersion, Locale locale) {
 
 		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
+			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
 				dlFileVersion.getFileVersionId());
 
 		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size());
@@ -253,12 +252,12 @@ public class DLFileEntryModelDocumentContributor
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			try {
 				DDMFormValues ddmFormValues =
-					storageEngineManager.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId());
 
 				if (ddmFormValues != null) {
 					sb.append(
-						ddmStructureManager.extractAttributes(
+						_ddmStructureManager.extractAttributes(
 							dlFileEntryMetadata.getDDMStructureId(),
 							ddmFormValues, locale));
 				}
@@ -273,28 +272,28 @@ public class DLFileEntryModelDocumentContributor
 		return sb.toString();
 	}
 
-	@Reference
-	protected DDMStructureManager ddmStructureManager;
-
-	@Reference
-	protected DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected RelatedEntryIndexerRegistry relatedEntryIndexerRegistry;
-
-	@Reference
-	protected StorageEngineManager storageEngineManager;
-
-	@Reference
-	protected TrashHelper trashHelper;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelDocumentContributor.class);
 
 	@Reference
+	private DDMStructureManager _ddmStructureManager;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
 	private InputStreamSanitizer _inputStreamSanitizer;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }
