@@ -1871,6 +1871,11 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
 		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
 
 		ApplicationsMenu.gotoPortlet(
