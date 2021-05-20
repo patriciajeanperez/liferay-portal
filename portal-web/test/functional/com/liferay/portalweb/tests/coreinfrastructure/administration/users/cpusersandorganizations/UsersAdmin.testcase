@@ -1831,22 +1831,6 @@ definition {
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME");
 	}
 
-	@priority = "3"
-	test TestRequiredFields {
-		User.openUsersAdmin();
-
-		LexiconEntry.gotoAdd();
-
-		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
-			FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${fieldFieldLabel}");
-		}
-
-		Button.clickSave();
-
-		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
-			Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
-		}
-
 	@description = "This is a use case for LPS-60180. This test asserts that the proper error message displays when the passwords entered in the Password Reset link do not match."
 	@priority = "4"
 	test SpecificErrorMessageDisplaysWhenPasswordsDoNotMatch {
@@ -1905,6 +1889,23 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#ALERT",
 			value1 = "Please enter the same value again.");
+	}
+
+	@priority = "3"
+	test TestRequiredFields {
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
+			FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+
+		Button.clickSave();
+
+		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
 	}
 
 	@description = "This is a use case for LPS-104643."
