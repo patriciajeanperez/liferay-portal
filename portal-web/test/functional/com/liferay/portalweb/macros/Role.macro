@@ -40,7 +40,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAssignees {
+	macro addAssignee {
 		Role._goToRoleAssigneeType(
 			assigneeType = "${assigneeType}",
 			roleTitle = "${roleTitle}");
