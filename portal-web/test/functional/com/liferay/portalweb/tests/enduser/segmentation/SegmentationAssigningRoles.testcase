@@ -75,11 +75,10 @@ definition {
 				panel = "Control Panel",
 				portlet = "Roles");
 
-			RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
-
-			RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
-
-			Role.addAssignees(assigneeName = "Segment global usersn");
+			Role.addAssignee(
+				assigneeName = "Segment global usersn",
+				assigneeType = "Segments",
+				roleTitle = "Roles Regrole Name");
 		}
 	}
 
