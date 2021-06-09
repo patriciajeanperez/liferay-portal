@@ -290,6 +290,40 @@ definition {
 	}
 
 	@priority = "4"
+	test RolesCanBeOrderedByTitle {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		AssertElementPresent(
+			key_itemName = "Administrator",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "Administrator");
+
+		AssertElementNotPresent(
+			key_itemName = "User",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "User");
+
+		ManagementBar.setFilterAndOrder(orderBy = "Title");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		AssertElementPresent(
+			key_itemName = "User",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "User");
+
+		AssertElementNotPresent(
+			key_itemName = "Administrator",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "Administrator");
+	}
+
+	@priority = "4"
 	test SegmentCanBeRemovedFromRegularRole {
 		ProductMenu.gotoSite(site = "Global");
 
