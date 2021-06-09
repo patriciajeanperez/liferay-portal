@@ -8,7 +8,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 	}
 
 	tearDown {
@@ -321,6 +321,33 @@ definition {
 			key_itemName = "Administrator",
 			locator1 = "ListGroupItem#ITEM_NAME_LINK",
 			value1 = "Administrator");
+	}
+
+	@priority = "3"
+	test RolesCanBeViewedInTableView {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		AssertTextEquals(
+			key_tableEntry = "Administrator",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
+			value1 = "Administrator");
+
+		AssertTextEquals(
+			key_columnName = "description",
+			key_tableEntry = "Administrators",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "Administrators are super users who can do anything.");
+
+		AssertTextEquals(
+			key_columnName = "assignees",
+			key_tableEntry = "Administrators",
+			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK",
+			value1 = "1");
 	}
 
 	@priority = "4"
