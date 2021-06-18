@@ -225,6 +225,64 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeAllEntriesFromAnApplication {
+
+		// TODO LRQA-50727 Anonymize all entries from an Application
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeEntriesFromAnApplicationWithHierarchy {
+
+		// TODO LRQA-50731 Data Erasure - Anonymize entries from an Application that has a hierarchy
+
+	}
+
+	@description = "LPS-77748"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAnonymizeMultipleEntriesFromAnApplication {
+
+		// TODO LRQA-50730 Anonymize multiple entries from an Application
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanAnonymizeViaInfoPanel {
+
+		// TODO LLRQA-50729 Anonymize a single entry from an Application via the info panel
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteAnExportProcess {
+
+		// TODO LRQA-50743 Delete Export
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteEntriesFromAnApplicationWithHierarchy {
+
+		// TODO LRQA-50724 Data Erasure - Delete entries from an Application that has a hierarchy
+
+	}
+
+	@description = "LPS-77748"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteMultipleEntriesFromAnApplication {
+
+		// TODO LRQA-50723 Data Erasure - Delete multiple entries from an Application (LPS-77748)
+
+	}
+
 	@priority = "5"
 	test DeleteEntryFromApplication {
 		User.logoutPG();
