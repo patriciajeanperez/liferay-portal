@@ -121,6 +121,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteSelectedEntryCP {
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete the selected items?");	
+		
+		Alert.viewSuccessMessage();
+	}
+
 	macro downloadExportedPersonalData {
 		for (var application : list "${applications}") {
 			var key_rowEntry = "${application}";
