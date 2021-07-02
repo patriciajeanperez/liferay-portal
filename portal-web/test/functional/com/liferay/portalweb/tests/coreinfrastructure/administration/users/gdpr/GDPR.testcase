@@ -342,13 +342,62 @@ definition {
 
 	}
 
-	@description = "LPS-77748"
+	@description = "This is a use case for LPS-77748. This test deletes multiple selected entries from a single application."
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteMultipleEntriesFromAnApplication {
+		User.logoutPG();
 
-		// TODO LRQA-50723 Data Erasure - Delete multiple entries from an Application (LPS-77748)
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");
+
+		User.logoutAndLoginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applications = "Documents and Media",
+			itemsCount = "4");
+
+		LexiconEntry.selectEntry(key_rowEntry = "Document_1.jpeg");
+
+		LexiconEntry.selectEntry(key_rowEntry = "Document_2.docx");
+
+		GDPR.deleteSelectedEntryCP();
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Review Data")) {
+			Navigator.gotoNavTab(navTab = "Review Data");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_applications = "Documents and Media",
+			locator1 = "DataErasure#APPLICATIONS_COUNT",
+			value1 = "Documents and Media (2)");
+
+		AssertTextEquals.assertPartialText(
+			key_itemsCount = "2",
+			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
+			value1 = "Remaining Items: 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		AssertTextNotPresent(value1 = "Document_1.jpeg");
+
+		AssertTextNotPresent(value1 = "Document_2.docx");
 	}
 
 	@description = "LRQA-50747"

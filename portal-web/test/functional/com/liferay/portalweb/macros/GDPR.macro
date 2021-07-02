@@ -126,8 +126,8 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete the selected items?");	
-		
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to delete the selected items?");
+
 		Alert.viewSuccessMessage();
 	}
 
