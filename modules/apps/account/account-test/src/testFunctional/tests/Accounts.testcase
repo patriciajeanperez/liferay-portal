@@ -101,7 +101,7 @@ definition {
 
 	@description = "This test adds a Person Account by changing the type in the dropdown upon creation."
 	@priority = "4"
-	test CanAddAPersonAccount {
+	test AddAPersonAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Applications",
