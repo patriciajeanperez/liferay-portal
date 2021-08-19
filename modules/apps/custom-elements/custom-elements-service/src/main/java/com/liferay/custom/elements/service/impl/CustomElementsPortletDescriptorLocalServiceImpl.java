@@ -89,7 +89,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = _buildSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, start, end, sort);
 
 		Indexer<CustomElementsPortletDescriptor> indexer =
@@ -101,7 +101,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 
 			List<CustomElementsPortletDescriptor>
 				customElementsPortletDescriptors =
-					_getCustomElementsPortletDescriptors(hits);
+					getCustomElementsPortletDescriptors(hits);
 
 			if (customElementsPortletDescriptors != null) {
 				return customElementsPortletDescriptors;
@@ -119,7 +119,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		Indexer<CustomElementsSource> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CustomElementsSource.class);
 
-		SearchContext searchContext = _buildSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
@@ -148,7 +148,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 			customElementsPortletDescriptor);
 	}
 
-	private SearchContext _buildSearchContext(
+	private SearchContext buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -177,8 +177,8 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		return searchContext;
 	}
 
-	private List<CustomElementsPortletDescriptor>
-			_getCustomElementsPortletDescriptors(Hits hits)
+	protected List<CustomElementsPortletDescriptor>
+			getCustomElementsPortletDescriptors(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();

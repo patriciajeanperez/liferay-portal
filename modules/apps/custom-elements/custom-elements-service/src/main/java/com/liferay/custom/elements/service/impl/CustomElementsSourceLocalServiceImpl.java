@@ -88,7 +88,7 @@ public class CustomElementsSourceLocalServiceImpl
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		SearchContext searchContext = _buildSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, start, end, sort);
 
 		Indexer<CustomElementsSource> indexer =
@@ -98,7 +98,7 @@ public class CustomElementsSourceLocalServiceImpl
 			Hits hits = indexer.search(searchContext);
 
 			List<CustomElementsSource> customElementsSources =
-				_getCustomElementsSources(hits);
+				getCustomElementsSources(hits);
 
 			if (customElementsSources != null) {
 				return customElementsSources;
@@ -116,7 +116,7 @@ public class CustomElementsSourceLocalServiceImpl
 		Indexer<CustomElementsSource> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CustomElementsSource.class);
 
-		SearchContext searchContext = _buildSearchContext(
+		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
@@ -140,7 +140,7 @@ public class CustomElementsSourceLocalServiceImpl
 		return customElementsSourcePersistence.update(customElementsSource);
 	}
 
-	private SearchContext _buildSearchContext(
+	protected SearchContext buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -169,7 +169,7 @@ public class CustomElementsSourceLocalServiceImpl
 		return searchContext;
 	}
 
-	private List<CustomElementsSource> _getCustomElementsSources(Hits hits)
+	protected List<CustomElementsSource> getCustomElementsSources(Hits hits)
 		throws PortalException {
 
 		List<Document> documents = hits.toList();
