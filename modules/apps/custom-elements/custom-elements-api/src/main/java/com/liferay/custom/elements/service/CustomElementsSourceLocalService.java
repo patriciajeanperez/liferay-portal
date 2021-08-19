@@ -80,7 +80,6 @@ public interface CustomElementsSourceLocalService
 	public CustomElementsSource addCustomElementsSource(
 		CustomElementsSource customElementsSource);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsSource addCustomElementsSource(
 			long userId, String htmlElementName, String name, String url,
 			ServiceContext serviceContext)
@@ -304,12 +303,10 @@ public interface CustomElementsSourceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CustomElementsSource> search(
-			long companyId, String keywords, int start, int end, Sort sort)
-		throws PortalException;
+		String keywords, int start, int end, Sort sort);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, String keywords)
-		throws PortalException;
+	public int searchCount(String keywords);
 
 	/**
 	 * Updates the custom elements source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -325,7 +322,6 @@ public interface CustomElementsSourceLocalService
 	public CustomElementsSource updateCustomElementsSource(
 		CustomElementsSource customElementsSource);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsSource updateCustomElementsSource(
 			long customElementsSourceId, String htmlElementName, String name,
 			String url, ServiceContext serviceContext)

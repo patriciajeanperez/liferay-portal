@@ -394,20 +394,16 @@ public class CustomElementsSourceLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.custom.elements.model.CustomElementsSource> search(
-				long companyId, String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort) {
 
 		return _customElementsSourceLocalService.search(
-			companyId, keywords, start, end, sort);
+			keywords, start, end, sort);
 	}
 
 	@Override
-	public int searchCount(long companyId, String keywords)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _customElementsSourceLocalService.searchCount(
-			companyId, keywords);
+	public int searchCount(String keywords) {
+		return _customElementsSourceLocalService.searchCount(keywords);
 	}
 
 	/**

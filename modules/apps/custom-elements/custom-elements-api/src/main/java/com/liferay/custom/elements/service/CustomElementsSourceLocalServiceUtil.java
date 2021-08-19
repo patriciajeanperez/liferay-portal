@@ -345,17 +345,14 @@ public class CustomElementsSourceLocalServiceUtil {
 	}
 
 	public static List<CustomElementsSource> search(
-			long companyId, String keywords, int start, int end,
-			com.liferay.portal.kernel.search.Sort sort)
-		throws PortalException {
+		String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
 
-		return getService().search(companyId, keywords, start, end, sort);
+		return getService().search(keywords, start, end, sort);
 	}
 
-	public static int searchCount(long companyId, String keywords)
-		throws PortalException {
-
-		return getService().searchCount(companyId, keywords);
+	public static int searchCount(String keywords) {
+		return getService().searchCount(keywords);
 	}
 
 	/**

@@ -27,11 +27,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -80,12 +77,6 @@ public interface CustomElementsPortletDescriptorLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsPortletDescriptor addCustomElementsPortletDescriptor(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CustomElementsPortletDescriptor addCustomElementsPortletDescriptor(
-			String cssURLs, String htmlElementName, boolean instanceable,
-			String name, String properties, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Creates a new custom elements portlet descriptor with the primary key. Does not add the custom elements portlet descriptor to the database.
@@ -305,15 +296,6 @@ public interface CustomElementsPortletDescriptorLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CustomElementsPortletDescriptor> search(
-			long companyId, String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, String keywords)
-		throws SearchException;
-
 	/**
 	 * Updates the custom elements portlet descriptor in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -328,13 +310,5 @@ public interface CustomElementsPortletDescriptorLocalService
 	public CustomElementsPortletDescriptor
 		updateCustomElementsPortletDescriptor(
 			CustomElementsPortletDescriptor customElementsPortletDescriptor);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CustomElementsPortletDescriptor
-			updateCustomElementsPortletDescriptor(
-				long customElementsSourceId, String cssURLs,
-				String htmlElementName, boolean instanceable, String name,
-				String properties, ServiceContext serviceContext)
-		throws PortalException;
 
 }
