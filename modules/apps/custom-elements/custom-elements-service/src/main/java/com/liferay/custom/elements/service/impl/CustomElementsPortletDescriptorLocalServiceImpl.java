@@ -74,11 +74,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		customElementsPortletDescriptor.setUserId(user.getUserId());
 		customElementsPortletDescriptor.setUserName(user.getFullName());
 
-		customElementsPortletDescriptor.setCSSURLs(cssURLs);
-		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
-		customElementsPortletDescriptor.setInstanceable(instanceable);
-		customElementsPortletDescriptor.setName(name);
-		customElementsPortletDescriptor.setProperties(properties);
+		_setCustomElementsPortletDescriptorFields(
+			customElementsPortletDescriptor, cssURLs, htmlElementName,
+			instanceable, name, properties);
 
 		return customElementsPortletDescriptorPersistence.update(
 			customElementsPortletDescriptor);
@@ -138,17 +136,15 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 			customElementsPortletDescriptorPersistence.findByPrimaryKey(
 				customElementsSourceId);
 
-		customElementsPortletDescriptor.setCSSURLs(cssURLs);
-		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
-		customElementsPortletDescriptor.setInstanceable(instanceable);
-		customElementsPortletDescriptor.setName(name);
-		customElementsPortletDescriptor.setProperties(properties);
+		_setCustomElementsPortletDescriptorFields(
+			customElementsPortletDescriptor, cssURLs, htmlElementName,
+			instanceable, name, properties);
 
 		return customElementsPortletDescriptorPersistence.update(
 			customElementsPortletDescriptor);
 	}
 
-	private SearchContext buildSearchContext(
+	protected SearchContext buildSearchContext(
 		long companyId, String keywords, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
@@ -213,6 +209,18 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 		}
 
 		return customElementsPortletDescriptors;
+	}
+
+	private void _setCustomElementsPortletDescriptorFields(
+		CustomElementsPortletDescriptor customElementsPortletDescriptor,
+		String cssURLs, String htmlElementName, boolean instanceable,
+		String name, String properties) {
+
+		customElementsPortletDescriptor.setCSSURLs(cssURLs);
+		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
+		customElementsPortletDescriptor.setInstanceable(instanceable);
+		customElementsPortletDescriptor.setName(name);
+		customElementsPortletDescriptor.setProperties(properties);
 	}
 
 }
