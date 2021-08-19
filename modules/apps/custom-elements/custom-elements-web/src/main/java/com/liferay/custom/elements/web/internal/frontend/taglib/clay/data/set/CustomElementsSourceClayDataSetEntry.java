@@ -31,7 +31,7 @@ public class CustomElementsSourceClayDataSetEntry {
 		return _customElementsSource.getCustomElementsSourceId();
 	}
 
-	public String getHtmlElementName() {
+	public String getHTMLElementName() {
 		return _customElementsSource.getHTMLElementName();
 	}
 
@@ -39,7 +39,7 @@ public class CustomElementsSourceClayDataSetEntry {
 		return _customElementsSource.getName();
 	}
 
-	public String getUrl() {
+	public String getURL() {
 		return _customElementsSource.getURL();
 	}
 
