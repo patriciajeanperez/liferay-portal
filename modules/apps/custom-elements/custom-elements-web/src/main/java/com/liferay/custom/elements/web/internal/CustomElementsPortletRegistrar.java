@@ -55,7 +55,7 @@ public class CustomElementsPortletRegistrar {
 		_bundleContext = bundleContext;
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Registering custom elements portlets");
+			_log.info("Starting custom elements portlets");
 		}
 
 		for (CustomElementsPortletDescriptor customElementsPortletDescriptor :
@@ -70,7 +70,7 @@ public class CustomElementsPortletRegistrar {
 	@Deactivate
 	protected void deactivate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Unregistering custom elements portlets");
+			_log.info("Stopping custom elements portlets");
 		}
 
 		for (long customElementsPortletDescriptorId :
@@ -104,7 +104,7 @@ public class CustomElementsPortletRegistrar {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Registered custom elements portlet " +
+				"Started custom elements portlet " +
 					customElementsPortlet.getName());
 		}
 	}
@@ -118,7 +118,7 @@ public class CustomElementsPortletRegistrar {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unregistered custom elements portlet " +
+					"Stopped custom elements portlet " +
 						customElementsPortlet.getName());
 			}
 		}
