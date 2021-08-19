@@ -76,9 +76,9 @@ public class RemoteAppPortlet extends MVCPortlet {
 			).put(
 				"javax.portlet.name", _getPortletName()
 			).put(
-				"javax.portlet.resource-bundle", _getResourceBundleName()
-			).put(
 				"javax.portlet.security-role-ref", "power-user,user"
+			).put(
+				"javax.portlet.resource-bundle", _getResourceBundleName()
 			).build());
 
 		_resourceBundleLoaderServiceRegistration =
