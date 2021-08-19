@@ -16,7 +16,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
-import com.liferay.custom.elements.web.internal.display.context.CustomElementsSourceDisplayContext;
+import com.liferay.custom.elements.web.internal.display.context.CustomElementsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_SOURCE,
+		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS,
 		"mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
@@ -44,11 +44,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			CustomElementsWebKeys.CUSTOM_ELEMENTS_SOURCE_DISPLAY_CONTEXT,
-			new CustomElementsSourceDisplayContext(
-				renderRequest, renderResponse));
+			CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT,
+			new CustomElementsDisplayContext(renderRequest, renderResponse));
 
-		return "/custom_elements_source/view.jsp";
+		return "/custom_elements/view.jsp";
 	}
 
 }
