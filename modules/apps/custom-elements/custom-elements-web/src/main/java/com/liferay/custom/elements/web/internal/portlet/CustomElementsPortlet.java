@@ -109,14 +109,14 @@ public class CustomElementsPortlet extends MVCPortlet {
 			printWriter.print(
 				_customElementsPortletDescriptor.getHTMLElementName());
 
-			Properties properties = _getProperties();
+			Map<String, String> tagAttributes = _getTagAttributes();
 
-			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			for (Map.Entry<String, String> entry : tagAttributes.entrySet()) {
 				printWriter.print(StringPool.SPACE);
 				printWriter.print(entry.getKey());
 				printWriter.print("=\"");
 
-				String value = (String)entry.getValue();
+				String value = entry.getValue();
 
 				printWriter.print(value.replaceAll(StringPool.QUOTE, "&quot;"));
 
@@ -165,24 +165,6 @@ public class CustomElementsPortlet extends MVCPortlet {
 			"CustomElementsPortlet#" + customElementsPortletDescriptorId;
 	}
 
-	private Properties _getProperties() {
-		Properties properties = new Properties();
-
-		String propertiesString =
-			_customElementsPortletDescriptor.getProperties();
-
-		try {
-			properties.load(
-				new ByteArrayInputStream(
-					propertiesString.getBytes(StandardCharsets.UTF_8)));
-		}
-		catch (IOException ioException) {
-			throw new IllegalArgumentException(propertiesString, ioException);
-		}
-
-		return properties;
-	}
-
 	private ResourceBundle _getResourceBundle() {
 		return new ResourceBundle() {
 
@@ -206,6 +188,23 @@ public class CustomElementsPortlet extends MVCPortlet {
 
 	private String _getResourceBundleName() {
 		return _getPortletName() + ".Language";
+	}
+
+	private Map<String, String> _getTagAttributes() {
+		Properties tagAttributes = new Properties();
+
+		String properties = _customElementsPortletDescriptor.getProperties();
+
+		try {
+			tagAttributes.load(
+				new ByteArrayInputStream(
+					properties.getBytes(StandardCharsets.UTF_8)));
+		}
+		catch (IOException ioException) {
+			throw new IllegalArgumentException(properties, ioException);
+		}
+
+		return (Map)tagAttributes;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
