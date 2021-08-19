@@ -23,8 +23,4 @@ public class CustomElementsPortletKeys {
 		"com_liferay_custom_elements_web_internal_portlet_" +
 			"CustomElementsPortlet";
 
-	public static final String CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR =
-		"com_liferay_custom_elements_web_internal_portlet_" +
-			"CustomElementsPortletDescriptorPortlet";
-
 }
