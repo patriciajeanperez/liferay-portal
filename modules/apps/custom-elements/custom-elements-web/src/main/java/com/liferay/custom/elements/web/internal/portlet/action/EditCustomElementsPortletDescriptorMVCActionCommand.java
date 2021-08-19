@@ -16,7 +16,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
-import com.liferay.custom.elements.web.internal.CustomElementsPortletRegistrar;
+import com.liferay.custom.elements.web.internal.CustomElementsDynamicPortletRegistrar;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -71,7 +71,7 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 						cssURLs, htmlElementName, instanceable, name,
 						properties, serviceContext);
 
-			_customElementsPortletRegistrar.registerPortlet(
+			_customElementsDynamicPortletRegistrar.registerPortlet(
 				customElementsPortletDescriptor);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
@@ -83,10 +83,10 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 						cssURLs, htmlElementName, instanceable, name,
 						properties, serviceContext);
 
-			_customElementsPortletRegistrar.unregisterPortlet(
+			_customElementsDynamicPortletRegistrar.unregisterPortlet(
 				customElementsPortletDescriptor);
 
-			_customElementsPortletRegistrar.registerPortlet(
+			_customElementsDynamicPortletRegistrar.registerPortlet(
 				customElementsPortletDescriptor);
 		}
 
@@ -98,10 +98,11 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 	}
 
 	@Reference
-	private CustomElementsPortletDescriptorLocalService
-		_customElementsPortletDescriptorLocalService;
+	private CustomElementsDynamicPortletRegistrar
+		_customElementsDynamicPortletRegistrar;
 
 	@Reference
-	private CustomElementsPortletRegistrar _customElementsPortletRegistrar;
+	private CustomElementsPortletDescriptorLocalService
+		_customElementsPortletDescriptorLocalService;
 
 }
