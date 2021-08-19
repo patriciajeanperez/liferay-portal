@@ -115,11 +115,9 @@ public class RemoteAppPortlet extends MVCPortlet {
 		}
 
 		_resourceBundleLoaderServiceRegistration.unregister();
-
-		_resourceBundleLoaderServiceRegistration = null;
-
 		_serviceRegistration.unregister();
 
+		_resourceBundleLoaderServiceRegistration = null;
 		_serviceRegistration = null;
 	}
 
