@@ -156,4 +156,18 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account Name");
 	}
 
+	@description = "This test asserts that a user can select an account from the list as the active account."
+	@priority = "4"
+	test CanSetActiveAccount {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "New Active Account",
+			accountEntryType = "Business");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Select",
+			rowEntry = "New Active Account");
+	}
+
 }
