@@ -1287,4 +1287,18 @@ definition {
 			locator1 = "NavTab#TAB_LINK");
 	}
 
+	macro viewSelectedAccount {
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "${selectedAccount}");
+
+		LexiconEntry.viewEntryName(rowEntry = "${selectedAccount}");
+
+		LexiconEntry.viewNoEntry(rowEntry = "${previousAccount}");
+
+		AssertElementPresent(
+			key_text = "check",
+			locator1 = "Icon#ANY");
+	}
+
 }
