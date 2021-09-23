@@ -1299,6 +1299,18 @@ definition {
 		AssertElementPresent(
 			key_text = "check",
 			locator1 = "Icon#ANY");
+			
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "${previousAccount}");
+
+		LexiconEntry.viewEntryName(rowEntry = "${previousAccount}");
+
+		LexiconEntry.viewNoEntry(rowEntry = "${selectedAccount}");
+
+		AssertElementNotPresent(
+			key_text = "check",
+			locator1 = "Icon#ANY");
 	}
 
 }
