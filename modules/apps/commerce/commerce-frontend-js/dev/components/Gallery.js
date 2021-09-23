@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/gallery/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/gallery/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 function getImgUrl(image, width) {
 	return `https://images.unsplash.com/${image}?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=${width}&q=80`;

@@ -14,22 +14,26 @@
 
 package com.liferay.remote.app.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.service.RemoteAppEntryService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys;
+import com.liferay.remote.app.web.internal.display.context.EditRemoteAppEntryDisplayContext;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,24 +62,11 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				actionRequest, "name");
-			String url = ParamUtil.getString(actionRequest, "url");
-
 			if (cmd.equals(Constants.ADD)) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						RemoteAppEntry.class.getName(), actionRequest);
-
-				_remoteAppEntryLocalService.addRemoteAppEntry(
-					serviceContext.getUserId(), nameMap, url, serviceContext);
+				_add(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				long remoteAppEntryId = ParamUtil.getLong(
-					actionRequest, "remoteAppEntryId");
-
-				_remoteAppEntryLocalService.updateRemoteAppEntry(
-					remoteAppEntryId, nameMap, url);
+				_update(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -85,16 +76,93 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof DuplicateRemoteAppEntryException) {
-				SessionErrors.add(actionRequest, exception.getClass());
-			}
-			else {
-				throw exception;
-			}
+			SessionErrors.add(actionRequest, exception.getClass());
+
+			actionRequest.setAttribute(
+				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
+				new EditRemoteAppEntryDisplayContext(
+					actionRequest, _getRemoteAppEntry(actionRequest)));
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/admin/edit_remote_app_entry.jsp");
+		}
+	}
+
+	private void _add(ActionRequest actionRequest) throws PortalException {
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String portletCategoryName = ParamUtil.getString(
+			actionRequest, "portletCategoryName");
+		String type = ParamUtil.getString(actionRequest, "type");
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			_remoteAppEntryService.addCustomElementRemoteAppEntry(
+				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
+				ParamUtil.getString(
+					actionRequest, "customElementHTMLElementName"),
+				ParamUtil.getString(actionRequest, "customElementURLs"),
+				nameMap, portletCategoryName,
+				ParamUtil.getString(actionRequest, "properties"));
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			_remoteAppEntryService.addIFrameRemoteAppEntry(
+				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
+				portletCategoryName,
+				ParamUtil.getString(actionRequest, "properties"));
+		}
+	}
+
+	private RemoteAppEntry _getRemoteAppEntry(ActionRequest actionRequest)
+		throws PortalException {
+
+		long remoteAppEntryId = ParamUtil.getLong(
+			actionRequest, "remoteAppEntryId");
+
+		if (remoteAppEntryId != 0) {
+			return _remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
+		}
+
+		return null;
+	}
+
+	private void _update(ActionRequest actionRequest) throws PortalException {
+		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry(actionRequest);
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String portletCategoryName = ParamUtil.getString(
+			actionRequest, "portletCategoryName");
+
+		if (Objects.equals(
+				remoteAppEntry.getType(),
+				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+
+			String[] customElementCSSURLs = ParamUtil.getStringValues(
+				actionRequest, "customElementCSSURLs");
+			String[] customElementURLs = ParamUtil.getStringValues(
+				actionRequest, "customElementURLs");
+
+			_remoteAppEntryService.updateCustomElementRemoteAppEntry(
+				remoteAppEntry.getRemoteAppEntryId(),
+				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
+				ParamUtil.getString(
+					actionRequest, "customElementHTMLElementName"),
+				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
+				nameMap, portletCategoryName,
+				ParamUtil.getString(actionRequest, "properties"));
+		}
+		else if (Objects.equals(
+					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
+
+			_remoteAppEntryService.updateIFrameRemoteAppEntry(
+				remoteAppEntry.getRemoteAppEntryId(),
+				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
+				portletCategoryName,
+				ParamUtil.getString(actionRequest, "properties"));
 		}
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

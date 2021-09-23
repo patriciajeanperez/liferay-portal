@@ -456,9 +456,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
 	@priority = "3"
 	test PaginateListOfMembersToBeAddedToTheSegment {
-		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
+		task ("Conect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
 		task ("Add new users") {
+			var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
+
 			for (var name : list "${users}") {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
@@ -521,13 +525,11 @@ definition {
 		}
 
 		task ("View only 5 users are shown in page 1") {
-			for (var username : list "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
 
 			AssertElementNotPresent(
 				key_assetName = "ac7 ac7",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Navigate to the page 2") {
@@ -535,7 +537,7 @@ definition {
 		}
 
 		task ("View the ac7 ac7 is shown in page 2") {
-			ACAssets.viewAssets(assetName = "ac7 ac7");
+			ACUtils.viewNameList(nameList = "ac7 ac7");
 
 			ACNavigation.clickCancelButton();
 		}
@@ -553,13 +555,11 @@ definition {
 		}
 
 		task ("View only 5 users are shown in page 1") {
-			for (var username : list "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
 
 			AssertElementNotPresent(
 				key_assetName = "ac7 ac7",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Navigate to the page 2") {
@@ -567,7 +567,7 @@ definition {
 		}
 
 		task ("View the ac7 ac7 is shown in page 2") {
-			ACAssets.viewAssets(assetName = "ac7 ac7");
+			ACUtils.viewNameList(nameList = "ac7 ac7");
 		}
 	}
 
@@ -630,16 +630,60 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"
 	@priority = "3"
 	test SortSegmentAddMembersModal {
-		task ("Go to AC and segments") {
-			ACUtils.launchAC();
+		var users = "ac,liferay,dxp";
 
-			ACNavigation.goToSegments();
+		task ("Add a new user in DXP") {
+			for (var name : list "${users}") {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = "${name}",
+					userLastName = "${name}",
+					userScreenName = "${name}");
+			}
 		}
 
-		task ("Create a new static segment and click to add members") {
+		task ("Conect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Sign in with the new user to visit the site pages") {
+			for (var name : list "${users}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${name}@liferay.com",
+					userLoginFullName = "${name} ${name}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to Segments and add a new segment") {
+			ACNavigation.goToSegments();
+
 			ACSegments.createStaticSegment();
 
-			ACSegments.nameSegment(segmentName = "New Segment Test");
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			ACSegments.addStaticMember(tableMember = "ac ac");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Go to Segments and edit") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
 
 			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 		}
@@ -647,14 +691,24 @@ definition {
 		task ("Assert the first user in the list, click the sort button and assert that the user has changed") {
 			AssertElementPresent(
 				index = "1",
-				key_userName = "Abram Bauch",
+				key_userName = "dxp dxp",
 				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
 
-			Click(locator1 = "ACSegments#ADD_MEMBERS_SORT_BUTTON");
+			AssertElementPresent(
+				index = "2",
+				key_userName = "liferay liferay",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+
+			ACSegments.sortSegmentButton();
 
 			AssertElementPresent(
 				index = "1",
-				key_userName = "Winston Olson",
+				key_userName = "liferay liferay",
+				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
+
+			AssertElementPresent(
+				index = "2",
+				key_userName = "dxp dxp",
 				locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE");
 		}
 	}

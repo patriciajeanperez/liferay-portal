@@ -33,6 +33,7 @@ import {parseOptions} from './util/index';
 
 function CartItem({item: cartItem}) {
 	const {
+		adaptiveMediaImageHTMLTag,
 		cartItems: childItems,
 		errorMessages,
 		id: cartItemId,
@@ -43,7 +44,6 @@ function CartItem({item: cartItem}) {
 		settings,
 		sku,
 		skuId,
-		thumbnail,
 	} = cartItem;
 
 	const {
@@ -126,10 +126,12 @@ function CartItem({item: cartItem}) {
 				'mini-cart-item': true,
 			})}
 		>
-			{!!thumbnail && (
+			{!!adaptiveMediaImageHTMLTag && (
 				<div
 					className="mini-cart-item-thumbnail"
-					style={{backgroundImage: `url(${thumbnail})`}}
+					dangerouslySetInnerHTML={{
+						__html: adaptiveMediaImageHTMLTag,
+					}}
 				/>
 			)}
 

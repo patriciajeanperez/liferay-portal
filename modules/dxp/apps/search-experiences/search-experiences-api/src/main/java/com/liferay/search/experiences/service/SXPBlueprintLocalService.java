@@ -24,10 +24,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +68,12 @@ public interface SXPBlueprintLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sxp blueprint local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SXPBlueprintLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPBlueprint addSXPBlueprint(
+			long userId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the sxp blueprint to the database. Also notifies the appropriate model listeners.
@@ -111,6 +122,7 @@ public interface SXPBlueprintLocalService
 	 * @throws PortalException if a sxp blueprint with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
 		throws PortalException;
 
@@ -123,9 +135,12 @@ public interface SXPBlueprintLocalService
 	 *
 	 * @param sxpBlueprint the sxp blueprint
 	 * @return the sxp blueprint that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -203,15 +218,15 @@ public interface SXPBlueprintLocalService
 	public SXPBlueprint fetchSXPBlueprint(long sxpBlueprintId);
 
 	/**
-	 * Returns the sxp blueprint matching the UUID and group.
+	 * Returns the sxp blueprint with the matching UUID and company.
 	 *
 	 * @param uuid the sxp blueprint's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SXPBlueprint fetchSXPBlueprintByUuidAndGroupId(
-		String uuid, long groupId);
+	public SXPBlueprint fetchSXPBlueprintByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -250,16 +265,16 @@ public interface SXPBlueprintLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the sxp blueprint matching the UUID and group.
+	 * Returns the sxp blueprint with the matching UUID and company.
 	 *
 	 * @param uuid the sxp blueprint's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching sxp blueprint
 	 * @throws PortalException if a matching sxp blueprint could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SXPBlueprint getSXPBlueprintByUuidAndGroupId(
-			String uuid, long groupId)
+	public SXPBlueprint getSXPBlueprintByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -277,38 +292,28 @@ public interface SXPBlueprintLocalService
 	public List<SXPBlueprint> getSXPBlueprints(int start, int end);
 
 	/**
-	 * Returns all the sxp blueprints matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the sxp blueprints
-	 * @param companyId the primary key of the company
-	 * @return the matching sxp blueprints, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SXPBlueprint> getSXPBlueprintsByUuidAndCompanyId(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of sxp blueprints matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the sxp blueprints
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of sxp blueprints
-	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching sxp blueprints, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SXPBlueprint> getSXPBlueprintsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SXPBlueprint> orderByComparator);
-
-	/**
 	 * Returns the number of sxp blueprints.
 	 *
 	 * @return the number of sxp blueprints
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSXPBlueprintsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSXPBlueprintsCount(long companyId);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPBlueprint updateStatus(
+			long userId, long sxpBlueprintId, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPBlueprint updateSXPBlueprint(
+			long userId, long sxpBlueprintId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Updates the sxp blueprint in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

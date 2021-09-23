@@ -25,6 +25,7 @@ CQLKeywordCheck | .cql | Checks that Cassandra keywords are upper case. |
 [CompanyIterationCheck](checks/company_iteration_check.markdown#companyiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies |
 CompatClassImportsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that classes are imported from `compat` modules, when possible. |
 ConsumerTypeAnnotationCheck | .java | Performs several checks on classes with @ConsumerType annotation. |
+DTOEnumCreationCheck | .java | Checks the creation of DTO enum. |
 DeprecatedUsageCheck | .java | Finds calls to deprecated classes or methods. |
 EmptyConstructorCheck | .java | Finds unnecessary empty constructors. |
 FactoryCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `*Factory` should be used when creating new instances of an object. |
@@ -133,7 +134,7 @@ MissingModifierCheck | .java | Verifies that a method or global variable has a m
 MissingOverrideCheck | .java | Verifies that a method that overrides a method in a superclass has the @Override annotation. |
 NestedFieldAnnotationCheck | .java | Verifies that `NestedFieldSupport.class` is used in `service` property of `Component` annotation |
 NewFileCheck | | Finds new files in directories that should not have added files. |
-NullAssertionInIfStatementCheck | .java | Verifies that null check should always be first in if-statement. |
+[NullAssertionInIfStatementCheck](checks/null_assertion_in_if_statement_check.markdown#nullassertioninifstatementcheck) | .java | Verifies that null check should always be first in if-statement. |
 PackageinfoBNDExportPackageCheck | packageinfo | Finds legacy `packageinfo` files. |
 PersistenceCallCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds illegal persistence calls across component boundaries. |
 [PersistenceUpdateCheck](checks/persistence_update_check.markdown#persistenceupdatecheck) | .java | Checks that there are no stale references in service code from persistence updates. |

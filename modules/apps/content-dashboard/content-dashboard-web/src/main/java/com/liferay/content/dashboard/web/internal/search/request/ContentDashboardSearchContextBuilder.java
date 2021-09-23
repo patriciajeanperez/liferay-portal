@@ -78,7 +78,6 @@ public class ContentDashboardSearchContextBuilder {
 		}
 
 		searchContext.setAttribute("status", status);
-
 		searchContext.setBooleanClauses(
 			_getBooleanClauses(
 				new AssetCategoryIds(
@@ -135,6 +134,7 @@ public class ContentDashboardSearchContextBuilder {
 		}
 
 		searchContext.setIncludeInternalAssetCategories(true);
+		searchContext.setIncludeStagingGroups(Boolean.FALSE);
 
 		if (_sort != null) {
 			searchContext.setSorts(_sort);

@@ -27,6 +27,8 @@ long classNameId = BeanParamUtil.getLong(ddmTemplate, request, "classNameId");
 long classPK = BeanParamUtil.getLong(ddmTemplate, request, "classPK");
 long resourceClassNameId = BeanParamUtil.getLong(ddmTemplate, request, "resourceClassNameId");
 
+long templateEntryId = ParamUtil.getLong(request, "templateEntryId");
+
 EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
@@ -52,6 +54,7 @@ else {
 	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= resourceClassNameId %>" />
+	<aui:input name="templateEntryId" type="hidden" value="<%= templateEntryId %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />

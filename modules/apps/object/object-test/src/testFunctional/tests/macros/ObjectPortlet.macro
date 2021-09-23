@@ -6,6 +6,12 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro changePagination {
+		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
+
+		MenuItem.click(menuItem = "${itemsPerPage}");
+	}
+
 	macro deleteEntry {
 		Click(
 			key_entry = "${entry}",
@@ -16,7 +22,7 @@ definition {
 
 	macro selectCustomObject {
 		Click(
-			key_name = "${name}",
+			key_label = "${label}",
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 	}
 

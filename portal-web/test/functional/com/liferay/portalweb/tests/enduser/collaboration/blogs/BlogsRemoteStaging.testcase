@@ -47,7 +47,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 
 		Navigator.openURL();
 
@@ -197,6 +197,8 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive(remoteStaging = "true");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

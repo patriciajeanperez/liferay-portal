@@ -14,9 +14,9 @@
 
 import React from 'react';
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/autocomplete/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/autocomplete/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('autocomplete', 'autocomplete-root', {
 	active: true,

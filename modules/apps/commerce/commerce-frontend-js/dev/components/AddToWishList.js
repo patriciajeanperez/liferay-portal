@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/add_to_wish_list/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/add_to_wish_list/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('add-to-wish-list', 'add-to-wish-list', {
 	iconOnly: false,

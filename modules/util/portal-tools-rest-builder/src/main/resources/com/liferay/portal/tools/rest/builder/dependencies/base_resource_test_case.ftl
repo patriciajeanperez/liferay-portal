@@ -412,6 +412,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 							Pagination.of(1, 10)
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "search")>
+							null
 						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							${javaMethodParameter.parameterName}
 						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
@@ -1282,6 +1284,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertValid(get${schemaName}, multipartFiles);
 					</#if>
 				</#if>
+
 				<#if javaMethodSignature.methodName?ends_with("ByExternalReferenceCode")>
 					${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
 

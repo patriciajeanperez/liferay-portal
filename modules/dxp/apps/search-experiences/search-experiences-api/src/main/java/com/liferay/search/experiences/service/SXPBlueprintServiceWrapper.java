@@ -30,6 +30,28 @@ public class SXPBlueprintServiceWrapper
 		_sxpBlueprintService = sxpBlueprintService;
 	}
 
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint addSXPBlueprint(
+			String configurationsJSON,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON,
+			java.util.Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.addSXPBlueprint(
+			configurationsJSON, descriptionMap, elementInstancesJSON, titleMap,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint deleteSXPBlueprint(
+			long sxpBlueprintId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.deleteSXPBlueprint(sxpBlueprintId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -38,6 +60,28 @@ public class SXPBlueprintServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _sxpBlueprintService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint getSXPBlueprint(
+			long sxpBlueprintId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.getSXPBlueprint(sxpBlueprintId);
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint updateSXPBlueprint(
+			long sxpBlueprintId, String configurationsJSON,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON,
+			java.util.Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.updateSXPBlueprint(
+			sxpBlueprintId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
 	}
 
 	@Override

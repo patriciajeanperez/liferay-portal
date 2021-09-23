@@ -41,42 +41,44 @@ public class SessionErrors {
 	public static void add(
 		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
-		add(_getPortalSession(httpServletRequest), clazz.getName());
+		add(_getPortalHttpSession(httpServletRequest), clazz.getName());
 	}
 
 	public static void add(
 		HttpServletRequest httpServletRequest, Class<?> clazz, Object value) {
 
-		add(_getPortalSession(httpServletRequest), clazz.getName(), value);
+		add(_getPortalHttpSession(httpServletRequest), clazz.getName(), value);
 	}
 
 	public static void add(HttpServletRequest httpServletRequest, String key) {
-		add(_getPortalSession(httpServletRequest), key);
+		add(_getPortalHttpSession(httpServletRequest), key);
 	}
 
 	public static void add(
 		HttpServletRequest httpServletRequest, String key, Object value) {
 
-		add(_getPortalSession(httpServletRequest), key, value);
+		add(_getPortalHttpSession(httpServletRequest), key, value);
 	}
 
-	public static void add(HttpSession session, Class<?> clazz) {
-		add(session, clazz.getName());
+	public static void add(HttpSession httpSession, Class<?> clazz) {
+		add(httpSession, clazz.getName());
 	}
 
-	public static void add(HttpSession session, Class<?> clazz, Object value) {
-		add(session, clazz.getName(), value);
+	public static void add(
+		HttpSession httpSession, Class<?> clazz, Object value) {
+
+		add(httpSession, clazz.getName(), value);
 	}
 
-	public static void add(HttpSession session, String key) {
+	public static void add(HttpSession httpSession, String key) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Adding key " + key);
 		}
 
-		_sessionMaps.add(session, _CLASS_NAME, key, key);
+		_sessionMaps.add(httpSession, _CLASS_NAME, key, key);
 	}
 
-	public static void add(HttpSession session, String key, Object value) {
+	public static void add(HttpSession httpSession, String key, Object value) {
 		if (_log.isDebugEnabled()) {
 			Exception exception = null;
 
@@ -89,7 +91,7 @@ public class SessionErrors {
 				exception);
 		}
 
-		_sessionMaps.add(session, _CLASS_NAME, key, value);
+		_sessionMaps.add(httpSession, _CLASS_NAME, key, value);
 	}
 
 	public static void add(PortletRequest portletRequest, Class<?> clazz) {
@@ -111,7 +113,7 @@ public class SessionErrors {
 		}
 
 		_sessionMaps.add(
-			_getPortalSession(portletRequest), _getKey(portletRequest), key,
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest), key,
 			key);
 	}
 
@@ -133,48 +135,51 @@ public class SessionErrors {
 		}
 
 		_sessionMaps.add(
-			_getPortalSession(portletRequest), _getKey(portletRequest), key,
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest), key,
 			value);
 	}
 
 	public static void clear(HttpServletRequest httpServletRequest) {
-		clear(_getPortalSession(httpServletRequest));
+		clear(_getPortalHttpSession(httpServletRequest));
 	}
 
-	public static void clear(HttpSession session) {
-		_sessionMaps.clear(session, _CLASS_NAME);
+	public static void clear(HttpSession httpSession) {
+		_sessionMaps.clear(httpSession, _CLASS_NAME);
 	}
 
 	public static void clear(PortletRequest portletRequest) {
 		_sessionMaps.clear(
-			_getPortalSession(portletRequest), _getKey(portletRequest));
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest));
 	}
 
 	public static boolean contains(
 		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
-		return contains(_getPortalSession(httpServletRequest), clazz.getName());
+		return contains(
+			_getPortalHttpSession(httpServletRequest), clazz.getName());
 	}
 
 	public static boolean contains(
 		HttpServletRequest httpServletRequest, Class<?>[] classes) {
 
-		return contains(_getPortalSession(httpServletRequest), classes);
+		return contains(_getPortalHttpSession(httpServletRequest), classes);
 	}
 
 	public static boolean contains(
 		HttpServletRequest httpServletRequest, String key) {
 
-		return contains(_getPortalSession(httpServletRequest), key);
+		return contains(_getPortalHttpSession(httpServletRequest), key);
 	}
 
-	public static boolean contains(HttpSession session, Class<?> clazz) {
-		return contains(session, clazz.getName());
+	public static boolean contains(HttpSession httpSession, Class<?> clazz) {
+		return contains(httpSession, clazz.getName());
 	}
 
-	public static boolean contains(HttpSession session, Class<?>[] classes) {
+	public static boolean contains(
+		HttpSession httpSession, Class<?>[] classes) {
+
 		for (Class<?> clazz : classes) {
-			if (contains(session, clazz.getName())) {
+			if (contains(httpSession, clazz.getName())) {
 				return true;
 			}
 		}
@@ -182,8 +187,8 @@ public class SessionErrors {
 		return false;
 	}
 
-	public static boolean contains(HttpSession session, String key) {
-		return _sessionMaps.contains(session, _CLASS_NAME, key);
+	public static boolean contains(HttpSession httpSession, String key) {
+		return _sessionMaps.contains(httpSession, _CLASS_NAME, key);
 	}
 
 	public static boolean contains(
@@ -206,27 +211,28 @@ public class SessionErrors {
 
 	public static boolean contains(PortletRequest portletRequest, String key) {
 		return _sessionMaps.contains(
-			_getPortalSession(portletRequest), _getKey(portletRequest), key);
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest),
+			key);
 	}
 
 	public static Object get(
 		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
-		return get(_getPortalSession(httpServletRequest), clazz.getName());
+		return get(_getPortalHttpSession(httpServletRequest), clazz.getName());
 	}
 
 	public static Object get(
 		HttpServletRequest httpServletRequest, String key) {
 
-		return get(_getPortalSession(httpServletRequest), key);
+		return get(_getPortalHttpSession(httpServletRequest), key);
 	}
 
-	public static Object get(HttpSession session, Class<?> clazz) {
-		return get(session, clazz.getName());
+	public static Object get(HttpSession httpSession, Class<?> clazz) {
+		return get(httpSession, clazz.getName());
 	}
 
-	public static Object get(HttpSession session, String key) {
-		return _sessionMaps.get(session, _CLASS_NAME, key);
+	public static Object get(HttpSession httpSession, String key) {
+		return _sessionMaps.get(httpSession, _CLASS_NAME, key);
 	}
 
 	public static Object get(PortletRequest portletRequest, Class<?> clazz) {
@@ -235,56 +241,57 @@ public class SessionErrors {
 
 	public static Object get(PortletRequest portletRequest, String key) {
 		return _sessionMaps.get(
-			_getPortalSession(portletRequest), _getKey(portletRequest), key);
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest),
+			key);
 	}
 
 	public static boolean isEmpty(HttpServletRequest httpServletRequest) {
-		return isEmpty(_getPortalSession(httpServletRequest));
+		return isEmpty(_getPortalHttpSession(httpServletRequest));
 	}
 
-	public static boolean isEmpty(HttpSession session) {
-		return _sessionMaps.isEmpty(session, _CLASS_NAME);
+	public static boolean isEmpty(HttpSession httpSession) {
+		return _sessionMaps.isEmpty(httpSession, _CLASS_NAME);
 	}
 
 	public static boolean isEmpty(PortletRequest portletRequest) {
 		return _sessionMaps.isEmpty(
-			_getPortalSession(portletRequest), _getKey(portletRequest));
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest));
 	}
 
 	public static Iterator<String> iterator(
 		HttpServletRequest httpServletRequest) {
 
-		return iterator(_getPortalSession(httpServletRequest));
+		return iterator(_getPortalHttpSession(httpServletRequest));
 	}
 
-	public static Iterator<String> iterator(HttpSession session) {
-		return _sessionMaps.iterator(session, _CLASS_NAME);
+	public static Iterator<String> iterator(HttpSession httpSession) {
+		return _sessionMaps.iterator(httpSession, _CLASS_NAME);
 	}
 
 	public static Iterator<String> iterator(PortletRequest portletRequest) {
 		return _sessionMaps.iterator(
-			_getPortalSession(portletRequest), _getKey(portletRequest));
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest));
 	}
 
 	public static Set<String> keySet(HttpServletRequest httpServletRequest) {
-		return keySet(_getPortalSession(httpServletRequest));
+		return keySet(_getPortalHttpSession(httpServletRequest));
 	}
 
-	public static Set<String> keySet(HttpSession session) {
-		return _sessionMaps.keySet(session, _CLASS_NAME);
+	public static Set<String> keySet(HttpSession httpSession) {
+		return _sessionMaps.keySet(httpSession, _CLASS_NAME);
 	}
 
 	public static Set<String> keySet(PortletRequest portletRequest) {
 		return _sessionMaps.keySet(
-			_getPortalSession(portletRequest), _getKey(portletRequest));
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest));
 	}
 
 	public static void print(HttpServletRequest httpServletRequest) {
-		print(_getPortalSession(httpServletRequest));
+		print(_getPortalHttpSession(httpServletRequest));
 	}
 
-	public static void print(HttpSession session) {
-		Iterator<String> iterator = iterator(session);
+	public static void print(HttpSession httpSession) {
+		Iterator<String> iterator = iterator(httpSession);
 
 		while (iterator.hasNext()) {
 			System.out.println(iterator.next());
@@ -303,21 +310,21 @@ public class SessionErrors {
 		HttpServletRequest httpServletRequest, Class<?> clazz) {
 
 		_sessionMaps.remove(
-			_getPortalSession(httpServletRequest), _CLASS_NAME,
+			_getPortalHttpSession(httpServletRequest), _CLASS_NAME,
 			clazz.getName());
 	}
 
 	public static int size(HttpServletRequest httpServletRequest) {
-		return size(_getPortalSession(httpServletRequest));
+		return size(_getPortalHttpSession(httpServletRequest));
 	}
 
-	public static int size(HttpSession session) {
-		return _sessionMaps.size(session, _CLASS_NAME);
+	public static int size(HttpSession httpSession) {
+		return _sessionMaps.size(httpSession, _CLASS_NAME);
 	}
 
 	public static int size(PortletRequest portletRequest) {
 		return _sessionMaps.size(
-			_getPortalSession(portletRequest), _getKey(portletRequest));
+			_getPortalHttpSession(portletRequest), _getKey(portletRequest));
 	}
 
 	private static String _getKey(PortletRequest portletRequest) {
@@ -336,7 +343,7 @@ public class SessionErrors {
 		return sb.toString();
 	}
 
-	private static HttpSession _getPortalSession(
+	private static HttpSession _getPortalHttpSession(
 		HttpServletRequest httpServletRequest) {
 
 		HttpServletRequest originalHttpServletRequest =
@@ -345,10 +352,10 @@ public class SessionErrors {
 		return originalHttpServletRequest.getSession();
 	}
 
-	private static HttpSession _getPortalSession(
+	private static HttpSession _getPortalHttpSession(
 		PortletRequest portletRequest) {
 
-		return _getPortalSession(
+		return _getPortalHttpSession(
 			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 

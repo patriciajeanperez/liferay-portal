@@ -42,30 +42,17 @@ import 'codemirror/addon/hint/xml-hint';
 
 import 'codemirror/lib/codemirror.css';
 
-import 'codemirror/mode/velocity/velocity';
+import 'codemirror/mode/htmlmixed/htmlmixed';
 
-import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/javascript/javascript';
 import CodeMirror from 'codemirror';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
-
-const VARIABLE_MARKERS = {
-	ftl: {
-		variableEnd: '}',
-		variableStart: '${',
-	},
-
-	velocity: {
-		variableEnd: '',
-		variableStart: '$',
-	},
-};
 
 export const CodeMirrorEditor = ({
 	autocompleteData,
 	content,
 	inputChannel,
-	mode,
 	onChange,
 }) => {
 	const [editor, setEditor] = useState();
@@ -100,7 +87,8 @@ export const CodeMirrorEditor = ({
 
 	useEffect(() => {
 		if (editor) {
-			const {variableEnd, variableStart} = VARIABLE_MARKERS[mode] || {};
+			const variableStart = '${';
+			const variableEnd = '}';
 
 			let wordList = [];
 
@@ -194,7 +182,7 @@ export const CodeMirrorEditor = ({
 
 			editor.setOption('mode', {
 				globalVars: true,
-				name: mode,
+				name: 'ftl',
 			});
 
 			const handleEditorChange = (cm) => {
@@ -211,7 +199,7 @@ export const CodeMirrorEditor = ({
 				editor.off('change', handleEditorChange);
 			};
 		}
-	}, [autocompleteData, editor, mode]);
+	}, [autocompleteData, editor]);
 
 	useEffect(() => {
 		if (!editor) {
@@ -259,6 +247,5 @@ CodeMirrorEditor.propTypes = {
 	inputChannel: PropTypes.shape({
 		onData: PropTypes.func.isRequired,
 	}),
-	mode: PropTypes.oneOf(['ftl', 'xml', 'velocity']),
 	onChange: PropTypes.func.isRequired,
 };

@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/global_search/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/global_search/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('global-search', 'global-search-root', {
 	accountURLTemplate: '/account-page/{id}',

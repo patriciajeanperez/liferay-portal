@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.model.RemoteAppEntryModel;
+import com.liferay.remote.app.model.RemoteAppEntrySoap;
 
 import java.io.Serializable;
 
@@ -46,10 +47,12 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -69,6 +72,7 @@ import java.util.function.Function;
  * @see RemoteAppEntryImpl
  * @generated
  */
+@JSON(strict = true)
 public class RemoteAppEntryModelImpl
 	extends BaseModelImpl<RemoteAppEntry> implements RemoteAppEntryModel {
 
@@ -84,7 +88,11 @@ public class RemoteAppEntryModelImpl
 		{"remoteAppEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"url", Types.VARCHAR}
+		{"customElementCSSURLs", Types.CLOB},
+		{"customElementHTMLElementName", Types.VARCHAR},
+		{"customElementURLs", Types.CLOB}, {"iFrameURL", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"portletCategoryName", Types.VARCHAR},
+		{"properties", Types.CLOB}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,20 +107,26 @@ public class RemoteAppEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("customElementCSSURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("customElementHTMLElementName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("customElementURLs", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("iFrameURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("portletCategoryName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("properties", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,url VARCHAR(1024) null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,iFrameURL STRING null,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY remoteAppEntry.name ASC";
+		" ORDER BY remoteAppEntry.remoteAppEntryId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY RemoteAppEntry.name ASC";
+		" ORDER BY RemoteAppEntry.remoteAppEntryId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -130,20 +144,14 @@ public class RemoteAppEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URL_COLUMN_BITMASK = 2L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long REMOTEAPPENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -157,6 +165,67 @@ public class RemoteAppEntryModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static RemoteAppEntry toModel(RemoteAppEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		RemoteAppEntry model = new RemoteAppEntryImpl();
+
+		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUuid(soapModel.getUuid());
+		model.setRemoteAppEntryId(soapModel.getRemoteAppEntryId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setCustomElementCSSURLs(soapModel.getCustomElementCSSURLs());
+		model.setCustomElementHTMLElementName(
+			soapModel.getCustomElementHTMLElementName());
+		model.setCustomElementURLs(soapModel.getCustomElementURLs());
+		model.setIFrameURL(soapModel.getIFrameURL());
+		model.setName(soapModel.getName());
+		model.setPortletCategoryName(soapModel.getPortletCategoryName());
+		model.setProperties(soapModel.getProperties());
+		model.setType(soapModel.getType());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static List<RemoteAppEntry> toModels(
+		RemoteAppEntrySoap[] soapModels) {
+
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<RemoteAppEntry> models = new ArrayList<RemoteAppEntry>(
+			soapModels.length);
+
+		for (RemoteAppEntrySoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
 	}
 
 	public RemoteAppEntryModelImpl() {
@@ -320,13 +389,48 @@ public class RemoteAppEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<RemoteAppEntry, Date>)RemoteAppEntry::setModifiedDate);
+		attributeGetterFunctions.put(
+			"customElementCSSURLs", RemoteAppEntry::getCustomElementCSSURLs);
+		attributeSetterBiConsumers.put(
+			"customElementCSSURLs",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setCustomElementCSSURLs);
+		attributeGetterFunctions.put(
+			"customElementHTMLElementName",
+			RemoteAppEntry::getCustomElementHTMLElementName);
+		attributeSetterBiConsumers.put(
+			"customElementHTMLElementName",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setCustomElementHTMLElementName);
+		attributeGetterFunctions.put(
+			"customElementURLs", RemoteAppEntry::getCustomElementURLs);
+		attributeSetterBiConsumers.put(
+			"customElementURLs",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setCustomElementURLs);
+		attributeGetterFunctions.put("iFrameURL", RemoteAppEntry::getIFrameURL);
+		attributeSetterBiConsumers.put(
+			"iFrameURL",
+			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setIFrameURL);
 		attributeGetterFunctions.put("name", RemoteAppEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setName);
-		attributeGetterFunctions.put("url", RemoteAppEntry::getUrl);
+		attributeGetterFunctions.put(
+			"portletCategoryName", RemoteAppEntry::getPortletCategoryName);
 		attributeSetterBiConsumers.put(
-			"url", (BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setUrl);
+			"portletCategoryName",
+			(BiConsumer<RemoteAppEntry, String>)
+				RemoteAppEntry::setPortletCategoryName);
+		attributeGetterFunctions.put(
+			"properties", RemoteAppEntry::getProperties);
+		attributeSetterBiConsumers.put(
+			"properties",
+			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setProperties);
+		attributeGetterFunctions.put("type", RemoteAppEntry::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -334,6 +438,7 @@ public class RemoteAppEntryModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -348,6 +453,7 @@ public class RemoteAppEntryModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -376,6 +482,7 @@ public class RemoteAppEntryModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public long getRemoteAppEntryId() {
 		return _remoteAppEntryId;
@@ -390,6 +497,7 @@ public class RemoteAppEntryModelImpl
 		_remoteAppEntryId = remoteAppEntryId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -414,6 +522,7 @@ public class RemoteAppEntryModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -444,6 +553,7 @@ public class RemoteAppEntryModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -463,6 +573,7 @@ public class RemoteAppEntryModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -477,6 +588,7 @@ public class RemoteAppEntryModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -497,6 +609,89 @@ public class RemoteAppEntryModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public String getCustomElementCSSURLs() {
+		if (_customElementCSSURLs == null) {
+			return "";
+		}
+		else {
+			return _customElementCSSURLs;
+		}
+	}
+
+	@Override
+	public void setCustomElementCSSURLs(String customElementCSSURLs) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementCSSURLs = customElementCSSURLs;
+	}
+
+	@JSON
+	@Override
+	public String getCustomElementHTMLElementName() {
+		if (_customElementHTMLElementName == null) {
+			return "";
+		}
+		else {
+			return _customElementHTMLElementName;
+		}
+	}
+
+	@Override
+	public void setCustomElementHTMLElementName(
+		String customElementHTMLElementName) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementHTMLElementName = customElementHTMLElementName;
+	}
+
+	@JSON
+	@Override
+	public String getCustomElementURLs() {
+		if (_customElementURLs == null) {
+			return "";
+		}
+		else {
+			return _customElementURLs;
+		}
+	}
+
+	@Override
+	public void setCustomElementURLs(String customElementURLs) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_customElementURLs = customElementURLs;
+	}
+
+	@JSON
+	@Override
+	public String getIFrameURL() {
+		if (_iFrameURL == null) {
+			return "";
+		}
+		else {
+			return _iFrameURL;
+		}
+	}
+
+	@Override
+	public void setIFrameURL(String iFrameURL) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_iFrameURL = iFrameURL;
+	}
+
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -603,32 +798,64 @@ public class RemoteAppEntryModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
-	public String getUrl() {
-		if (_url == null) {
+	public String getPortletCategoryName() {
+		if (_portletCategoryName == null) {
 			return "";
 		}
 		else {
-			return _url;
+			return _portletCategoryName;
 		}
 	}
 
 	@Override
-	public void setUrl(String url) {
+	public void setPortletCategoryName(String portletCategoryName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_url = url;
+		_portletCategoryName = portletCategoryName;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalUrl() {
-		return getColumnOriginalValue("url");
+	@JSON
+	@Override
+	public String getProperties() {
+		if (_properties == null) {
+			return "";
+		}
+		else {
+			return _properties;
+		}
+	}
+
+	@Override
+	public void setProperties(String properties) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_properties = properties;
+	}
+
+	@JSON
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
 	}
 
 	@Override
@@ -791,8 +1018,15 @@ public class RemoteAppEntryModelImpl
 		remoteAppEntryImpl.setUserName(getUserName());
 		remoteAppEntryImpl.setCreateDate(getCreateDate());
 		remoteAppEntryImpl.setModifiedDate(getModifiedDate());
+		remoteAppEntryImpl.setCustomElementCSSURLs(getCustomElementCSSURLs());
+		remoteAppEntryImpl.setCustomElementHTMLElementName(
+			getCustomElementHTMLElementName());
+		remoteAppEntryImpl.setCustomElementURLs(getCustomElementURLs());
+		remoteAppEntryImpl.setIFrameURL(getIFrameURL());
 		remoteAppEntryImpl.setName(getName());
-		remoteAppEntryImpl.setUrl(getUrl());
+		remoteAppEntryImpl.setPortletCategoryName(getPortletCategoryName());
+		remoteAppEntryImpl.setProperties(getProperties());
+		remoteAppEntryImpl.setType(getType());
 
 		remoteAppEntryImpl.resetOriginalValues();
 
@@ -819,23 +1053,39 @@ public class RemoteAppEntryModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		remoteAppEntryImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		remoteAppEntryImpl.setCustomElementCSSURLs(
+			this.<String>getColumnOriginalValue("customElementCSSURLs"));
+		remoteAppEntryImpl.setCustomElementHTMLElementName(
+			this.<String>getColumnOriginalValue(
+				"customElementHTMLElementName"));
+		remoteAppEntryImpl.setCustomElementURLs(
+			this.<String>getColumnOriginalValue("customElementURLs"));
+		remoteAppEntryImpl.setIFrameURL(
+			this.<String>getColumnOriginalValue("iFrameURL"));
 		remoteAppEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
-		remoteAppEntryImpl.setUrl(this.<String>getColumnOriginalValue("url"));
+		remoteAppEntryImpl.setPortletCategoryName(
+			this.<String>getColumnOriginalValue("portletCategoryName"));
+		remoteAppEntryImpl.setProperties(
+			this.<String>getColumnOriginalValue("properties"));
+		remoteAppEntryImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
 
 		return remoteAppEntryImpl;
 	}
 
 	@Override
 	public int compareTo(RemoteAppEntry remoteAppEntry) {
-		int value = 0;
+		long primaryKey = remoteAppEntry.getPrimaryKey();
 
-		value = getName().compareToIgnoreCase(remoteAppEntry.getName());
-
-		if (value != 0) {
-			return value;
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
 		}
-
-		return 0;
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -939,6 +1189,46 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		remoteAppEntryCacheModel.customElementCSSURLs =
+			getCustomElementCSSURLs();
+
+		String customElementCSSURLs =
+			remoteAppEntryCacheModel.customElementCSSURLs;
+
+		if ((customElementCSSURLs != null) &&
+			(customElementCSSURLs.length() == 0)) {
+
+			remoteAppEntryCacheModel.customElementCSSURLs = null;
+		}
+
+		remoteAppEntryCacheModel.customElementHTMLElementName =
+			getCustomElementHTMLElementName();
+
+		String customElementHTMLElementName =
+			remoteAppEntryCacheModel.customElementHTMLElementName;
+
+		if ((customElementHTMLElementName != null) &&
+			(customElementHTMLElementName.length() == 0)) {
+
+			remoteAppEntryCacheModel.customElementHTMLElementName = null;
+		}
+
+		remoteAppEntryCacheModel.customElementURLs = getCustomElementURLs();
+
+		String customElementURLs = remoteAppEntryCacheModel.customElementURLs;
+
+		if ((customElementURLs != null) && (customElementURLs.length() == 0)) {
+			remoteAppEntryCacheModel.customElementURLs = null;
+		}
+
+		remoteAppEntryCacheModel.iFrameURL = getIFrameURL();
+
+		String iFrameURL = remoteAppEntryCacheModel.iFrameURL;
+
+		if ((iFrameURL != null) && (iFrameURL.length() == 0)) {
+			remoteAppEntryCacheModel.iFrameURL = null;
+		}
+
 		remoteAppEntryCacheModel.name = getName();
 
 		String name = remoteAppEntryCacheModel.name;
@@ -947,12 +1237,31 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.name = null;
 		}
 
-		remoteAppEntryCacheModel.url = getUrl();
+		remoteAppEntryCacheModel.portletCategoryName = getPortletCategoryName();
 
-		String url = remoteAppEntryCacheModel.url;
+		String portletCategoryName =
+			remoteAppEntryCacheModel.portletCategoryName;
 
-		if ((url != null) && (url.length() == 0)) {
-			remoteAppEntryCacheModel.url = null;
+		if ((portletCategoryName != null) &&
+			(portletCategoryName.length() == 0)) {
+
+			remoteAppEntryCacheModel.portletCategoryName = null;
+		}
+
+		remoteAppEntryCacheModel.properties = getProperties();
+
+		String properties = remoteAppEntryCacheModel.properties;
+
+		if ((properties != null) && (properties.length() == 0)) {
+			remoteAppEntryCacheModel.properties = null;
+		}
+
+		remoteAppEntryCacheModel.type = getType();
+
+		String type = remoteAppEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			remoteAppEntryCacheModel.type = null;
 		}
 
 		return remoteAppEntryCacheModel;
@@ -1054,9 +1363,15 @@ public class RemoteAppEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _customElementCSSURLs;
+	private String _customElementHTMLElementName;
+	private String _customElementURLs;
+	private String _iFrameURL;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private String _url;
+	private String _portletCategoryName;
+	private String _properties;
+	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1095,8 +1410,16 @@ public class RemoteAppEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"customElementCSSURLs", _customElementCSSURLs);
+		_columnOriginalValues.put(
+			"customElementHTMLElementName", _customElementHTMLElementName);
+		_columnOriginalValues.put("customElementURLs", _customElementURLs);
+		_columnOriginalValues.put("iFrameURL", _iFrameURL);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("url", _url);
+		_columnOriginalValues.put("portletCategoryName", _portletCategoryName);
+		_columnOriginalValues.put("properties", _properties);
+		_columnOriginalValues.put("type_", _type);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1105,6 +1428,7 @@ public class RemoteAppEntryModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1136,9 +1460,21 @@ public class RemoteAppEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("customElementCSSURLs", 256L);
 
-		columnBitmasks.put("url", 512L);
+		columnBitmasks.put("customElementHTMLElementName", 512L);
+
+		columnBitmasks.put("customElementURLs", 1024L);
+
+		columnBitmasks.put("iFrameURL", 2048L);
+
+		columnBitmasks.put("name", 4096L);
+
+		columnBitmasks.put("portletCategoryName", 8192L);
+
+		columnBitmasks.put("properties", 16384L);
+
+		columnBitmasks.put("type_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

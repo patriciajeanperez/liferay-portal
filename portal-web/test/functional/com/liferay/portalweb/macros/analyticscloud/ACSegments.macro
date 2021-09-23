@@ -177,6 +177,16 @@ definition {
 		ACSegments.selectSegmentType(segmentType = "DYNAMIC");
 	}
 
+	macro createDynamicSegmentAndFillFields {
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "${segments}");
+
+		ACSegments.goToSidebarAttributes(criterion = "${criterion}");
+
+		ACSegments.addSegmentField(segmentField = "${segmentField}");
+	}
+
 	macro createStaticSegment {
 		Click(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
 
@@ -479,6 +489,14 @@ definition {
 		Click(locator1 = "Icon#EYE_PREVIEW");
 	}
 
+	macro removeStaticMember {
+		var key_TableMember = "${tableMember}";
+
+		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
+
+		Click(locator1 = "ACSegments#REMOVE_MEMBERS_BUTTON");
+	}
+
 	macro saveSegment {
 		Click(locator1 = "ACSegments#SAVE_SEGMENT");
 
@@ -566,6 +584,10 @@ definition {
 		Type(
 			locator1 = "ACSegments#OCCURENCE_INPUT",
 			value1 = "${occurenceNumber}");
+	}
+
+	macro sortSegmentButton {
+		Click(locator1 = "ACSegments#ADD_MEMBERS_SORT_BUTTON");
 	}
 
 	macro viewActivePageCreationModel {
@@ -659,11 +681,19 @@ definition {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
 				value1 = "${individualsNumber}");
+
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
+				value1 = "${individualsPercent}");
 		}
 		else if ("${individualsType}" == "Known") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
 				value1 = "${individualsNumber}");
+
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_COMPOSITION_PERCENT",
+				value1 = "${individualsPercent}");
 		}
 	}
 

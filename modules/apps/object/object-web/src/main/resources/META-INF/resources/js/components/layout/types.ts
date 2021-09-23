@@ -23,6 +23,7 @@ export type TObjectLayout = {
 };
 
 export type TObjectLayoutTab = {
+	objectRelationshipId: number;
 	name: TName;
 	objectLayoutBoxes: TObjectLayoutBox[];
 	priority: number;
@@ -43,6 +44,7 @@ export type TObjectLayoutRow = {
 export type TObjectLayoutColumn = {
 	objectFieldId: number;
 	priority: number;
+	size: number;
 };
 
 export type TObjectField = {
@@ -50,9 +52,20 @@ export type TObjectField = {
 	indexed: boolean;
 	indexedAsKeyword: boolean;
 	indexedLanguageId: string;
+	inLayout?: boolean;
 	label: TName;
 	listTypeDefinitionId: boolean;
 	name: string;
 	required: boolean;
+	type: string;
+};
+
+export type TObjectRelationship = {
+	id: number;
+	inLayout?: boolean;
+	label: TName;
+	name: string;
+	objectDefinitionId1: number;
+	objectDefinitionId2: number;
 	type: string;
 };

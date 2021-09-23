@@ -20,19 +20,20 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
-import com.liferay.object.service.ObjectLayoutLocalService;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectLayoutService;
 import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,12 +49,27 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 
 	@Override
+	public void deleteObjectLayout(Long objectLayoutId) throws Exception {
+		_objectLayoutService.deleteObjectLayout(objectLayoutId);
+	}
+
+	@Override
 	public Page<ObjectLayout> getObjectDefinitionObjectLayoutsPage(
 			Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postObjectDefinitionObjectLayout",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectDefinitionObjectLayoutsPage",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).build(),
 			booleanQuery -> {
 			},
 			null, com.liferay.object.model.ObjectLayout.class.getName(), search,
@@ -68,14 +84,14 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			},
 			null,
 			document -> _toObjectLayout(
-				_objectLayoutLocalService.getObjectLayout(
+				_objectLayoutService.getObjectLayout(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public ObjectLayout getObjectLayout(Long objectLayoutId) throws Exception {
 		return _toObjectLayout(
-			_objectLayoutLocalService.getObjectLayout(objectLayoutId));
+			_objectLayoutService.getObjectLayout(objectLayoutId));
 	}
 
 	@Override
@@ -84,8 +100,8 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		throws Exception {
 
 		return _toObjectLayout(
-			_objectLayoutLocalService.addObjectLayout(
-				contextUser.getUserId(), objectDefinitionId,
+			_objectLayoutService.addObjectLayout(
+				objectDefinitionId,
 				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
 				transformToList(
@@ -99,7 +115,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 		throws Exception {
 
 		return _toObjectLayout(
-			_objectLayoutLocalService.updateObjectLayout(
+			_objectLayoutService.updateObjectLayout(
 				objectLayoutId, objectLayout.getDefaultObjectLayout(),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
 				transformToList(
@@ -112,6 +128,25 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 
 		return new ObjectLayout() {
 			{
+				actions = HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, "deleteObjectLayout",
+						ObjectDefinition.class.getName(),
+						serviceBuilderObjectLayout.getObjectDefinitionId())
+				).put(
+					"get",
+					addAction(
+						ActionKeys.VIEW, "getObjectLayout",
+						ObjectDefinition.class.getName(),
+						serviceBuilderObjectLayout.getObjectDefinitionId())
+				).put(
+					"update",
+					addAction(
+						ActionKeys.UPDATE, "putObjectLayout",
+						ObjectDefinition.class.getName(),
+						serviceBuilderObjectLayout.getObjectDefinitionId())
+				).build();
 				dateCreated = serviceBuilderObjectLayout.getCreateDate();
 				dateModified = serviceBuilderObjectLayout.getModifiedDate();
 				defaultObjectLayout =
@@ -178,6 +213,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 				objectFieldId =
 					serviceBuilderObjectLayoutColumn.getObjectFieldId();
 				priority = serviceBuilderObjectLayoutColumn.getPriority();
+				size = serviceBuilderObjectLayoutColumn.getSize();
 			}
 		};
 	}
@@ -193,6 +229,8 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 			objectLayoutColumn.getObjectFieldId());
 		serviceBuilderObjectLayoutColumn.setPriority(
 			objectLayoutColumn.getPriority());
+		serviceBuilderObjectLayoutColumn.setSize(
+			GetterUtil.getInteger(objectLayoutColumn.getSize(), 12));
 
 		return serviceBuilderObjectLayoutColumn;
 	}
@@ -277,10 +315,10 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
 
 	@Reference
-	private ObjectLayoutLocalService _objectLayoutLocalService;
+	private ObjectLayoutRowPersistence _objectLayoutRowPersistence;
 
 	@Reference
-	private ObjectLayoutRowPersistence _objectLayoutRowPersistence;
+	private ObjectLayoutService _objectLayoutService;
 
 	@Reference
 	private ObjectLayoutTabPersistence _objectLayoutTabPersistence;

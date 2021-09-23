@@ -14,9 +14,19 @@
 
 package com.liferay.search.experiences.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.search.experiences.service.SXPBlueprintServiceUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.search.experiences.service.SXPBlueprintServiceUtil</code> service
+ * <code>SXPBlueprintServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,105 @@ package com.liferay.search.experiences.service.http;
  */
 @Deprecated
 public class SXPBlueprintServiceSoap {
+
+	public static com.liferay.search.experiences.model.SXPBlueprintSoap
+			addSXPBlueprint(
+				String configurationsJSON, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, String elementInstancesJSON,
+				String[] titleMapLanguageIds, String[] titleMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+
+			com.liferay.search.experiences.model.SXPBlueprint returnValue =
+				SXPBlueprintServiceUtil.addSXPBlueprint(
+					configurationsJSON, descriptionMap, elementInstancesJSON,
+					titleMap, serviceContext);
+
+			return com.liferay.search.experiences.model.SXPBlueprintSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPBlueprintSoap
+			deleteSXPBlueprint(long sxpBlueprintId)
+		throws RemoteException {
+
+		try {
+			com.liferay.search.experiences.model.SXPBlueprint returnValue =
+				SXPBlueprintServiceUtil.deleteSXPBlueprint(sxpBlueprintId);
+
+			return com.liferay.search.experiences.model.SXPBlueprintSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPBlueprintSoap
+			getSXPBlueprint(long sxpBlueprintId)
+		throws RemoteException {
+
+		try {
+			com.liferay.search.experiences.model.SXPBlueprint returnValue =
+				SXPBlueprintServiceUtil.getSXPBlueprint(sxpBlueprintId);
+
+			return com.liferay.search.experiences.model.SXPBlueprintSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPBlueprintSoap
+			updateSXPBlueprint(
+				long sxpBlueprintId, String configurationsJSON,
+				String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, String elementInstancesJSON,
+				String[] titleMapLanguageIds, String[] titleMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+
+			com.liferay.search.experiences.model.SXPBlueprint returnValue =
+				SXPBlueprintServiceUtil.updateSXPBlueprint(
+					sxpBlueprintId, configurationsJSON, descriptionMap,
+					elementInstancesJSON, titleMap, serviceContext);
+
+			return com.liferay.search.experiences.model.SXPBlueprintSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SXPBlueprintServiceSoap.class);
+
 }

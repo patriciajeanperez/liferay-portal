@@ -18,12 +18,16 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-import RequiredMask from './RequiredMask';
+import {
+	firstLetterLowercase,
+	firstLetterUppercase,
+	removeAllSpecialCharacters,
+} from '../utils/string';
+import RequiredMask from './form/RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	objectDefinitions: TObjectDefinition[];
-	spritemap: string;
 }
 
 type TObjectDefinition = {
@@ -32,6 +36,10 @@ type TObjectDefinition = {
 };
 
 type TFormState = {
+	generateAutoName: boolean;
+	label: {
+		[key: string]: string;
+	};
 	name: string;
 	objectDefinitionId2: number;
 	type: string;
@@ -44,13 +52,30 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
+type TFormatName = (str: string) => string;
+
+const formatName: TFormatName = (str) => {
+	const split = str.split(' ');
+	const capitalizeFirstLetters = split.map((str: string) =>
+		firstLetterUppercase(str)
+	);
+	const join = capitalizeFirstLetters.join('');
+
+	return firstLetterLowercase(removeAllSpecialCharacters(join));
+};
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 const ModalAddObjectRelationship: React.FC<IProps> = ({
 	apiURL,
 	objectDefinitions,
-	spritemap,
 }) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
+		generateAutoName: true,
+		label: {
+			[defaultLanguageId]: '',
+		},
 		name: '',
 		objectDefinitionId2: 0,
 		type: '',
@@ -62,10 +87,11 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	});
 
 	const handleSaveObjectRelationship = async () => {
-		const {name, objectDefinitionId2, type} = formState;
+		const {label, name, objectDefinitionId2, type} = formState;
 
 		const response = await Liferay.Util.fetch(apiURL, {
 			body: JSON.stringify({
+				label: label ?? {[defaultLanguageId]: name},
 				name,
 				objectDefinitionId2,
 				type,
@@ -114,13 +140,33 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 					<ClayModal.Body>
 						{error && (
-							<ClayAlert
-								displayType="danger"
-								spritemap={spritemap}
-							>
-								{error}
-							</ClayAlert>
+							<ClayAlert displayType="danger">{error}</ClayAlert>
 						)}
+
+						<ClayForm.Group>
+							<label htmlFor="objectRelationshipLabel">
+								{Liferay.Language.get('label')}
+							</label>
+
+							<ClayInput
+								id="objectRelationshipLabel"
+								onChange={({target: {value}}) => {
+									setFormState({
+										...formState,
+										...(formState.generateAutoName && {
+											name: formatName(value),
+										}),
+										label: {
+											[defaultLanguageId]: value,
+										},
+									});
+
+									error && setError('');
+								}}
+								type="text"
+								value={formState.label[defaultLanguageId]}
+							/>
+						</ClayForm.Group>
 
 						<ClayForm.Group>
 							<label htmlFor="objectRelationshipName">
@@ -247,7 +293,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
+const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		TObjectDefinition[]
 	>([]);
@@ -282,7 +328,6 @@ const ModalWithProvider: React.FC<IProps> = ({apiURL, spritemap}) => {
 			<ModalAddObjectRelationship
 				apiURL={apiURL}
 				objectDefinitions={objectDefinitions}
-				spritemap={spritemap}
 			/>
 		</ClayModalProvider>
 	);

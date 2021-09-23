@@ -103,6 +103,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -362,7 +364,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 1") {
@@ -466,7 +468,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 1") {
@@ -570,7 +572,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 2") {
@@ -599,6 +601,8 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
+
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
@@ -652,6 +656,8 @@ definition {
 				siteName = "Site Name");
 		}
 
+		ACUtils.closeAllSessionsAndWait();
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -690,6 +696,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
 	@priority = "3"
 	test CanCreateNestedCriteria {
+		var usernameList = "userea,user1,test";
+
+		var fullNameList = "userfn userln,Test Test,user1 user1";
+
 		task ("Add one more user with a given birth date") {
 			JSONUser.addUser(
 				birthdayDay = "10",
@@ -715,7 +725,7 @@ definition {
 		}
 
 		task ("View the page as different users") {
-			for (var username : list "userea,user1,test") {
+			for (var username : list "${usernameList}") {
 				if ("${username}" == "userea") {
 					var fullName = "userfn userln";
 				}
@@ -735,7 +745,13 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
+		}
+
+		task ("Close sessions and wait for 30 seconds") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -778,7 +794,7 @@ definition {
 		task ("Add a userName criteria from Individual Attributes nested in email") {
 			ACSegments.addNestedSegmentField(
 				index = "2",
-				segmentField = "userName");
+				segmentField = "additionalName");
 
 			ACSegments.selectOperator(
 				index = "3",
@@ -812,77 +828,136 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("View the number of Membership is 2") {
-			ACAssets.viewAssetsInfo(
-				assetName = "Dynamic Segment Test",
-				index = "1",
-				value = "2");
+		task ("View both criterias in Segment Criteria card") {
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "email",
+				attributeValue = '''"@liferay.com"''',
+				condition = "contains",
+				conjunction = "AND");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "birthDate",
+				attributeValue = "2000-09-10",
+				condition = "is after",
+				conjunction = "OR",
+				index = "2");
+
+			ACSegments.viewSegmentCriteriaIndividualAttributes(
+				attributeName = "additionalName",
+				attributeValue = '''"@liferay.com"''',
+				condition = "does not contain",
+				index = "2",
+				key_indexNested = "2");
+		}
+
+		task ("Switch tab to membership and check the membership list") {
+			ACNavigation.switchTab(tabName = "Membership");
+
+			ACUtils.viewNameList(nameList = "${fullNameList}");
 		}
 	}
 
-	@description = "Create a segment that contains anonymous individuals"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-7962 | Test Summary: Create a segment that contains anonymous individuals"
 	@priority = "5"
 	test CanCreateSegmentWithAnonymousIndividuals {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: data doesn't appear on time
+		// AC Refactor ticket: LRAC-9363
+
+		var usernameList = "ac,liferay,dxp";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
 
-		JSONUser.addUser(
-			userEmailAddress = "liferay@liferay.com",
-			userFirstName = "liferay",
-			userLastName = "liferay",
-			userScreenName = "liferay");
+		task ("Add new users") {
+			for (var username : list "${usernameList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${username}@liferay.com",
+					userFirstName = "${username}",
+					userLastName = "${username}",
+					userScreenName = "${username}");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "liferay@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "liferay@liferay.com",
-			userLoginFullName = "liferay liferay");
-
-		task ("View the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${username}@liferay.com");
+			}
 		}
 
-		ACUtils.launchAC();
+		task ("Login with users and view the site page") {
+			for (var username : list "${usernameList}") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${username} ${username}");
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-		ACNavigation.goToSegments();
+				Pause(locator1 = "5000");
+			}
+		}
 
-		ACSegments.createDynamicSegment();
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
 
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
-		ACSegments.includeAnonymous();
+		task ("Add a new dynamic segment") {
+			ACNavigation.goToSegments();
 
-		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
+			ACSegments.createDynamicSegment();
 
-		ACSegments.addSegmentField(segmentField = "fullName");
+			ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		}
 
-		ACSegments.editFormControlCriterion(
-			criterionName = "fullName",
-			option = "is unknown");
+		task ("Mark anonymous toggle") {
+			ACSegments.includeAnonymous();
+		}
 
-		ACSegments.saveSegment();
+		task ("Add an fullName criteria from Individual Attributes") {
+			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-		ACNavigation.goToSegments();
+			ACSegments.addSegmentField(segmentField = "fullName");
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+			ACSegments.editFormControlCriterion(
+				criterionName = "fullName",
+				option = "is unknown");
+		}
 
-		ACSegments.viewSegmentMembershipLegendNumbers(
-			anonymousNumber = "1",
-			knownNumber = "1",
-			totalNumber = "2");
+		task ("Save the segment") {
+			ACSegments.saveSegment();
+		}
 
-		ACSegments.viewIncludeAnonymousLabel();
+		task ("Navigate to Segments admin") {
+			ACNavigation.goToSegments();
+		}
+
+		task ("Access the new segment") {
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
+		task ("View segment membership numbers") {
+
+			// AC Refactor: data doesn't appear on time
+
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "3",
+				knownNumber = "0",
+				totalNumber = "3");
+		}
+
+		task ("View include anonymous label") {
+			ACSegments.viewIncludeAnonymousLabel();
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8479 | Test Summary: Create a Segment with a Number Property"
@@ -974,7 +1049,7 @@ definition {
 		task ("Search the new segment") {
 			ACUtils.searchBar(searchItem = "Dynamic Segment Test");
 
-			ACAssets.viewAssets(assetName = "Dynamic Segment Test");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 		}
 
 		task ("View the number of Membership is 2") {
@@ -1108,6 +1183,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8471 | Test Summary: Paginate Segment Profile in Membership List"
 	@priority = "3"
 	test CanPaginateSegmentProfileInMembershipList {
+		var usernameList = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4";
+
 		task ("Add 5 more new users") {
 			for (var n : list "1,2,3,4,5") {
 				JSONUser.addUser(
@@ -1148,6 +1225,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -1186,13 +1265,11 @@ definition {
 		}
 
 		task ("View only 5 users are shown in page 1") {
-			for (var username : list "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "${usernameList}");
 
 			AssertElementNotPresent(
 				key_assetName = "user5 user5",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Navigate to the page 2") {
@@ -1200,7 +1277,7 @@ definition {
 		}
 
 		task ("View the user5 user5 is shown in page 2") {
-			ACAssets.viewAssets(assetName = "user5 user5");
+			ACUtils.viewNameList(nameList = "user5 user5");
 		}
 	}
 
@@ -1247,6 +1324,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
 			}
 		}
 
@@ -1306,6 +1385,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
+		var usernameList = "userfn userln,user1 user1";
+
 		task ("Add one more user with a jobTitle") {
 			JSONUser.addUser(
 				jobTitle = "lawyer",
@@ -1345,10 +1426,14 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 		}
 
 		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -1375,9 +1460,7 @@ definition {
 		task ("View two users are shown on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			for (var username : list "userfn userln,user1 user1") {
-				ACAssets.viewAssets(assetName = "${username}");
-			}
+			ACUtils.viewNameList(nameList = "${usernameList}");
 
 			Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 		}
@@ -1393,11 +1476,11 @@ definition {
 		task ("View only one user is shown on Preview mode") {
 			ACSegments.previewSegmentMembership();
 
-			ACAssets.viewAssets(assetName = "user1 user1");
+			ACUtils.viewNameList(nameList = "user1 user1");
 
 			AssertElementNotPresent(
 				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 	}
 
@@ -1442,10 +1525,14 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 		}
 
 		task ("Switch to new property in AC") {
+			ACUtils.closeAllSessionsAndWait();
+
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -1466,11 +1553,11 @@ definition {
 		task ("View only the userea shown in modal") {
 			AssertVisible(
 				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 
 			AssertElementNotPresent(
 				key_assetName = "user1 user1",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 
 		task ("Search email in Add Members modal") {
@@ -1482,11 +1569,11 @@ definition {
 		task ("View only the user1 shown in modal") {
 			AssertVisible(
 				key_assetName = "user1 user1",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 
 			AssertElementNotPresent(
 				key_assetName = "userfn userln",
-				locator1 = "ACAssets#ASSETS_TABLE");
+				locator1 = "ACUtils#NAME_LIST");
 		}
 	}
 

@@ -17,59 +17,129 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-RemoteAppEntry remoteAppEntry = (RemoteAppEntry)request.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
-
-long remoteAppEntryId = BeanParamUtil.getLong(remoteAppEntry, request, "remoteAppEntryId");
+EditRemoteAppEntryDisplayContext editRemoteAppEntryDisplayContext = (EditRemoteAppEntryDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(editRemoteAppEntryDisplayContext.getRedirect());
 
-renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "new-remote-app") : remoteAppEntry.getName(locale));
+renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 %>
 
 <portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
 
-<clay:container-fluid>
-	<aui:form action="<%= editRemoteAppEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveRemoteAppEntry();" %>'>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="remoteAppEntryId" type="hidden" value="<%= remoteAppEntryId %>" />
+<liferay-frontend:edit-form
+	action="<%= editRemoteAppEntryURL %>"
+	method="post"
+>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getCmd() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getRedirect() %>" />
+	<aui:input name="remoteAppEntryId" type="hidden" value="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntryId() %>" />
 
-		<liferay-ui:error exception="<%= DuplicateRemoteAppEntryException.class %>" message="please-enter-a-unique-remote-app-url" />
+	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementCSSURLsException.class %>" message="please-enter-valid-css-urls" />
+	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementHTMLElementNameException.class %>" message="please-enter-a-valid-html-element-name" />
+	<liferay-ui:error exception="<%= RemoteAppEntryCustomElementURLsException.class %>" message="please-enter-valid-remote-app-urls" />
+	<liferay-ui:error exception="<%= RemoteAppEntryIFrameURLException.class %>" message="please-enter-a-unique-remote-app-url" />
 
-		<aui:model-context bean="<%= remoteAppEntry %>" model="<%= RemoteAppEntry.class %>" />
+	<aui:model-context bean="<%= editRemoteAppEntryDisplayContext.getRemoteAppEntry() %>" model="<%= RemoteAppEntry.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:field-wrapper label="name">
-					<liferay-ui:input-localized
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						name="name"
-						xml='<%= BeanPropertiesUtil.getString(remoteAppEntry, "name") %>'
-					/>
-				</aui:field-wrapper>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<aui:field-wrapper label="name" name="name">
+				<liferay-ui:input-localized
+					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
+					name="name"
+					xml="<%= editRemoteAppEntryDisplayContext.getName() %>"
+				/>
+			</aui:field-wrapper>
 
-				<aui:input name="url">
+			<clay:select
+				disabled="<%= editRemoteAppEntryDisplayContext.isTypeDisabled() %>"
+				label="type"
+				name="type"
+				options='<%=
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME)))
+				%>'
+				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
+			/>
+
+			<liferay-frontend:fieldset
+				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_IFRAME) %>"
+				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
+			>
+				<aui:input label="url" name="iFrameURL">
 					<aui:validator name="url" />
 				</aui:input>
-			</aui:fieldset>
-		</aui:fieldset-group>
+			</liferay-frontend:fieldset>
 
-		<aui:button-row>
-			<aui:button type="submit" />
+			<liferay-frontend:fieldset
+				cssClass='<%= editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) ? StringPool.BLANK : "d-none" %>'
+				disabled="<%= !editRemoteAppEntryDisplayContext.isEditingRemoteAppEntryType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT) %>"
+				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
+			>
+				<aui:input label="html-element-name" name="customElementHTMLElementName">
+					<aui:validator name="customElementName" />
+				</aui:input>
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:form>
-</clay:container-fluid>
+				<%
+				for (String customElementURL : editRemoteAppEntryDisplayContext.getCustomElementURLs()) {
+				%>
 
-<aui:script>
-	function <portlet:namespace />saveRemoteAppEntry() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
-			'<%= (remoteAppEntry == null) ? Constants.ADD : Constants.UPDATE %>';
+					<div class="repeatable">
+						<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
+							<aui:validator name="url" />
+						</aui:input>
+					</div>
 
-		submitForm(document.<portlet:namespace />fm);
-	}
+				<%
+				}
+
+				for (String customElementCSSURL : editRemoteAppEntryDisplayContext.getCustomElementCSSURLs()) {
+				%>
+
+					<div class="repeatable">
+						<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="customElementCSSURLs" type="text" value="<%= customElementCSSURL %>">
+							<aui:validator name="url" />
+						</aui:input>
+					</div>
+
+				<%
+				}
+				%>
+
+			</liferay-frontend:fieldset>
+
+			<clay:select
+				label="portlet-category-name"
+				name="portletCategoryName"
+				options="<%=
+					editRemoteAppEntryDisplayContext.getPortletCategoryNameSelectOptions()
+				%>"
+			/>
+
+			<aui:input label="properties" name="properties" type="textarea" />
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<clay:button
+			label="save"
+			type="submit"
+		/>
+
+		<clay:link
+			displayType="secondary"
+			href="<%= editRemoteAppEntryDisplayContext.getRedirect() %>"
+			label="cancel"
+			type="button"
+		/>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
+
+<aui:script use="liferay-auto-fields">
+	new Liferay.AutoFields({
+		baseRows: '.repeatable',
+		contentBox: '#<portlet:namespace />_type_customElement',
+		namespace: '<portlet:namespace />',
+	}).render();
 </aui:script>

@@ -14,11 +14,11 @@
 
 import {fetch} from 'frontend-js-web';
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/item_finder/entry';
-import slugify from '../../../src/main/resources/META-INF/resources/utilities/slugify';
+import launcher from '../../src/main/resources/META-INF/resources/components/item_finder/entry';
+import slugify from '../../src/main/resources/META-INF/resources/utilities/slugify';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
-import {showErrorNotification} from '../../../src/main/resources/META-INF/resources/utilities/notifications';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
+import {showErrorNotification} from '../../src/main/resources/META-INF/resources/utilities/notifications';
 
 const headers = new Headers({
 	Accept: 'application/json',

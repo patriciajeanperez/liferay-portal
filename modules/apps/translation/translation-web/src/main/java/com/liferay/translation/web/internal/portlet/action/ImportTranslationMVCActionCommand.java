@@ -36,10 +36,13 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.service.TranslationEntryService;
@@ -104,21 +107,26 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				className, classPK, object,
 				themeDisplay.getPermissionChecker());
 
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
+			if (Objects.equals(
+					uploadPortletRequest.getContentType("file"),
+					ContentTypes.APPLICATION_ZIP)) {
 
-				TranslationSnapshot translationSnapshot =
-					_translationSnapshotProvider.getTranslationSnapshot(
-						groupId, new InfoItemReference(className, classPK),
+				try (InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("file")) {
+
+					_importZipFile(
+						actionRequest, groupId, className, classPK,
 						inputStream);
+				}
+			}
+			else {
+				try (InputStream inputStream =
+						uploadPortletRequest.getFileAsStream("file")) {
 
-				_translationEntryService.addOrUpdateTranslationEntry(
-					groupId,
-					_language.getLanguageId(
-						translationSnapshot.getTargetLocale()),
-					new InfoItemReference(className, classPK),
-					translationSnapshot.getInfoItemFieldValues(),
-					ServiceContextFactory.getInstance(actionRequest));
+					_importXLIFFFile(
+						actionRequest, groupId, className, classPK,
+						inputStream);
+				}
 			}
 
 			String portletResource = ParamUtil.getString(
@@ -161,7 +169,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	private void _checkContentType(String contentType)
 		throws XLIFFFileException {
 
-		if (!Objects.equals("application/x-xliff+xml", contentType) &&
+		if (!Objects.equals(ContentTypes.APPLICATION_ZIP, contentType) &&
+			!Objects.equals("application/x-xliff+xml", contentType) &&
 			!Objects.equals("application/xliff+xml", contentType)) {
 
 			throw new XLIFFFileException.MustBeValid(
@@ -209,6 +218,47 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, className, classPK, ActionKeys.UPDATE);
+		}
+	}
+
+	private void _importXLIFFFile(
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, InputStream inputStream)
+		throws IOException, PortalException {
+
+		TranslationSnapshot translationSnapshot =
+			_translationSnapshotProvider.getTranslationSnapshot(
+				groupId, new InfoItemReference(className, classPK),
+				inputStream);
+
+		_translationEntryService.addOrUpdateTranslationEntry(
+			groupId,
+			_language.getLanguageId(translationSnapshot.getTargetLocale()),
+			new InfoItemReference(className, classPK),
+			translationSnapshot.getInfoItemFieldValues(),
+			ServiceContextFactory.getInstance(actionRequest));
+	}
+
+	private void _importZipFile(
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, InputStream inputStream)
+		throws IOException, PortalException {
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
+
+		try {
+			for (String entry : zipReader.getEntries()) {
+				try (InputStream entryInputStream =
+						zipReader.getEntryAsInputStream(entry)) {
+
+					_importXLIFFFile(
+						actionRequest, groupId, className, classPK,
+						entryInputStream);
+				}
+			}
+		}
+		finally {
+			zipReader.close();
 		}
 	}
 

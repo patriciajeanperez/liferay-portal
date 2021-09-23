@@ -14,6 +14,11 @@
 
 package com.liferay.search.experiences.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.search.experiences.model.SXPBlueprint;
+
+import java.util.Map;
+
 /**
  * Provides the remote service utility for SXPBlueprint. This utility wraps
  * <code>com.liferay.search.experiences.service.impl.SXPBlueprintServiceImpl</code> and is an
@@ -33,14 +38,49 @@ public class SXPBlueprintServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static SXPBlueprint addSXPBlueprint(
+			String configurationsJSON,
+			Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSXPBlueprint(
+			configurationsJSON, descriptionMap, elementInstancesJSON, titleMap,
+			serviceContext);
+	}
+
+	public static SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
+		throws PortalException {
+
+		return getService().deleteSXPBlueprint(sxpBlueprintId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static SXPBlueprint getSXPBlueprint(long sxpBlueprintId)
+		throws PortalException {
+
+		return getService().getSXPBlueprint(sxpBlueprintId);
+	}
+
+	public static SXPBlueprint updateSXPBlueprint(
+			long sxpBlueprintId, String configurationsJSON,
+			Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateSXPBlueprint(
+			sxpBlueprintId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
 	}
 
 	public static SXPBlueprintService getService() {

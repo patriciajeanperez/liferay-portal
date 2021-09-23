@@ -78,6 +78,10 @@ public class CartItemDTOConverter
 
 		return new CartItem() {
 			{
+				adaptiveMediaImageHTMLTag =
+					_cpInstanceHelper.getCPInstanceAdaptiveMediaImageHTMLTag(
+						commerceOrderItem.getCompanyId(),
+						commerceOrderItem.getCPInstanceId());
 				customFields = expandoBridge.getAttributes();
 				errorMessages = _getErrorMessages(commerceOrderItem, locale);
 				id = commerceOrderItem.getCommerceOrderItemId();

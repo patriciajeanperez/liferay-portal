@@ -20,7 +20,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -34,8 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RemoteAppAdminDisplayContext {
 
 	public RemoteAppAdminDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		RemoteAppEntryLocalService remoteAppEntryLocalService) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;

@@ -113,7 +113,15 @@ public class WorkflowDefinitionResourceTest
 		assertHttpResponseStatusCode(
 			200,
 			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
-				workflowDefinition.getName()));
+				workflowDefinition.getName(), null));
+		assertHttpResponseStatusCode(
+			200,
+			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
+				workflowDefinition.getName(), 1));
+		assertHttpResponseStatusCode(
+			404,
+			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
+				workflowDefinition.getName(), 2));
 	}
 
 	@Override

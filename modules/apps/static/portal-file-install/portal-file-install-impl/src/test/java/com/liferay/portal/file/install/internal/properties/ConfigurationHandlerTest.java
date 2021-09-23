@@ -55,8 +55,8 @@ public class ConfigurationHandlerTest {
 
 	@Test
 	public void testReadBoolean() throws IOException {
-		Assert.assertEquals(true, ConfigurationHandler.read("B\"true\""));
-		Assert.assertEquals(true, ConfigurationHandler.read("b\"true\""));
+		Assert.assertTrue((boolean)ConfigurationHandler.read("B\"true\""));
+		Assert.assertTrue((boolean)ConfigurationHandler.read("b\"true\""));
 	}
 
 	@Test

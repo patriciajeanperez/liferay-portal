@@ -157,5 +157,18 @@ definition {
 	}
 
 
+	@description = "This test searches for an Account within the list by Account Name and Account ID."
+	@priority = "5"
+	test CanViewAccountsUserIsAMemberOf {
+		Search.searchPG(
+			portletName = "Account Management",
+			searchTerm = "Account Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+		Navigator.gotoPage(pageName = "2B Account Page");
+
+		Accounts.searchAccountsViaId(accountName = "Account Name");
+	}
 
 }

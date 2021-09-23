@@ -73,12 +73,19 @@ public class WorkflowDefinitionResourceImpl
 	}
 
 	@Override
-	public WorkflowDefinition getWorkflowDefinitionByName(String name)
+	public WorkflowDefinition getWorkflowDefinitionByName(
+			String name, Integer version)
 		throws Exception {
 
+		if (version == null) {
+			return _toWorkflowDefinition(
+				_workflowDefinitionManager.getLatestWorkflowDefinition(
+					contextCompany.getCompanyId(), name));
+		}
+
 		return _toWorkflowDefinition(
-			_workflowDefinitionManager.getLatestWorkflowDefinition(
-				contextCompany.getCompanyId(), name));
+			_workflowDefinitionManager.getWorkflowDefinition(
+				contextCompany.getCompanyId(), name, version));
 	}
 
 	@Override

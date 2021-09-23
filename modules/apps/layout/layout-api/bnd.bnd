@@ -4,6 +4,7 @@ Bundle-Version: 8.2.0
 Export-Package:\
 	com.liferay.layout.adaptive.media,\
 	com.liferay.layout.configuration,\
+	com.liferay.layout.crawler,\
 	com.liferay.layout.exception,\
 	com.liferay.layout.friendly.url,\
 	com.liferay.layout.list.retriever,\

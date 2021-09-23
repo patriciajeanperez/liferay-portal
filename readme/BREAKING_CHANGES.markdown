@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `6bd6a44f32b3`.*
+*This document has been reviewed through the breaking change entry at commit `defe666e35a2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -335,6 +335,28 @@ A further exploration and analysis of the different front-end options available 
 
 ---------------------------------------
 
+### Removed com.liferay.portal.kernel.model.PortletPreferences Methods getPreferences and setPreferences
+- **Date:** 2020-Dec-20
+- **JIRA Ticket:** [LPS-122562](https://issues.liferay.com/browse/LPS-122562)
+
+#### What changed?
+
+Portlet preferences are no longer stored and retrieved as XML. They are now stored in a table called `PortletPreferenceValue` that has separate columns for preference names and preference values.
+
+#### Who is affected?
+
+This affects you if you are directly getting or setting portlet preferences via `com.liferay.portal.kernel.model.PortletPreferences` methods `getPreferences` or `setPreferences`.
+
+#### How should I update my code?
+
+Access `javax.portlet.PortletPreferences` instances via `PortletPreferencesLocalService`. Get and set preferences using the `javax.portlet.PortletPreferences` API.
+
+#### Why was this change made?
+
+This change simplifies upgrades, reduces storage requirements, and supports querying preferences without using the `like` operator.
+
+---------------------------------------
+
 ### Removed CSS Compatibility Layer
 - **Date:** 2021-Jan-02
 - **JIRA Ticket:** [LPS-123359](https://issues.liferay.com/browse/LPS-123359)
@@ -444,6 +466,28 @@ Make sure to pass a `true` value to boolean attributes you want present in the D
 #### Why was this change made?
 
 This change was made for better compliance with [the HTML Standard](https://html.spec.whatwg.org/#boolean-attribute), which says that "The presence of a boolean attribute on an element represents the true value, and the absence of the attribute represents the false value. If the attribute is present, its value must either be the empty string or a value that is an ASCII case-insensitive match for the attribute's canonical name."
+
+---------------------------------------
+
+### Removed com.liferay.portal.kernel.model.PortalPreferences Methods getPreferences and setPreferences
+- **Date:** 2020-Mar-31
+- **JIRA Ticket:** [LPS-124338](https://issues.liferay.com/browse/LPS-124338)
+
+#### What changed?
+
+`PortalPreferences` preferences are now stored in the `PortalPreferenceValue` table.
+
+#### Who is affected?
+
+This affects you if you are directly getting or setting portal preferences via `com.liferay.portal.kernel.model.PortalPreferences` methods `getPreferences` or `setPreferences`.
+
+#### How should I update my code?
+
+Access `javax.portlet.PortalPreferences` instances via `PortalPreferencesLocalService`. Get and set preferences using the `javax.portlet.PortalPreferences` API.
+
+#### Why was this change made?
+
+This change simplifies upgrades, reduces storage requirements, and supports querying preferences without using the `like` operator.
 
 ---------------------------------------
 
@@ -767,5 +811,34 @@ download the corresponding module from Liferay Marketplace.
 #### Why was this change made?
 
 This is part of an on-going effort to consolidate SSO support and increased focus on open standards.
+
+---------------------------------------
+
+### Name attribute of `clay:select` is now namespaced
+
+- **Date:** 2021-Sep-09
+- **JIRA Ticket:** LPS-139131
+
+#### What changed?
+
+The attribute `name` of `clay:select` is now namespaced by default when printed out using the portlet namespace
+when available.
+
+#### Who is affected?
+
+Everyone using `clay:select` and relying on the `name` attribute to handle data server-side.
+
+#### How should I update my code?
+
+If you were namespacing the attribute on your own using `liferayPortletResponse.getNamespace() + NAME_VALUE`
+to prefix the name attribute value, you should be able to simply drop that and use `name="NAME_VALUE"` directly.
+
+If you want full control (or the namespaced version doesn't match your needs), you can revert back to the old
+behaviour by also passing `useNamespace="<%= Boolean.FALSE %>"` to the tag.
+
+#### Why was this change made?
+
+This change was made to better match the current behaviour of `aui:select` and facilitate a future migration as
+well as simplify current usage of the `clay:select` tag.
 
 ---------------------------------------

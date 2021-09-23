@@ -71,6 +71,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setEnabled('required', FALSE)",
+				"setValue('required', isRequiredObjectField(getValue('objectFieldName')))"
+			},
+			condition = "not(isEmpty(getValue('objectFieldName')))"
+		),
+		@DDMFormRule(
+			actions = {
 				"setRequired('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setValidationDataType('validation', getValue('dataType'))",

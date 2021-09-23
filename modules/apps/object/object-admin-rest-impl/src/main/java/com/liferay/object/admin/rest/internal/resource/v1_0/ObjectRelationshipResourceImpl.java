@@ -17,7 +17,9 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
-import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -40,6 +42,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ObjectRelationshipResourceImpl
 	extends BaseObjectRelationshipResourceImpl implements NestedFieldSupport {
 
+	@Override
+	public void deleteObjectRelationship(Long objectRelationshipId)
+		throws Exception {
+
+		_objectRelationshipService.deleteObjectRelationship(
+			objectRelationshipId);
+	}
+
 	@NestedField(
 		parentClass = ObjectDefinition.class, value = "objectRelationships"
 	)
@@ -50,7 +60,7 @@ public class ObjectRelationshipResourceImpl
 
 		return Page.of(
 			transform(
-				_objectRelationshipLocalService.getObjectRelationships(
+				_objectRelationshipService.getObjectRelationships(
 					objectDefinitionId, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				this::_toObjectRelationship));
@@ -62,7 +72,7 @@ public class ObjectRelationshipResourceImpl
 		throws Exception {
 
 		return _toObjectRelationship(
-			_objectRelationshipLocalService.addObjectRelationship(
+			_objectRelationshipService.addObjectRelationship(
 				contextUser.getUserId(), objectDefinitionId,
 				objectRelationship.getObjectDefinitionId2(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
@@ -75,6 +85,14 @@ public class ObjectRelationshipResourceImpl
 
 		return new ObjectRelationship() {
 			{
+				actions = HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.DELETE, "deleteObjectRelationship",
+						com.liferay.object.model.ObjectDefinition.class.
+							getName(),
+						objectRelationship.getObjectDefinitionId1())
+				).build();
 				id = objectRelationship.getObjectRelationshipId();
 				label = LocalizedMapUtil.getI18nMap(
 					objectRelationship.getLabelMap());
@@ -90,6 +108,6 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+	private ObjectRelationshipService _objectRelationshipService;
 
 }

@@ -13,15 +13,26 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {TabsVisitor} from '../../utils/visitor';
 import SidePanelContent from '../SidePanelContent';
-import LayoutScreen from './LayoutScreen/LayoutScreen';
 import LayoutContext, {LayoutContextProvider, TYPES} from './context';
+import InfoScreen from './info-screen/InfoScreen';
+import LayoutScreen from './layout-screen/LayoutScreen';
+import {
+	TObjectField,
+	TObjectLayout,
+	TObjectLayoutTab,
+	TObjectRelationship,
+} from './types';
 
 const TABS = [
+	{
+		Component: InfoScreen,
+		label: Liferay.Language.get('info'),
+	},
 	{
 		Component: LayoutScreen,
 		label: Liferay.Language.get('layout'),
@@ -33,11 +44,68 @@ const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
+type TNormalizeObjectFields = ({
+	objectFields,
+	objectLayout,
+}: {
+	objectFields: TObjectField[];
+	objectLayout: TObjectLayout;
+}) => TObjectField[];
+
+const normalizeObjectFields: TNormalizeObjectFields = ({
+	objectFields,
+	objectLayout,
+}) => {
+	const visitor = new TabsVisitor(objectLayout);
+	const objectFieldIds = objectFields.map(({id}) => id);
+
+	const normalizedObjectFields = [...objectFields];
+
+	visitor.mapFields((field) => {
+		const objectFieldIndex = objectFieldIds.indexOf(field.objectFieldId);
+		normalizedObjectFields[objectFieldIndex].inLayout = true;
+	});
+
+	return normalizedObjectFields;
+};
+
+type TNormalizeObjectRelationships = ({
+	objectLayoutTabs,
+	objectRelationships,
+}: {
+	objectLayoutTabs: TObjectLayoutTab[];
+	objectRelationships: TObjectRelationship[];
+}) => TObjectRelationship[];
+
+const normalizeObjectRelationships: TNormalizeObjectRelationships = ({
+	objectLayoutTabs,
+	objectRelationships,
+}) => {
+	const objectRelationshipIds = objectRelationships.map(({id}) => id);
+
+	const normalizedObjectRelationships = [...objectRelationships];
+
+	objectLayoutTabs.forEach(({objectRelationshipId}) => {
+		if (objectRelationshipId) {
+			const objectRelationshipIndex = objectRelationshipIds.indexOf(
+				objectRelationshipId
+			);
+
+			normalizedObjectRelationships[
+				objectRelationshipIndex
+			].inLayout = true;
+		}
+	});
+
+	return normalizedObjectRelationships;
+};
+
 const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{objectLayout, objectLayoutId}, dispatch] = useContext(
 		LayoutContext
 	);
 	const [activeIndex, setActiveIndex] = useState<number>(0);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -64,25 +132,58 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}
 			);
 
-			const {
-				items: objectFields = [],
-			} = await objectFieldsResponse.json();
+			const objectRelationshipsResponse = await Liferay.Util.fetch(
+				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships`,
+				{
+					headers: HEADERS,
+					method: 'GET',
+				}
+			);
+
+			const objectLayout = {
+				defaultObjectLayout,
+				name,
+				objectLayoutTabs,
+			};
 
 			dispatch({
 				payload: {
-					objectLayout: {
-						defaultObjectLayout,
-						name,
-						objectLayoutTabs,
-					},
+					objectLayout,
 				},
 				type: TYPES.ADD_OBJECT_LAYOUT,
 			});
 
+			const {
+				items: objectFields,
+			}: {items: TObjectField[]} = await objectFieldsResponse.json();
+
 			dispatch({
-				payload: {objectFields},
+				payload: {
+					objectFields: normalizeObjectFields({
+						objectFields,
+						objectLayout,
+					}),
+				},
 				type: TYPES.ADD_OBJECT_FIELDS,
 			});
+
+			const {
+				items: objectRelationships,
+			}: {
+				items: TObjectRelationship[];
+			} = await objectRelationshipsResponse.json();
+
+			dispatch({
+				payload: {
+					objectRelationships: normalizeObjectRelationships({
+						objectLayoutTabs,
+						objectRelationships,
+					}),
+				},
+				type: TYPES.ADD_OBJECT_RELATIONSHIPS,
+			});
+
+			setLoading(false);
 		};
 
 		makeFetch();
@@ -145,25 +246,27 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						{TABS.map(({Component}, index) => (
 							<ClayTabs.TabPane key={index}>
-								<Component />
+								{!loading && <Component />}
 							</ClayTabs.TabPane>
 						))}
 					</ClayTabs.Content>
 				</SidePanelContent.Body>
 
-				<SidePanelContent.Footer>
-					<ClayButton.Group spaced>
-						<ClayButton
-							className="btn-cancel"
-							displayType="secondary"
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-						<ClayButton onClick={() => saveObjectLayout()}>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				</SidePanelContent.Footer>
+				{!loading && (
+					<SidePanelContent.Footer>
+						<ClayButton.Group spaced>
+							<ClayButton
+								className="btn-cancel"
+								displayType="secondary"
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+							<ClayButton onClick={() => saveObjectLayout()}>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ClayButton.Group>
+					</SidePanelContent.Footer>
+				)}
 			</SidePanelContent>
 		</>
 	);
@@ -171,19 +274,13 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	objectLayoutId: string;
-	spritemap: string;
 }
 
-const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({
-	objectLayoutId,
-	spritemap,
-}) => {
+const LayoutWrapper: React.FC<ILayoutWrapperProps> = ({objectLayoutId}) => {
 	return (
-		<ClayIconSpriteContext.Provider value={spritemap}>
-			<LayoutContextProvider value={{objectLayoutId}}>
-				<Layout />
-			</LayoutContextProvider>
-		</ClayIconSpriteContext.Provider>
+		<LayoutContextProvider value={{objectLayoutId}}>
+			<Layout />
+		</LayoutContextProvider>
 	);
 };
 

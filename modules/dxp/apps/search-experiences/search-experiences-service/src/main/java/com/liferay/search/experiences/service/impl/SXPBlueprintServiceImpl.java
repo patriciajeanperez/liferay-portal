@@ -15,9 +15,24 @@
 package com.liferay.search.experiences.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.search.experiences.constants.SXPActionKeys;
+import com.liferay.search.experiences.constants.SXPConstants;
+import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.base.SXPBlueprintServiceBaseImpl;
 
+import java.util.Locale;
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,9 +40,84 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"json.web.service.context.name=sxp",
-		"json.web.service.context.path=SXPBlueprint"
+		"json.web.service.context.path=SXPBlueprint",
+		"jsonws.web.service.parameter.type.whitelist.class.names=com.liferay.search.experiences.util.comparator.SXPBlueprintModifiedDateComparator",
+		"jsonws.web.service.parameter.type.whitelist.class.names=com.liferay.search.experiences.util.comparator.SXPBlueprintTitleComparator"
 	},
 	service = AopService.class
 )
 public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
+
+	@Override
+	public SXPBlueprint addSXPBlueprint(
+			String configurationsJSON, Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, SXPActionKeys.ADD_SXP_BLUEPRINT);
+
+		return sxpBlueprintLocalService.addSXPBlueprint(
+			getUserId(), configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
+	}
+
+	@Override
+	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
+		throws PortalException {
+
+		_sxpBlueprintModelResourcePermission.check(
+			getPermissionChecker(), sxpBlueprintId, ActionKeys.DELETE);
+
+		return sxpBlueprintLocalService.deleteSXPBlueprint(sxpBlueprintId);
+	}
+
+	@Override
+	public SXPBlueprint getSXPBlueprint(long sxpBlueprintId)
+		throws PortalException {
+
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.getSXPBlueprint(
+			sxpBlueprintId);
+
+		_sxpBlueprintModelResourcePermission.check(
+			getPermissionChecker(), sxpBlueprint,
+			SXPActionKeys.APPLY_SXP_BLUEPRINT);
+
+		return sxpBlueprint;
+	}
+
+	@Override
+	public SXPBlueprint updateSXPBlueprint(
+			long sxpBlueprintId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		_sxpBlueprintModelResourcePermission.check(
+			getPermissionChecker(), sxpBlueprintId, ActionKeys.UPDATE);
+
+		return _sxpBlueprintLocalService.updateSXPBlueprint(
+			getUserId(), sxpBlueprintId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")
+	private volatile PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.search.experiences.model.SXPBlueprint)"
+	)
+	private volatile ModelResourcePermission<SXPBlueprint>
+		_sxpBlueprintModelResourcePermission;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

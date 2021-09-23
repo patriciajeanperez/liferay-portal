@@ -818,8 +818,6 @@ definition {
 	@description = "LPS-89014 - Verify that the SLA infos are correctly displayed on the table view"
 	@priority = "5"
 	test SLAInfosAreCorrectlyDisplayed {
-		property portal.upstream = "quarantine";
-
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -851,16 +849,6 @@ definition {
 		AssertElementPresent(
 			key_columnName = "Duration",
 			key_fieldName = "1min",
-			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_INFO");
-
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateMonth = DateUtil.getCurrentMonthName();
-		var currentDateMonthShort = StringUtil.substring("${displayDateMonth}", "0", "3");
-		var displayDate = "${currentDateMonthShort} ${displayDateDay}";
-
-		AssertElementPresent(
-			key_columnName = "Last Modified",
-			key_fieldName = "${displayDate}",
 			locator1 = "WorkflowMetricsProcessListView#ASSERT_SLA_INFO");
 	}
 
@@ -1002,8 +990,6 @@ definition {
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
 	@priority = "3"
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
-		property portal.upstream = "quarantine";
-
 		var slaName = "SLAName";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
@@ -1082,10 +1068,6 @@ definition {
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
-
-		AssertElementNotPresent(
-			key_slaName = "${slaName}",
-			locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT");
 	}
 
 	@description = "LPS-89014 - Verify that the table view of SLAs are ordered by last modified (Desc)"

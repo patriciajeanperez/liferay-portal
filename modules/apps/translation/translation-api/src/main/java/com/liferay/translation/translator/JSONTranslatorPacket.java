@@ -15,6 +15,7 @@
 package com.liferay.translation.translator;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,7 +25,18 @@ import java.util.Map;
  */
 public class JSONTranslatorPacket implements TranslatorPacket {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #JSONTranslatorPacket(long, JSONObject)}
+	 */
+	@Deprecated
 	public JSONTranslatorPacket(JSONObject jsonObject) {
+		this(CompanyThreadLocal.getCompanyId(), jsonObject);
+	}
+
+	public JSONTranslatorPacket(long companyId, JSONObject jsonObject) {
+		_companyId = companyId;
+
 		_sourceLanguageId = jsonObject.getString("sourceLanguageId");
 		_targetLanguageId = jsonObject.getString("targetLanguageId");
 
@@ -33,6 +45,11 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 		for (String key : fieldsJSONObject.keySet()) {
 			_fieldsMap.put(key, fieldsJSONObject.getString(key));
 		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	@Override
@@ -50,6 +67,7 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 		return _targetLanguageId;
 	}
 
+	private final long _companyId;
 	private final Map<String, String> _fieldsMap = new LinkedHashMap<>();
 	private final String _sourceLanguageId;
 	private final String _targetLanguageId;

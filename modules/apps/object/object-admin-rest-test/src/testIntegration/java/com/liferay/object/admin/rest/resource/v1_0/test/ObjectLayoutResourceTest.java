@@ -90,7 +90,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	protected ObjectLayout randomObjectLayout() throws Exception {
 		ObjectLayout objectLayout = super.randomObjectLayout();
 
-		objectLayout.setDefaultObjectLayout(true);
+		objectLayout.setDefaultObjectLayout(false);
 		objectLayout.setName(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 		objectLayout.setObjectDefinitionId(
@@ -99,6 +99,14 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 			new ObjectLayoutTab[] {_randomObjectLayoutTab()});
 
 		return objectLayout;
+	}
+
+	@Override
+	protected ObjectLayout testDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
 	}
 
 	@Override
@@ -152,6 +160,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 			{
 				objectFieldId = _objectField.getObjectFieldId();
 				priority = RandomTestUtil.randomInt();
+				size = RandomTestUtil.randomInt(1, 12);
 			}
 		};
 	}

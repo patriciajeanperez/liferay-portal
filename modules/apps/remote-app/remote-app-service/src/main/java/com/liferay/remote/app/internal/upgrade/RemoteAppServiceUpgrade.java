@@ -15,7 +15,6 @@
 package com.liferay.remote.app.internal.upgrade;
 
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.remote.app.internal.upgrade.v1_0_1.RemoteAppEntryURLUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,7 +27,14 @@ public class RemoteAppServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "1.0.1", new RemoteAppEntryURLUpgradeProcess());
+			"1.0.0", "1.0.1",
+			new com.liferay.remote.app.internal.upgrade.v1_0_1.
+				RemoteAppEntryUpgradeProcess());
+
+		registry.register(
+			"1.0.1", "2.0.0",
+			new com.liferay.remote.app.internal.upgrade.v2_0_0.
+				RemoteAppEntryUpgradeProcess());
 	}
 
 }

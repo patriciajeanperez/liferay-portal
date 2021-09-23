@@ -800,6 +800,79 @@ definition {
 			fieldValue = "1");
 	}
 
+	@description = "LPS-130164 - Verify that the Input Mask can be enabled on decimals"
+	@priority = "5"
+	test InputMaskCanBeEnabledOnDecimal {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		FormFields.viewOptionSelected(optionSelected = "double");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		for (var default : list "Thousands Separator-None,Decimal Separator-0.0") {
+			key_fieldName = StringUtil.extractFirst("${default}","-");
+			key_fieldValue = StringUtil.extractLast("${default}","-");
+
+			AssertElementPresent(locator1 = "FormFields#PREDEFINED_VALUE_AT_FORM_SELECT");
+		}
+
+		FormFields.viewDisabledSelectOption(
+			fieldName = "Thousands Separator",
+			optionValue = "1.000");
+
+		MenuItem.click(menuItem = "1,000");
+
+		FormFields.viewDisabledSelectOption(
+			fieldName = "Decimal Separator",
+			optionValue = "0,00");
+
+		Type(
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
+			value1 = "a");
+
+		FormFields.viewOptionSelected(optionSelected = "prefix");
+
+		FormFields.setInputMaskOnDecimal(prefix = "more than 10 characters");
+
+		FormFields.viewWarningMessage(
+			fieldName = "Prefix or Suffix",
+			warningMessage = "The maximum length is 10 characters.");
+
+		FormFields.setInputMaskOnDecimal(prefix = "123456789$");
+
+		FormFields.viewOptionSelected(optionSelected = "prefix");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "123456789$",
+			inputMaskValue = "0.00");
+
+		Type(
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
+			value1 = "");
+
+		AssertElementNotPresent(
+			key_affixValue = "123456789$",
+			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX_VALUE");
+
+		for (var radioOption : list "Prefix,Suffix") {
+			AssertElementNotPresent(
+				key_fieldName = "",
+				key_radioOption = "${radioOption}",
+				locator1 = "FormFields#RADIO_OPTION_LABEL");
+		}
+	}
+
 	@description = "LPS-125861 - Verify that the Input Mask can be enabled on integers"
 	@priority = "5"
 	test InputMaskCanBeEnabledOnIntegers {
@@ -812,7 +885,7 @@ definition {
 			fieldType = "Numeric",
 			formPageNumber = "0");
 
-		FormFields.viewNumericType(numericType = "integer");
+		FormFields.viewOptionSelected(optionSelected = "integer");
 
 		Form.gotoAdvancedTab();
 
@@ -829,6 +902,130 @@ definition {
 		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
 	}
 
+	@description = "LPS-130164 - Verify that the Input Mask can be enabled on decimals using prefix"
+	@priority = "5"
+	test InputMaskIsWorkingOnDecimalWithPrefix {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		FormFields.viewOptionSelected(optionSelected = "double");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskOnDecimal(
+			prefix = "ABC123@$&*",
+			thousandsSeparator = "1 000");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0.00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "9999999");
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "1",
+			value = "9 999 999");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "9 999 999");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC123@$&*",
+			inputMaskValue = "0.00");
+	}
+
+	@description = "LPS-130164 - Verify that the Input Mask can be enabled on decimals using suffix"
+	@priority = "5"
+	test InputMaskIsWorkingOnDecimalWithSuffix {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.editNumericType(numericType = "Decimal");
+
+		FormFields.viewOptionSelected(optionSelected = "double");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskOnDecimal(
+			suffix = "ABC12 @$&*",
+			thousandsSeparator = "1,000");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC12 @$&*",
+			inputMaskValue = "0.00");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC12 @$&*",
+			inputMaskValue = "0.00");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "9999999");
+
+		FormFields.viewNumericFieldValue(
+			fieldName = "Numeric",
+			rowNumber = "1",
+			value = "9,999,999");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "9,999,999");
+
+		FormFields.viewNumericInputMask(
+			affixValue = "ABC12 @$&*",
+			inputMaskValue = "0.00");
+	}
+
 	@description = "LPS-130848 - Verify that the Input Mask can be applied on integers"
 	@priority = "5"
 	test InputMaskIsWorkingOnIntegers {
@@ -841,7 +1038,7 @@ definition {
 			fieldType = "Numeric",
 			formPageNumber = "0");
 
-		FormFields.viewNumericType(numericType = "integer");
+		FormFields.viewOptionSelected(optionSelected = "integer");
 
 		Form.gotoAdvancedTab();
 
@@ -881,6 +1078,135 @@ definition {
 			fieldLabel = "Numeric",
 			fieldName = "Numeric",
 			fieldValue = "E.g +12 (34) 1234-1234");
+	}
+
+	@description = "Verify that input mask on integers can be translated"
+	@priority = "5"
+	test InputMaskOnIntegersCanBeTranslated {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.viewOptionSelected(optionSelected = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "+9 (999) 999 9999");
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+_ (___) ___ ____");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "+99 (99) 99999 9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+__ (__) _____ ____");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+_ (___) ___ ____");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "11111111111");
+
+		FormPortlet.submitSuccessfully();
+
+		Refresh();
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "+__ (__) _____ ____");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "2222222222222");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+	}
+
+	@description = "Verify that input mask on integers working on rules"
+	@priority = "5"
+	test InputMaskOnIntegersWorkingOnRules {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 1");
+
+		FormFields.viewOptionSelected(optionSelected = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "E.g +99 (99) 9999-9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.editFieldLabelMetal(fieldValue = "Numeric 2");
+
+		FormFields.viewOptionSelected(optionSelected = "integer");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitch(fieldName = "Input Mask");
+
+		FormFields.setInputMaskFormat(inputMaskFormat = "E.g +99 (99) 9999-9999");
+
+		FormFields.viewNumericInputMask(inputMaskValue = "E.g +__ (__) ____-____");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Numeric 1",
+			conditionFieldValue = "999999999999",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Numeric 2");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.validateNoFieldLabel(fieldLabel = "Numeric 2");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "999999999999");
+
+		FormFields.viewLabel(
+			fieldLabel = "Numeric 2",
+			fieldName = "Numeric 2");
 	}
 
 	@description = "Verify that the Field Label can be edited"

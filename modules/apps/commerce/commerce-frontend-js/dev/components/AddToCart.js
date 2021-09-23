@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/add_to_cart/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/add_to_cart/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 for (let i = 1; i <= 15; i++) {
 	launcher('add_to_cart', 'add-to-cart-' + i, {

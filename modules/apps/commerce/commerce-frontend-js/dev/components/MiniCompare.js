@@ -12,10 +12,10 @@
  * details.
  */
 
-import compareCheckboxLauncher from '../../../src/main/resources/META-INF/resources/components/compare_checkbox/entry';
-import miniCompareLauncher from '../../../src/main/resources/META-INF/resources/components/mini_compare/entry';
+import compareCheckboxLauncher from '../../src/main/resources/META-INF/resources/components/compare_checkbox/entry';
+import miniCompareLauncher from '../../src/main/resources/META-INF/resources/components/mini_compare/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 miniCompareLauncher('miniCompare', 'mini-compare-root', {
 	commerceChannelGroupId: 1234,

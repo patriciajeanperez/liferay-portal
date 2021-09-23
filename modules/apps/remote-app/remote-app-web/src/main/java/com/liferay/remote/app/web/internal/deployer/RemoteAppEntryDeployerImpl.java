@@ -15,11 +15,21 @@
 package com.liferay.remote.app.web.internal.deployer;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
+import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
+
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.Portlet;
 
@@ -36,40 +46,97 @@ import org.osgi.service.component.annotations.Reference;
 public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 	@Override
-	public ServiceRegistration<Portlet> deploy(RemoteAppEntry remoteAppEntry) {
+	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry) {
+		return Arrays.asList(
+			_registerConfigurationAction(remoteAppEntry),
+			_registerPortlet(remoteAppEntry));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private String _getPortletCategoryName(RemoteAppEntry remoteAppEntry) {
+		String portletCategoryName = remoteAppEntry.getPortletCategoryName();
+
+		if (Validator.isNull(portletCategoryName)) {
+			return "category.remote-apps";
+		}
+
+		return portletCategoryName;
+	}
+
+	private String _getPortletId(RemoteAppEntry remoteAppEntry) {
+		return "com_liferay_remote_app_web_internal_portlet_" +
+			"RemoteAppEntryPortlet_" + remoteAppEntry.getRemoteAppEntryId();
+	}
+
+	private ServiceRegistration<ConfigurationAction>
+		_registerConfigurationAction(RemoteAppEntry remoteAppEntry) {
+
 		return _bundleContext.registerService(
-			Portlet.class,
-			new RemoteAppEntryPortlet(
-				remoteAppEntry,
-				_npmResolver.resolveModuleName(
-					"@liferay/remote-app-web/remote_protocol/bridge")),
+			ConfigurationAction.class, new RemoteAppEntryConfigurationAction(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"javax.portlet.name", _getPortletId(remoteAppEntry)
+			).build());
+	}
+
+	private ServiceRegistration<Portlet> _registerPortlet(
+		RemoteAppEntry remoteAppEntry) {
+
+		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.company", remoteAppEntry.getCompanyId()
 			).put(
 				"com.liferay.portlet.css-class-wrapper", "portlet-remote-app"
 			).put(
-				"com.liferay.portlet.display-category", "category.sample"
-			).put(
-				"com.liferay.portlet.header-portlet-css",
-				"/display/css/main.css"
+				"com.liferay.portlet.display-category",
+				_getPortletCategoryName(remoteAppEntry)
 			).put(
 				"com.liferay.portlet.instanceable", true
 			).put(
 				"javax.portlet.display-name",
 				remoteAppEntry.getName(LocaleUtil.US)
 			).put(
-				"javax.portlet.name",
-				"com_liferay_remote_app_web_internal_portlet_" +
-					"RemoteAppEntryPortlet_" +
-						remoteAppEntry.getRemoteAppEntryId()
+				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).put(
 				"javax.portlet.security-role-ref", "power-user,user"
-			).build());
-	}
+			).build();
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		if (Objects.equals(
+				remoteAppEntry.getType(),
+				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+
+			String customElementURLs = remoteAppEntry.getCustomElementURLs();
+
+			dictionary.put(
+				"com.liferay.portlet.header-portal-javascript",
+				customElementURLs.split(StringPool.NEW_LINE));
+
+			String customElementCSSURLs =
+				remoteAppEntry.getCustomElementCSSURLs();
+
+			dictionary.put(
+				"com.liferay.portlet.header-portlet-css",
+				customElementCSSURLs.split(StringPool.NEW_LINE));
+		}
+		else if (Objects.equals(
+					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
+
+			dictionary.put(
+				"com.liferay.portlet.header-portlet-css",
+				"/display/css/main.css");
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid remote app entry type: " + remoteAppEntry.getType());
+		}
+
+		return _bundleContext.registerService(
+			Portlet.class,
+			new RemoteAppEntryPortlet(_npmResolver, remoteAppEntry),
+			dictionary);
 	}
 
 	private BundleContext _bundleContext;

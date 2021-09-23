@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionParameterAccessor;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -44,6 +46,11 @@ public class DefaultDDMExpressionParameterAccessor
 	@Override
 	public Locale getLocale() {
 		return _getLocaleSupplier.get();
+	}
+
+	@Override
+	public JSONArray getObjectFieldsJSONArray() {
+		return _getObjectFieldsJSONArraySupplier.get();
 	}
 
 	@Override
@@ -81,6 +88,8 @@ public class DefaultDDMExpressionParameterAccessor
 		() -> StringPool.BLANK;
 	private Supplier<Long> _getGroupIdSupplier = () -> 0L;
 	private Supplier<Locale> _getLocaleSupplier = () -> new Locale("pt", "BR");
+	private final Supplier<JSONArray> _getObjectFieldsJSONArraySupplier =
+		() -> JSONFactoryUtil.createJSONArray();
 	private final Supplier<String> _getTimeZoneIdSupplier = () -> "UTC";
 	private Supplier<Long> _getUserIdSupplier = () -> 0L;
 

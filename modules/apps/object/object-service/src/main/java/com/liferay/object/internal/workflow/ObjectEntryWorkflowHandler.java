@@ -68,7 +68,7 @@ public class ObjectEntryWorkflowHandler
 			"serviceContext");
 
 		return _objectEntryLocalService.updateStatus(
-			userId, classPK, status, serviceContext, workflowContext);
+			userId, classPK, status, serviceContext);
 	}
 
 	private final ObjectDefinition _objectDefinition;

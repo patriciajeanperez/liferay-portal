@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/step_tracker/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/step_tracker/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('step_tracker', 'step-tracker', {
 	spritemap: './assets/clay/icons.svg',

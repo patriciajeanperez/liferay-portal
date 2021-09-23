@@ -2031,8 +2031,6 @@ definition {
 	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
 	@priority = "4"
 	test UpdateDueDateUnassignedUser {
-		property portal.upstream = "quarantine";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		ProductMenu.gotoPortlet(
@@ -2090,7 +2088,9 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
 
-		PortletEntry.selectAll();
+		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+		}
 
 		AssertElementNotPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
 	}
@@ -2218,6 +2218,7 @@ definition {
 	}
 
 	@description = "LRQA-53639 - Automate LPS-100675"
+	@ignore = "true"
 	@priority = "5"
 	test VerifyFilterTopStepPerformance {
 		property portal.acceptance = "true";
@@ -2962,6 +2963,7 @@ definition {
 	}
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
+	@ignore = "true"
 	@priority = "5"
 	test ViewTopAsigneePerformance {
 		property portal.acceptance = "true";

@@ -24,10 +24,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.search.experiences.model.SXPElement;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +68,13 @@ public interface SXPElementLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPElementLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sxp element local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SXPElementLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPElement addSXPElement(
+			long userId, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean readOnly,
+			Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the sxp element to the database. Also notifies the appropriate model listeners.
@@ -123,9 +135,12 @@ public interface SXPElementLocalService
 	 *
 	 * @param sxpElement the sxp element
 	 * @return the sxp element that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public SXPElement deleteSXPElement(SXPElement sxpElement);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public SXPElement deleteSXPElement(SXPElement sxpElement)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -203,15 +218,15 @@ public interface SXPElementLocalService
 	public SXPElement fetchSXPElement(long sxpElementId);
 
 	/**
-	 * Returns the sxp element matching the UUID and group.
+	 * Returns the sxp element with the matching UUID and company.
 	 *
 	 * @param uuid the sxp element's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching sxp element, or <code>null</code> if a matching sxp element could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SXPElement fetchSXPElementByUuidAndGroupId(
-		String uuid, long groupId);
+	public SXPElement fetchSXPElementByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -249,15 +264,16 @@ public interface SXPElementLocalService
 	public SXPElement getSXPElement(long sxpElementId) throws PortalException;
 
 	/**
-	 * Returns the sxp element matching the UUID and group.
+	 * Returns the sxp element with the matching UUID and company.
 	 *
 	 * @param uuid the sxp element's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching sxp element
 	 * @throws PortalException if a matching sxp element could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SXPElement getSXPElementByUuidAndGroupId(String uuid, long groupId)
+	public SXPElement getSXPElementByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -275,38 +291,23 @@ public interface SXPElementLocalService
 	public List<SXPElement> getSXPElements(int start, int end);
 
 	/**
-	 * Returns all the sxp elements matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the sxp elements
-	 * @param companyId the primary key of the company
-	 * @return the matching sxp elements, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SXPElement> getSXPElementsByUuidAndCompanyId(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of sxp elements matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the sxp elements
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of sxp elements
-	 * @param end the upper bound of the range of sxp elements (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching sxp elements, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SXPElement> getSXPElementsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SXPElement> orderByComparator);
-
-	/**
 	 * Returns the number of sxp elements.
 	 *
 	 * @return the number of sxp elements
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSXPElementsCount();
+
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPElement updateStatus(long userId, long sxpElementId, int status)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPElement updateSXPElement(
+			long userId, long sxpElementId, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean hidden,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Updates the sxp element in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -13,11 +13,12 @@
  */
 
 import React from 'react';
-import {TObjectField, TObjectLayout} from './types';
+import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 declare type TState = {
-	objectLayout: TObjectLayout;
 	objectFields: TObjectField[];
+	objectLayout: TObjectLayout;
 	objectLayoutId: string;
+	objectRelationships: TObjectRelationship[];
 };
 declare type TAction = {
 	payload: {
@@ -30,17 +31,20 @@ interface ILayoutContextProps extends Array<TState | Function> {
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 declare const LayoutContext: React.Context<ILayoutContextProps>;
-export declare const TYPES: {
-	readonly ADD_OBJECT_FIELDS: 'ADD_OBJECT_FIELDS';
-	readonly ADD_OBJECT_LAYOUT: 'ADD_OBJECT_LAYOUT';
-	readonly ADD_OBJECT_LAYOUT_BOX: 'ADD_OBJECT_LAYOUT_BOX';
-	readonly ADD_OBJECT_LAYOUT_FIELD: 'ADD_OBJECT_LAYOUT_FIELD';
-	readonly ADD_OBJECT_LAYOUT_TAB: 'ADD_OBJECT_LAYOUT_TAB';
-	readonly CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE: 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE';
-	readonly DELETE_OBJECT_LAYOUT_BOX: 'DELETE_OBJECT_LAYOUT_BOX';
-	readonly DELETE_OBJECT_LAYOUT_FIELD: 'DELETE_OBJECT_LAYOUT_FIELD';
-	readonly DELETE_OBJECT_LAYOUT_TAB: 'DELETE_OBJECT_LAYOUT_TAB';
-};
+export declare enum TYPES {
+	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
+	ADD_OBJECT_LAYOUT = 'ADD_OBJECT_LAYOUT',
+	ADD_OBJECT_LAYOUT_BOX = 'ADD_OBJECT_LAYOUT_BOX',
+	ADD_OBJECT_LAYOUT_FIELD = 'ADD_OBJECT_LAYOUT_FIELD',
+	ADD_OBJECT_LAYOUT_TAB = 'ADD_OBJECT_LAYOUT_TAB',
+	ADD_OBJECT_RELATIONSHIPS = 'ADD_OBJECT_RELATIONSHIPS',
+	CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE = 'CHANGE_OBJECT_LAYOUT_BOX_ATTRIBUTE',
+	CHANGE_OBJECT_LAYOUT_NAME = 'CHANGE_OBJECT_LAYOUT_NAME',
+	DELETE_OBJECT_LAYOUT_BOX = 'DELETE_OBJECT_LAYOUT_BOX',
+	DELETE_OBJECT_LAYOUT_FIELD = 'DELETE_OBJECT_LAYOUT_FIELD',
+	DELETE_OBJECT_LAYOUT_TAB = 'DELETE_OBJECT_LAYOUT_TAB',
+	SET_OBJECT_LAYOUT_AS_DEFAULT = 'SET_OBJECT_LAYOUT_AS_DEFAULT',
+}
 declare const initialState: TState;
 interface ILayoutContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {

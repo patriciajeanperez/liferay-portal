@@ -62,7 +62,6 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, true);
-		addSearchTerm(searchQuery, searchContext, Field.URL, true);
 	}
 
 	@Override
@@ -103,8 +102,6 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 				name);
 		}
 
-		document.addText(Field.URL, remoteAppEntry.getUrl());
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + remoteAppEntry + " indexed successfully");
 		}
@@ -117,7 +114,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.NAME, Field.URL);
+		Summary summary = createSummary(document);
 
 		summary.setMaxContentLength(200);
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/summary/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/summary/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('summary', 'summary', {
 	apiUrl: '/o/headless-commerce-admin-order/v1.0/orders/40977',

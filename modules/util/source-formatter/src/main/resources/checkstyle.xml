@@ -222,7 +222,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AssertEqualsCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that additional information is provided when calling `Assert.assertEquals`." />
+			<property name="enabled" value="false" />
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
+			<message key="assert.use.boolean" value="Use ''Assert.assert{0}'' instead of ''Assert.assertEquals'' when assert boolean" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.AssignAsUsedCheck">
 			<property name="category" value="Performance" />
@@ -326,6 +328,12 @@
 			<message key="field.call.deprecated" value="Field ''{0}'' has been deprecated" />
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
 			<message key="type.call.deprecated" value="Type ''{0}'' has been deprecated" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.DTOEnumCreationCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks the creation of DTO enum." />
+			<property name="enabled" value="false" />
+			<message key="create.use" value="Use ''create'' to create DTO enum, instead of ''valueOf''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.EmptyConstructorCheck">
 			<property name="category" value="Bug Prevention" />
@@ -478,9 +486,11 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNamingCheck">
 			<property name="category" value="Naming Conventions" />
+			<property name="checkSearchMethodNames" value="false" />
 			<property name="description" value="Checks that method names follow naming conventions." />
 			<message key="method.incorrect.ending" value="Name of method returning type ''{0}'' should end with ''{0}''" />
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
+			<message key="search.method.incorrect" value="Incorrect name of method ''{0}''. Name should equal ''search'' or start with ''searchBy''." />
 			<property name="enforceTypeNames" value="" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthorCheck">

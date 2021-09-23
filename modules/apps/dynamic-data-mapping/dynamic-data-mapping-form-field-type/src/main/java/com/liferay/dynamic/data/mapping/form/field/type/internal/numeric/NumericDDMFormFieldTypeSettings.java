@@ -56,6 +56,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setEnabled('required', FALSE)",
+				"setValue('required', isRequiredObjectField(getValue('objectFieldName')))"
+			},
+			condition = "not(isEmpty(getValue('objectFieldName')))"
+		),
+		@DDMFormRule(
+			actions = {
 				"setDataType('predefinedValue', getValue('dataType'))",
 				"setPropertyValue('predefinedValue', 'inputMask', getValue('inputMask'))",
 				"setPropertyValue('predefinedValue', 'inputMaskFormat', getLocalizedValue('inputMaskFormat'))",

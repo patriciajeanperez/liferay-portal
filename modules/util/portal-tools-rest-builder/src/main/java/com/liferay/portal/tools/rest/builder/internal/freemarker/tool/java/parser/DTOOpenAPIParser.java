@@ -221,7 +221,10 @@ public class DTOOpenAPIParser {
 			}
 		}
 
-		if (StringUtil.equalsIgnoreCase(type, "object")) {
+		if (StringUtil.equalsIgnoreCase(type, "object") &&
+			((propertySchema.getAdditionalPropertySchema() == null) ||
+			 _isEmpty(propertySchema.getAdditionalPropertySchema()))) {
+
 			String name = StringUtil.upperCaseFirstLetter(propertySchemaName);
 
 			if (items != null) {
@@ -267,6 +270,20 @@ public class DTOOpenAPIParser {
 		}
 
 		return propertyType;
+	}
+
+	private static boolean _isEmpty(Schema schema) {
+		if ((schema.getAdditionalPropertySchema() == null) &&
+			(schema.getAllOfSchemas() == null) &&
+			(schema.getAnyOfSchemas() == null) && (schema.getItems() == null) &&
+			(schema.getOneOfSchemas() == null) &&
+			(schema.getPropertySchemas() == null) &&
+			(schema.getReference() == null) && (schema.getType() == null)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static boolean _isObject(Schema schema, String type) {

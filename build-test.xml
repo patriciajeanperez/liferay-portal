@@ -1783,15 +1783,6 @@ war.path=${app.server.portal.dir}/</echo>
 							</fileset>
 						</chmod>
 
-						<chmod
-							perm="a+rwx"
-							type="both"
-						>
-							<fileset
-								dir="${test.app.server.parent.dir}/elasticsearch-sidecar"
-							/>
-						</chmod>
-
 						<local name="jmx.remote.port.overwrite" />
 
 						<math
@@ -11011,7 +11002,6 @@ tokenLocation="REQUEST"</echo>
 
 	<target name="prepare-system-ext-properties">
 		<echo file="${app.server.classes.portal.dir}/system-ext.properties">com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=300000
-liferay.mode=test
 log.sanitizer.enabled=false</echo>
 
 		<get-testcase-property property.name="custom.system.properties" />

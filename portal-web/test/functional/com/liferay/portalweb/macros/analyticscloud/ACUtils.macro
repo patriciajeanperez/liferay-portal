@@ -1,14 +1,18 @@
 definition {
 
 	macro addSiteAndPage {
-		JSONGroup.addGroup(groupName = "Site Name");
+		if (!(isSet(siteName))) {
+			siteName = "Site Name";
+		}
+
+		JSONGroup.addGroup(groupName = "${siteName}");
 
 		if (!(isSet(layoutName))) {
 			layoutName = "AC Page";
 		}
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "${siteName}",
 			layoutName = "${layoutName}");
 	}
 
@@ -562,6 +566,16 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",
 			value1 = "${infoMessage}");
+	}
+
+	macro viewNameList {
+		for (var name : list "${nameList}") {
+			var key_nameList = "${name}";
+
+			AssertTextEquals(
+				locator1 = "ACUtils#NAME_LIST",
+				value1 = "${name}");
+		}
 	}
 
 	macro viewNoResultsMessage {

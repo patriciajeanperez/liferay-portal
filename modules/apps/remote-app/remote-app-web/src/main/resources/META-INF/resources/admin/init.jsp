@@ -16,11 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
-page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.remote.app.exception.DuplicateRemoteAppEntryException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException" %><%@
 page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminConstants" %><%@
 page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys" %><%@
+page import="com.liferay.remote.app.web.internal.display.context.EditRemoteAppEntryDisplayContext" %><%@
 page import="com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext" %>
+
+<%@ page import="java.util.Arrays" %>

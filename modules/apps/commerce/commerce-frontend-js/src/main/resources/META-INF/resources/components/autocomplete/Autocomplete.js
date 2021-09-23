@@ -87,7 +87,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		if (onChange) {
 			onChange({target: {value}});
 		}
-	}, [selectedItem, props.id, props.itemsKey, onValueUpdated]);
+	}, [selectedItem, props.id, props.itemsKey, onChange, onValueUpdated]);
 
 	useEffect(() => {
 		if (query) {
@@ -169,6 +169,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		function handleClick(event) {
 			if (
 				node.current.contains(event.target) ||
+				event.target === dropdownNode.current.parentElement ||
 				(dropdownNode.current &&
 					dropdownNode.current.contains(event.target))
 			) {
@@ -260,6 +261,7 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 						value={currentValue || ''}
 					/>
 					<ClayAutocomplete.Input
+						disabled={props.readOnly}
 						id={props.id}
 						name={props.name}
 						onChange={(event) => {
@@ -339,7 +341,7 @@ Autocomplete.propTypes = {
 	onItemsUpdated: PropTypes.func,
 	onValueUpdated: PropTypes.func,
 	required: PropTypes.bool,
-	value: PropTypes.string
+	value: PropTypes.string,
 };
 
 Autocomplete.defaultProps = {

@@ -23,7 +23,7 @@ import {normalizeFieldName} from './fields.es';
 import {generateName, getRepeatedIndex, parseName} from './repeatable.es';
 import {PagesVisitor} from './visitors.es';
 
-export const addField = ({
+export const addFieldToPage = ({
 	defaultLanguageId,
 	editingLanguageId,
 	fieldNameGenerator,
@@ -35,67 +35,8 @@ export const addField = ({
 }) => {
 	const {columnIndex, pageIndex, rowIndex} = indexes;
 
-	let newPages;
-
-	if (parentFieldName) {
-		const visitor = new PagesVisitor(pages);
-
-		newPages = visitor.mapFields(
-			(field) => {
-				if (field.fieldName === parentFieldName) {
-					const nestedFields = field.nestedFields
-						? [...field.nestedFields, newField]
-						: [newField];
-
-					field = updateField(
-						{
-							defaultLanguageId,
-							editingLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						field,
-						'nestedFields',
-						nestedFields
-					);
-
-					const {rows} = field;
-					const pages = addFieldToColumn(
-						[
-							{
-								rows:
-									typeof rows === 'string'
-										? JSON.parse(rows)
-										: rows,
-							},
-						], // TODO: Check if row can be a string
-						0,
-						rowIndex,
-						columnIndex,
-						newField.fieldName
-					);
-
-					return updateField(
-						{
-							defaultLanguageId,
-							editingLanguageId,
-							fieldNameGenerator,
-							generateFieldNameUsingFieldLabel,
-						},
-						field,
-						'rows',
-						pages[0].rows
-					);
-				}
-
-				return field;
-			},
-			true,
-			true
-		);
-	}
-	else {
-		newPages = addFieldToColumn(
+	if (!parentFieldName) {
+		return addFieldToColumn(
 			pages,
 			pageIndex,
 			rowIndex,
@@ -104,14 +45,61 @@ export const addField = ({
 		);
 	}
 
-	return {
-		activePage: pageIndex,
-		focusedField: {
-			...newField,
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.mapFields(
+		(field) => {
+			if (field.fieldName === parentFieldName) {
+				const nestedFields = field.nestedFields
+					? [...field.nestedFields, newField]
+					: [newField];
+
+				field = updateField(
+					{
+						defaultLanguageId,
+						editingLanguageId,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+					},
+					field,
+					'nestedFields',
+					nestedFields
+				);
+
+				const {rows} = field;
+				const pages = addFieldToColumn(
+					[
+						{
+							rows:
+								typeof rows === 'string'
+									? JSON.parse(rows)
+									: rows,
+						},
+					], // TODO: Check if row can be a string
+					0,
+					rowIndex,
+					columnIndex,
+					newField.fieldName
+				);
+
+				return updateField(
+					{
+						defaultLanguageId,
+						editingLanguageId,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+					},
+					field,
+					'rows',
+					pages[0].rows
+				);
+			}
+
+			return field;
 		},
-		pages: newPages,
-		previousFocusedField: newField,
-	};
+		true,
+		true
+	);
 };
 
 export const generateInstanceId = (isNumbersOnly) =>
@@ -340,14 +328,14 @@ export const normalizeSettingsContextPages = (
 				});
 			}
 
-			const newInstanceId = generateInstanceId();
+			const instanceId = generateInstanceId();
 
 			if (field.type === 'rich_text' && field.editorConfig) {
 				field = {
 					...field,
-					editorConfig: formatEditorConfig(
+					editorConfig: updateEditorConfigInstanceId(
 						field.editorConfig,
-						newInstanceId
+						instanceId
 					),
 				};
 			}
@@ -355,10 +343,10 @@ export const normalizeSettingsContextPages = (
 			return {
 				...field,
 				defaultLanguageId,
-				instanceId: newInstanceId,
+				instanceId,
 				locale: defaultLanguageId,
 				name: generateName(field.name, {
-					instanceId: newInstanceId,
+					instanceId,
 					repeatedIndex: getRepeatedIndex(field.name),
 				}),
 			};
@@ -455,21 +443,22 @@ export const createField = (props, event) => {
 	};
 };
 
-export const formatEditorConfig = (editorConfig, instanceId) => {
-	Object.keys(editorConfig).map((key) => {
-		if (typeof editorConfig[key] === 'string') {
-			const parsedName = parseName(decodeURIComponent(editorConfig[key]));
+export const updateEditorConfigInstanceId = (editorConfig, instanceId) => {
+	const updatedEditorConfig = {...editorConfig};
+	for (const [key, value] of Object.entries(updatedEditorConfig)) {
+		if (typeof value === 'string') {
+			const parsedName = parseName(decodeURIComponent(value));
 
 			if (parsedName.instanceId) {
-				editorConfig[key] = editorConfig[key].replace(
+				updatedEditorConfig[key] = value.replace(
 					parsedName.instanceId,
 					instanceId
 				);
 			}
 		}
-	});
+	}
 
-	return editorConfig;
+	return updatedEditorConfig;
 };
 
 export const formatFieldName = (instanceId, languageId, value) => {

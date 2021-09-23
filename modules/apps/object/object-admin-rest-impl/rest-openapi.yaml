@@ -89,6 +89,13 @@ components:
                     type: string
         ObjectLayout:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 dateCreated:
                     format: date
                     readOnly: true
@@ -143,6 +150,9 @@ components:
                     format: int64
                     type: integer
                 priority:
+                    format: int32
+                    type: integer
+                size:
                     format: int32
                     type: integer
         ObjectLayoutRow:
@@ -666,6 +676,21 @@ paths:
                                 $ref: "#/components/schemas/ObjectField"
             tags: ["ObjectField"]
     "/object-layouts/{objectLayoutId}":
+        delete:
+            operationId: deleteObjectLayout
+            parameters:
+                - in: path
+                  name: objectLayoutId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectLayout"]
         get:
             operationId: getObjectLayout
             parameters:
@@ -712,3 +737,19 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectLayout"
             tags: ["ObjectLayout"]
+    "/object-relationships/{objectRelationshipId}":
+        delete:
+            operationId: deleteObjectRelationship
+            parameters:
+                - in: path
+                  name: objectRelationshipId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectRelationship"]

@@ -14,17 +14,30 @@
 
 package com.liferay.remote.app.web.internal.portlet;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Map;
+import java.util.Properties;
+
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -34,11 +47,10 @@ import javax.portlet.RenderResponse;
 public class RemoteAppEntryPortlet extends MVCPortlet {
 
 	public RemoteAppEntryPortlet(
-		RemoteAppEntry remoteAppEntry, String remoteProtocolBridgeModuleName) {
+		NPMResolver npmResolver, RemoteAppEntry remoteAppEntry) {
 
-		_remoteProtocolBridgeModuleName = remoteProtocolBridgeModuleName;
-
-		_url = remoteAppEntry.getUrl();
+		_npmResolver = npmResolver;
+		_remoteAppEntry = remoteAppEntry;
 	}
 
 	@Override
@@ -46,32 +58,17 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		OutputData outputData = _getOutputData(renderRequest);
+		String type = _remoteAppEntry.getType();
 
-		ScriptData scriptData = new ScriptData();
-
-		scriptData.append(
-			null, "RemoteProtocolBridge.default()",
-			_remoteProtocolBridgeModuleName + " as RemoteProtocolBridge",
-			ScriptData.ModulesType.ES6);
-
-		StringWriter stringWriter = new StringWriter();
-
-		scriptData.writeTo(stringWriter);
-
-		StringBuffer stringBuffer = stringWriter.getBuffer();
-
-		outputData.setDataSB(
-			RemoteAppEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
-			new StringBundler(stringBuffer.toString()));
-
-		PrintWriter printWriter = renderResponse.getWriter();
-
-		printWriter.print("<iframe src=\"");
-		printWriter.print(_url);
-		printWriter.print("\"></iframe>");
-
-		printWriter.flush();
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			_renderCustomElement(renderRequest, renderResponse);
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			_renderIFrame(renderRequest, renderResponse);
+		}
+		else {
+			throw new IOException("Invalid remote app entry type: " + type);
+		}
 	}
 
 	private OutputData _getOutputData(RenderRequest renderRequest) {
@@ -87,7 +84,104 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		return outputData;
 	}
 
-	private final String _remoteProtocolBridgeModuleName;
-	private final String _url;
+	private Properties _getProperties(RenderRequest renderRequest)
+		throws IOException {
+
+		Properties properties = new Properties();
+
+		_loadProperties(properties, _remoteAppEntry.getProperties());
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		_loadProperties(
+			properties,
+			portletPreferences.getValue("properties", StringPool.BLANK));
+
+		return properties;
+	}
+
+	private void _loadProperties(Properties properties, String string)
+		throws IOException {
+
+		properties.load(
+			new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8)));
+	}
+
+	private void _renderCustomElement(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException {
+
+		PrintWriter printWriter = renderResponse.getWriter();
+
+		printWriter.print(StringPool.LESS_THAN);
+		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
+
+		Properties properties = _getProperties(renderRequest);
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			printWriter.print(StringPool.SPACE);
+			printWriter.print(entry.getKey());
+			printWriter.print("=\"");
+			printWriter.print(
+				StringUtil.replace(
+					(String)entry.getValue(), CharPool.QUOTE, "&quot;"));
+			printWriter.print(StringPool.QUOTE);
+		}
+
+		printWriter.print("></");
+		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
+		printWriter.print(StringPool.GREATER_THAN);
+
+		printWriter.flush();
+	}
+
+	private void _renderIFrame(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException {
+
+		OutputData outputData = _getOutputData(renderRequest);
+
+		ScriptData scriptData = new ScriptData();
+
+		String moduleName = _npmResolver.resolveModuleName(
+			"@liferay/remote-app-web/remote_protocol/bridge");
+
+		scriptData.append(
+			null, "RemoteProtocolBridge.default()",
+			moduleName + " as RemoteProtocolBridge",
+			ScriptData.ModulesType.ES6);
+
+		StringWriter stringWriter = new StringWriter();
+
+		scriptData.writeTo(stringWriter);
+
+		StringBuffer stringBuffer = stringWriter.getBuffer();
+
+		outputData.setDataSB(
+			RemoteAppEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
+			new StringBundler(stringBuffer.toString()));
+
+		PrintWriter printWriter = renderResponse.getWriter();
+
+		printWriter.print("<iframe src=\"");
+
+		String iFrameURL = _remoteAppEntry.getIFrameURL();
+
+		Properties properties = _getProperties(renderRequest);
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			iFrameURL = HttpUtil.addParameter(
+				iFrameURL, (String)entry.getKey(), (String)entry.getValue());
+		}
+
+		printWriter.print(iFrameURL);
+
+		printWriter.print("\"></iframe>");
+
+		printWriter.flush();
+	}
+
+	private final NPMResolver _npmResolver;
+	private final RemoteAppEntry _remoteAppEntry;
 
 }

@@ -75,14 +75,6 @@ public class RemoteAppEntryModelArgumentsResolver implements ArgumentsResolver {
 					remoteAppEntryModelImpl.getColumnBitmask(columnName);
 			}
 
-			if (finderPath.isBaseModelResult() &&
-				(RemoteAppEntryPersistenceImpl.
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
-						finderPath.getCacheName())) {
-
-				finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
-			}
-
 			_finderPathColumnBitmasksCache.put(
 				finderPath, finderPathColumnBitmask);
 		}
@@ -128,16 +120,5 @@ public class RemoteAppEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	private static final Map<FinderPath, Long> _finderPathColumnBitmasksCache =
 		new ConcurrentHashMap<>();
-
-	private static final long _ORDER_BY_COLUMNS_BITMASK;
-
-	static {
-		long orderByColumnsBitmask = 0;
-
-		orderByColumnsBitmask |= RemoteAppEntryModelImpl.getColumnBitmask(
-			"name");
-
-		_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
-	}
 
 }

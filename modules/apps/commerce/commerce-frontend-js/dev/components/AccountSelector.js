@@ -12,11 +12,11 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/account_selector/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/account_selector/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
-import '../../../../../frontend-theme/frontend-theme-styled/src/main/resources/META-INF/resources/_styled/css/application/_account_selector.scss';
+import '../../../../frontend-theme/frontend-theme-styled/src/main/resources/META-INF/resources/_styled/css/application/_account_selector.scss';
 
 launcher('account_selector', 'account-selector', {
 	commerceChannelId: 24324,

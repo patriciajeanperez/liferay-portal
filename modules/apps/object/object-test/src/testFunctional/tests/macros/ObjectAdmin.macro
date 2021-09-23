@@ -1,18 +1,20 @@
 definition {
 
 	macro addNewObject {
-		var fieldLabelName = "${fieldLabelName}";
-		var pluralLabelName = "${pluralLabelName}";
-
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
 
 		Type(
 			locator1 = "ObjectAdmin#LABEL_CUSTOM_OBJECT",
 			value1 = "${fieldLabelName}");
-
 		Type(
 			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
 			value1 = "${pluralLabelName}");
+
+		if (isSet(fieldName)) {
+			Type(
+				locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
+				value1 = "${fieldName}");
+		}
 	}
 
 	macro addObjectFieldViaAPI {
@@ -68,6 +70,12 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro assertFieldsTableColumnsAreDisplayed {
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_NAME_COLUMN");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
+	}
+
 	macro assertKeywordAndText {
 		AssertElementPresent(locator1 = "ObjectAdmin#SEARCHABLE_SECTION_TITLE");
 
@@ -90,17 +98,47 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_STATUS_COLUMN");
 	}
 
+	macro assertObjectColumnValue {
+		AssertTextEquals(
+			locator1 = "ObjectAdmin#OBJECT_NAME",
+			value1 = "${name}");
+
+		AssertTextEquals(
+			locator1 = "ObjectAdmin#OBJECT_SYSTEM",
+			value1 = "${system}");
+
+		AssertTextEquals(
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "${status}");
+	}
+
+	macro assertObjectDetailsPage {
+		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
+	}
+
 	macro assertObjectField {
-		var key_fieldName = "${fieldName}";
+		var key_fieldLabel = "${fieldLabel}";
 		var key_fieldType = "${fieldType}";
 
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_NAME",
-			value1 = "${fieldName}");
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE");
+	}
+
+	macro assertObjectFieldNotPresent {
+		var key_fielLabel = "${fieldLabel}";
+
+		ObjectAdmin.goToFieldsTab();
+
+		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+	}
+
+	macro assertObjectStatus {
 		AssertElementPresent(
-			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_TYPE",
-			value1 = "${fieldType}");
+			key_status = "${status}",
+			locator1 = "ObjectAdmin#OBJECT_STATUS");
 	}
 
 	macro clickFieldsSearchableSectionRadioOption {
@@ -174,7 +212,7 @@ definition {
 
 	macro goToFieldsDetails {
 		Click(
-			key_fieldName = "${fieldName}",
+			key_label = "${label}",
 			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
@@ -195,11 +233,15 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro publishObjectViaUI {
+		Button.clickPublish();
+	}
+
 	macro saveCustomObject {
 		Click(locator1 = "ObjectAdmin#SAVE_CUSTOM_OBJECT");
 	}
 
-	macro selectCustomObjectFieldKebabMenuOption {
+	macro selectKebabMenuOption {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(

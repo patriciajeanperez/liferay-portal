@@ -35,6 +35,12 @@
 		<column name="version" type="int" />
 		<column name="status" type="int" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="CompanyId" return-type="Collection">
@@ -51,17 +57,12 @@
 			<finder-column name="system" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_A_S" return-type="Collection">
+		<finder name="C_A_S_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="active" />
+			<finder-column name="system" />
 			<finder-column name="status" />
 		</finder>
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="name" />
-		</order>
 
 		<!-- References -->
 
@@ -95,6 +96,12 @@
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="objectEntryId" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="ObjectDefinitionId" return-type="Collection">
@@ -109,12 +116,6 @@
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="objectEntryId" />
-		</order>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 
@@ -145,6 +146,12 @@
 		<column name="required" type="boolean" />
 		<column name="type" type="String" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="ListTypeDefinitionId" return-type="Collection">
@@ -161,12 +168,6 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />
 		</finder>
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="name" />
-		</order>
 	</entity>
 	<entity local-service="true" name="ObjectLayout" remote-service="true" uuid="true">
 
@@ -244,6 +245,7 @@
 		<column name="objectFieldId" type="long" />
 		<column name="objectLayoutRowId" type="long" />
 		<column name="priority" type="int" />
+		<column name="size" type="int" />
 
 		<!-- Finder methods -->
 
@@ -276,7 +278,7 @@
 			<finder-column name="objectLayoutBoxId" />
 		</finder>
 	</entity>
-	<entity local-service="false" name="ObjectLayoutTab" remote-service="false" uuid="true">
+	<entity local-service="false" name="ObjectLayoutTab" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -364,8 +366,10 @@
 		<exception>ObjectFieldLabel</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldType</exception>
+		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipType</exception>
+		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>ReservedObjectField</exception>
 	</exceptions>

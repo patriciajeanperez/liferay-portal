@@ -372,26 +372,30 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				if (value instanceof Boolean || value instanceof Number) {
 					sb.append(value);
-					sb.append(StringPool.SPACE);
 				}
 				else if (value instanceof Date) {
 					sb.append(dateFormat.format(value));
-					sb.append(StringPool.SPACE);
 				}
 				else if (value instanceof Date[]) {
 					Date[] dates = (Date[])value;
 
-					for (Date date : dates) {
-						sb.append(dateFormat.format(date));
-						sb.append(StringPool.SPACE);
+					for (int i = 0; i < dates.length; i++) {
+						sb.append(dateFormat.format(dates[i]));
+
+						if (i < (dates.length - 1)) {
+							sb.append(StringPool.SPACE);
+						}
 					}
 				}
 				else if (value instanceof Object[]) {
 					Object[] values = (Object[])value;
 
-					for (Object object : values) {
-						sb.append(object);
-						sb.append(StringPool.SPACE);
+					for (int i = 0; i < values.length; i++) {
+						sb.append(values[i]);
+
+						if (i < (values.length - 1)) {
+							sb.append(StringPool.SPACE);
+						}
 					}
 				}
 				else {
@@ -409,8 +413,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 							jsonArray);
 
 						sb.append(stringArray);
-
-						sb.append(StringPool.SPACE);
 					}
 					else {
 						if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
@@ -418,15 +420,20 @@ public class DDMIndexerImpl implements DDMIndexer {
 						}
 
 						sb.append(valueString);
-						sb.append(StringPool.SPACE);
 					}
 				}
+
+				sb.append(StringPool.SPACE);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(exception, exception);
 				}
 			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

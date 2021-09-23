@@ -26,6 +26,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DETAILS_PAGE_TITLE</td>
+		<td>//h2[contains(text(),'Information')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DETAILS_LABEL_CUSTOM_OBJECT</td>
 		<td>>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
 		<td></td>
@@ -76,6 +81,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_DETAILS_TAB</td>
+		<td>//a[contains(text(), 'Details')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_FIELDS_TAB</td>
 		<td>//a[contains(text(),'Fields')]</td>
 		<td></td>
@@ -101,6 +111,21 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_NAME</td>
+		<td>//a[contains(text(),'${name}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_STATUS</td>
+		<td>//strong[contains(@class, 'workflow-value') and contains(text(),'${status}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_SYSTEM</td>
+		<td>//div[contains(text(),'${system}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_NAME_COLUMN</td>
 		<td>//div[contains(@class,'dnd-th') and contains(text(),'Name')]</td>
 		<td></td>
@@ -122,7 +147,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_FIELD</td>
-		<td>//a[contains(text(),'${key_fieldName}')]</td>
+		<td>//a[contains(text(),'${key_label}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -141,6 +166,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELDS_NAME_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th') and contains(text(),'Name')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FIELDS_RADIO_OPTION</td>
 		<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
 		<td></td>
@@ -156,8 +186,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>VIEW_OBJECT_FIELD_NAME</td>
-		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldName}')]</td>
+		<td>FIELDS_TYPE_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th') and contains(text(),'Type')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_FIELD_LABEL</td>
+		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -172,7 +207,7 @@
 	</tr>
 	<tr>
 		<td>KEBAB_MENU_OPTION</td>
-		<td>//button[contains(text(), '${key_kebabOption}')]</td>
+		<td>//*[@class = 'dropdown-item' and contains(text(), '${key_kebabOption}')]</td>
 		<td></td>
 	</tr>
 </tbody>

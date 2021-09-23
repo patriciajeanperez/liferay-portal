@@ -15,13 +15,23 @@
 package com.liferay.translation.translator;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface Translator {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #isEnabled(long)}
+	 */
+	@Deprecated
 	public boolean isEnabled();
+
+	public boolean isEnabled(long companyId) throws ConfigurationException;
 
 	public TranslatorPacket translate(TranslatorPacket translatorPacket)
 		throws PortalException;

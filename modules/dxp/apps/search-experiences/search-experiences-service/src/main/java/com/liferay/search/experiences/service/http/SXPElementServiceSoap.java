@@ -14,9 +14,19 @@
 
 package com.liferay.search.experiences.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.search.experiences.service.SXPElementServiceUtil;
+
+import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.search.experiences.service.SXPElementServiceUtil</code> service
+ * <code>SXPElementServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +66,106 @@ package com.liferay.search.experiences.service.http;
  */
 @Deprecated
 public class SXPElementServiceSoap {
+
+	public static com.liferay.search.experiences.model.SXPElementSoap
+			addSXPElement(
+				String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, String elementDefinitionJSON,
+				boolean readOnly, String[] titleMapLanguageIds,
+				String[] titleMapValues, int type,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+
+			com.liferay.search.experiences.model.SXPElement returnValue =
+				SXPElementServiceUtil.addSXPElement(
+					descriptionMap, elementDefinitionJSON, readOnly, titleMap,
+					type, serviceContext);
+
+			return com.liferay.search.experiences.model.SXPElementSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPElementSoap
+			deleteSXPElement(long sxpElementId)
+		throws RemoteException {
+
+		try {
+			com.liferay.search.experiences.model.SXPElement returnValue =
+				SXPElementServiceUtil.deleteSXPElement(sxpElementId);
+
+			return com.liferay.search.experiences.model.SXPElementSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPElementSoap
+			getSXPElement(long sxpElementId)
+		throws RemoteException {
+
+		try {
+			com.liferay.search.experiences.model.SXPElement returnValue =
+				SXPElementServiceUtil.getSXPElement(sxpElementId);
+
+			return com.liferay.search.experiences.model.SXPElementSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPElementSoap
+			updateSXPElement(
+				long sxpElementId, String[] descriptionMapLanguageIds,
+				String[] descriptionMapValues, String elementDefinitionJSON,
+				boolean hidden, String[] titleMapLanguageIds,
+				String[] titleMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> descriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					descriptionMapLanguageIds, descriptionMapValues);
+			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+				titleMapLanguageIds, titleMapValues);
+
+			com.liferay.search.experiences.model.SXPElement returnValue =
+				SXPElementServiceUtil.updateSXPElement(
+					sxpElementId, descriptionMap, elementDefinitionJSON, hidden,
+					titleMap, serviceContext);
+
+			return com.liferay.search.experiences.model.SXPElementSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SXPElementServiceSoap.class);
+
 }

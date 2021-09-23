@@ -14,9 +14,9 @@
 
 import React from 'react';
 
-import modalLauncher from '../../../src/main/resources/META-INF/resources/components/modal/entry';
-import {OPEN_MODAL} from '../../../src/main/resources/META-INF/resources/utilities/eventsDefinitions';
-import launcher from '../../../src/main/resources/META-INF/resources/utilities/launcher';
+import modalLauncher from '../../src/main/resources/META-INF/resources/components/modal/entry';
+import {OPEN_MODAL} from '../../src/main/resources/META-INF/resources/utilities/eventsDefinitions';
+import launcher from '../../src/main/resources/META-INF/resources/utilities/launcher';
 
 const props = {
 	actions: [

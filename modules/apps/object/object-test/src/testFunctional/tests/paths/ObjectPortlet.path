@@ -26,8 +26,13 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>PAGINATION_ITEMS_PER_PAGE_SELECT</td>
+		<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'dropdown-toggle')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_CUSTOM_OBJECT</td>
-		<td>//div[(@class='table-list-title') and contains (.,'${key_name}')]</td>
+		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
 		<td></td>
 	</tr>
 </tbody>

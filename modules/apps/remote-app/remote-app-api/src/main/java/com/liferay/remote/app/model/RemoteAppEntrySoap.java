@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.remote.app.service.http.RemoteAppEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -41,8 +41,15 @@ public class RemoteAppEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setCustomElementCSSURLs(model.getCustomElementCSSURLs());
+		soapModel.setCustomElementHTMLElementName(
+			model.getCustomElementHTMLElementName());
+		soapModel.setCustomElementURLs(model.getCustomElementURLs());
+		soapModel.setIFrameURL(model.getIFrameURL());
 		soapModel.setName(model.getName());
-		soapModel.setUrl(model.getUrl());
+		soapModel.setPortletCategoryName(model.getPortletCategoryName());
+		soapModel.setProperties(model.getProperties());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -165,6 +172,40 @@ public class RemoteAppEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getCustomElementCSSURLs() {
+		return _customElementCSSURLs;
+	}
+
+	public void setCustomElementCSSURLs(String customElementCSSURLs) {
+		_customElementCSSURLs = customElementCSSURLs;
+	}
+
+	public String getCustomElementHTMLElementName() {
+		return _customElementHTMLElementName;
+	}
+
+	public void setCustomElementHTMLElementName(
+		String customElementHTMLElementName) {
+
+		_customElementHTMLElementName = customElementHTMLElementName;
+	}
+
+	public String getCustomElementURLs() {
+		return _customElementURLs;
+	}
+
+	public void setCustomElementURLs(String customElementURLs) {
+		_customElementURLs = customElementURLs;
+	}
+
+	public String getIFrameURL() {
+		return _iFrameURL;
+	}
+
+	public void setIFrameURL(String iFrameURL) {
+		_iFrameURL = iFrameURL;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -173,12 +214,28 @@ public class RemoteAppEntrySoap implements Serializable {
 		_name = name;
 	}
 
-	public String getUrl() {
-		return _url;
+	public String getPortletCategoryName() {
+		return _portletCategoryName;
 	}
 
-	public void setUrl(String url) {
-		_url = url;
+	public void setPortletCategoryName(String portletCategoryName) {
+		_portletCategoryName = portletCategoryName;
+	}
+
+	public String getProperties() {
+		return _properties;
+	}
+
+	public void setProperties(String properties) {
+		_properties = properties;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
 	}
 
 	private long _mvccVersion;
@@ -189,7 +246,13 @@ public class RemoteAppEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _customElementCSSURLs;
+	private String _customElementHTMLElementName;
+	private String _customElementURLs;
+	private String _iFrameURL;
 	private String _name;
-	private String _url;
+	private String _portletCategoryName;
+	private String _properties;
+	private String _type;
 
 }

@@ -19,19 +19,6 @@ definition {
 		task ("Add a new site with a public widget page") {
 			ACUtils.addSiteAndPage();
 		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
 	}
 
 	tearDown {
@@ -51,51 +38,10 @@ definition {
 	test OrderDynamicSegmentMembershipPreview {
 		property portal.upstream = "quarantine";
 
-		// AC Refactor: members are not appearing
+		// AC Refactor: members are not appearing in correct order
 		// AC Refactor ticket: LRAC-8767
 
-		task ("Add 3 new users") {
-			for (var n : list "1,2,3") {
-				JSONUser.addUser(
-					userEmailAddress = "user${n}@liferay.com",
-					userFirstName = "user${n}",
-					userLastName = "user${n}",
-					userScreenName = "user${n}");
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = "user${n}@liferay.com");
-			}
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
-		}
-
-		task ("View the page as different users") {
-			for (var username : list "userea,user1") {
-				if ("${username}" == "userea") {
-					var fullName = "userfn userln";
-				}
-
-				else {
-					var fullName = "${username} ${username}";
-				}
-
-				User.logoutAndLoginPG(
-					userLoginEmailAddress = "${username}@liferay.com",
-					userLoginFullName = "${fullName}");
-
-				Navigator.gotoSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
-		}
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -119,6 +65,57 @@ definition {
 			ACSegments.selectOperator(operator = "contains");
 
 			ACSegments.editTextCriterion(textInput = "user");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Add 3 new users in DXP") {
+			ACUtils.launchDXP();
+
+			for (var n : list "1,2,3") {
+				JSONUser.addUser(
+					userEmailAddress = "user${n}@liferay.com",
+					userFirstName = "user${n}",
+					userLastName = "user${n}",
+					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "user1,user2,user3") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				for (var n : list "1,2") {
+					Navigator.gotoSitePage(
+						pageName = "AC Page",
+						siteName = "Site Name");
+				}
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Open AC and view the segment") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
 		}
 
 		task ("View members in Preview mode and order by name descending") {
@@ -126,10 +123,12 @@ definition {
 
 			ACSegments.filterKnownSegmentMembersList();
 
-			for (var username : list "userfn userln,user1 user1,user2 user2,user3 user3") {
+			Pause(locator1 = "3000");
+
+			for (var username : list "user3 user3,user2 user2,user1 user1") {
 				ACSegments.viewKnownSegmentMembersSpecificOrder(username = "${username}");
 
-				// Fails here due to LRAC-8722, needs refactor after bug is fixed
+				// Fails here - the order of the members is not consistent
 
 			}
 
@@ -146,37 +145,6 @@ definition {
 		// AC Refactor ticket: LRAC-8818
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		task ("Add a new user in DXP") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-		}
-
-		task ("Sync the Contact Data") {
-			ACDXPSettings.syncNewContactData();
-		}
-
-		task ("Sign in as new user and view the site page") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userLoginFullName = "user1 user1");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
 
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
@@ -202,10 +170,51 @@ definition {
 			ACSegments.saveSegment();
 		}
 
+		task ("Add a new user in DXP") {
+			ACUtils.launchDXP();
+
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Sign in as new user and view the site page") {
+			for (var n : list "1,2") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "user1@liferay.com",
+					userLoginFullName = "user1 user1");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Open AC and view the segment") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSegments();
+
+			ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		}
+
 		task ("Assert Membership card exists") {
-			AssertTextPresent(
-				locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CARD",
-				value1 = "Segment Membership");
+			ACCards.viewCards(cardTitle = "Segment Membership");
 		}
 
 		task ("Show members added") {
@@ -386,12 +395,106 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8487 | Test Summary: Membership card shows members removed"
-	@ignore = "true"
 	@priority = "5"
 	test ViewMembershipCardShowsMembersRemoved {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8487 PENDING IMPLEMENTATION
+		// AC Refactor: timing issue for membership card
+		// AC Refactor ticket: LRAC-8887
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		var userList = "user1,user2";
+
+		task ("Add new users in DXP") {
+			for (var n : list "${userList}") {
+				JSONUser.addUser(
+					userEmailAddress = "${n}@liferay.com",
+					userFirstName = "${n}",
+					userLastName = "${n}",
+					userScreenName = "${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${n}@liferay.com");
+			}
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("View the page as different users") {
+			for (var username : list "${userList}") {
+				var fullName = "${username} ${username}";
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "${username}@liferay.com",
+					userLoginFullName = "${fullName}");
+
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Open AC and create new segment with members") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
+
+			ACSegments.saveSegment();
+		}
+
+		// Data takes to long to appear
+
+		task ("Show members added") {
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "2",
+				totalNumber = "2");
+		}
+
+		task ("Go to Segment and remove a user") {
+			ACNavigation.goToSegments();
+
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
+
+			ACSegments.removeStaticMember(tableMember = "user2 user2");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Show updated numbers") {
+			ACSegments.viewSegmentMembershipLegendNumbers(
+				anonymousNumber = "0",
+				knownNumber = "1",
+				totalNumber = "1");
+		}
+
+		// Data takes to long to appear
+
+		task ("View membership card when hovering") {
+			ACSegments.viewSegmentMembershipChartNumbers(
+				addedMember = "0",
+				netChange = "0",
+				removedMember = "1");
+		}
 	}
 
 }

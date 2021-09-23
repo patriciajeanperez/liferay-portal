@@ -77,7 +77,7 @@ public class SXPElementCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -85,8 +85,6 @@ public class SXPElementCacheModel
 		sb.append(uuid);
 		sb.append(", sxpElementId=");
 		sb.append(sxpElementId);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -130,7 +128,6 @@ public class SXPElementCacheModel
 		}
 
 		sxpElementImpl.setSXPElementId(sxpElementId);
-		sxpElementImpl.setGroupId(groupId);
 		sxpElementImpl.setCompanyId(companyId);
 		sxpElementImpl.setUserId(userId);
 
@@ -188,13 +185,13 @@ public class SXPElementCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		sxpElementId = objectInput.readLong();
-
-		groupId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -203,7 +200,7 @@ public class SXPElementCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		description = objectInput.readUTF();
-		elementDefinitionJSON = objectInput.readUTF();
+		elementDefinitionJSON = (String)objectInput.readObject();
 
 		hidden = objectInput.readBoolean();
 
@@ -228,8 +225,6 @@ public class SXPElementCacheModel
 
 		objectOutput.writeLong(sxpElementId);
 
-		objectOutput.writeLong(groupId);
-
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
@@ -252,10 +247,10 @@ public class SXPElementCacheModel
 		}
 
 		if (elementDefinitionJSON == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(elementDefinitionJSON);
+			objectOutput.writeObject(elementDefinitionJSON);
 		}
 
 		objectOutput.writeBoolean(hidden);
@@ -277,7 +272,6 @@ public class SXPElementCacheModel
 	public long mvccVersion;
 	public String uuid;
 	public long sxpElementId;
-	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

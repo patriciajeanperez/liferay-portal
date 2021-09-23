@@ -12,9 +12,9 @@
  * details.
  */
 
-import launcher from '../../../src/main/resources/META-INF/resources/components/quantity_selector/entry';
+import launcher from '../../src/main/resources/META-INF/resources/components/quantity_selector/entry';
 
-import '../../../src/main/resources/META-INF/resources/styles/main.scss';
+import '../../src/main/resources/META-INF/resources/styles/main.scss';
 
 launcher('quantity-selector', 'quantity-selector', {
 	onUpdate: (quantity) =>

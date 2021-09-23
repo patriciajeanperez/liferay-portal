@@ -31,6 +31,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 	rules = {
 		@DDMFormRule(
 			actions = {
+				"setEnabled('required', FALSE)",
+				"setValue('required', isRequiredObjectField(getValue('objectFieldName')))"
+			},
+			condition = "not(isEmpty(getValue('objectFieldName')))"
+		),
+		@DDMFormRule(
+			actions = {
 				"setVisible('dataType', FALSE)",
 				"setVisible('requiredErrorMessage', getValue('required'))"
 			},

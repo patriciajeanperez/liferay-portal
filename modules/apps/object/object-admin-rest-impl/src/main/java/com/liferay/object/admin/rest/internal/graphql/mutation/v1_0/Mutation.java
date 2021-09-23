@@ -320,6 +320,34 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteObjectLayout(
+			@GraphQLName("objectLayoutId") Long objectLayoutId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource -> objectLayoutResource.deleteObjectLayout(
+				objectLayoutId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectLayoutBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectLayoutResource ->
+				objectLayoutResource.deleteObjectLayoutBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public ObjectLayout updateObjectLayout(
 			@GraphQLName("objectLayoutId") Long objectLayoutId,
 			@GraphQLName("objectLayout") ObjectLayout objectLayout)
@@ -375,6 +403,35 @@ public class Mutation {
 				objectRelationshipResource.
 					postObjectDefinitionObjectRelationshipBatch(
 						objectDefinitionId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteObjectRelationship(
+			@GraphQLName("objectRelationshipId") Long objectRelationshipId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectRelationshipResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectRelationshipResource ->
+				objectRelationshipResource.deleteObjectRelationship(
+					objectRelationshipId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectRelationshipBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectRelationshipResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectRelationshipResource ->
+				objectRelationshipResource.deleteObjectRelationshipBatch(
+					callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
