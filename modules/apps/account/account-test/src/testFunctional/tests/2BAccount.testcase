@@ -311,6 +311,7 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+<<<<<<< HEAD
 	@description = "This test sets the Allowed Account Type to only Business and assert that only Business Accounts display in Account Management Widget."
 	@priority = "4"
 	test CanOnlyViewBusinessAccountsWhenAllowedAccountTypeIsBusiness {
@@ -484,6 +485,9 @@ definition {
 	}
 
 	@description = "This test asserts that a user can select an account from the list as the active account. Backend tests are covering functionality for account selection."
+=======
+	@description = "This test checks that the size of the pagination list can be changed."
+>>>>>>> LRQA-70079 Update description
 	@priority = "4"
 	test CanChangePaginationInAccounts {
 		User.logoutAndLoginPG(
