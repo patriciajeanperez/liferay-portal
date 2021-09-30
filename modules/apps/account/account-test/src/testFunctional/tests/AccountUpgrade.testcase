@@ -21,8 +21,140 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
 
-	@priority = "4"
-	test AddBusinessAccountAfterUpgrade {
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.5";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.4";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade713 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.3";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade720 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.0";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade730 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.0";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade7210 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade7310 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade70106 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.6";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade71103 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade621015 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.15";
+
+		Upgrade.addAndViewBusinessAccount(
+			accountDescription = "Adding Account after upgrade",
+			accountName = "Account Name",
+			accountTaxID = "L-123456");
+	}
+
+	@priority = "5"
+	test AddBusinessAccountAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
