@@ -21,148 +21,364 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex search indexes.");
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade625 {
+	test ViewAccountAppsAfterUpgrade625 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.5";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade704 {
+	test ViewAccountAppsAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.4";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade713 {
+	test ViewAccountAppsAfterUpgrade713 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.3";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade720 {
+	test ViewAccountAppsAfterUpgrade720 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.0";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade730 {
+	test ViewAccountAppsAfterUpgrade730 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.0";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade7110 {
+	test ViewAccountAppsAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade7210 {
+	test ViewAccountAppsAfterUpgrade7210 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade7310 {
+	test ViewAccountAppsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade70106 {
-		property data.archive.type = "data-archive-portal";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.version = "7.0.10.6";
-
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
-	}
-
-	@priority = "5"
-	test AddBusinessAccountAfterUpgrade71103 {
+	test ViewAccountAppsAfterUpgrade71103 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade621015 {
+	test ViewAccountAppsAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
+	@description = "This is a use case for LPS-125389"
 	@priority = "5"
-	test AddBusinessAccountAfterUpgrade621021 {
+	test ViewAccountAppsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.addAndViewBusinessAccount(
-			accountDescription = "Adding Account after upgrade",
-			accountName = "Account Name",
-			accountTaxID = "L-123456");
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
+	}
+
+	@description = "This is a use case for LPS-125389"
+	@priority = "5"
+	test ViewAccountAppsAfterUpgrade701016 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.16";
+
+		task ("Add and view a business account after upgrade") {
+			Upgrade.addAndViewBusinessAccount(
+				accountDescription = "Adding Account after upgrade",
+				accountName = "Account Name",
+				accountTaxID = "L-123456");
+		}
+
+		task ("Add an account user to business account after upgrade") {
+			Upgrade.addUserToBusinessAccount(
+				accountName = "Account Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Add and view an account group after upgrade") {
+			Upgrade.addAndViewAccountGroup(
+				accountGroupDescription = "Adding Account Group after upgrade",
+				accountGroupName = "Account Group");
+		}
 	}
 
 }
