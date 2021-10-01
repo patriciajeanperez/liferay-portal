@@ -38,10 +38,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -68,10 +68,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -98,10 +98,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -128,10 +128,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -158,10 +158,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -188,10 +188,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -218,10 +218,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -248,10 +248,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -278,10 +278,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -308,10 +308,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -338,10 +338,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
@@ -368,10 +368,10 @@ definition {
 		task ("Add an account user to business account after upgrade") {
 			Upgrade.addUserToBusinessAccount(
 				accountName = "Account Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
 		}
 
 		task ("Add and view an account group after upgrade") {
