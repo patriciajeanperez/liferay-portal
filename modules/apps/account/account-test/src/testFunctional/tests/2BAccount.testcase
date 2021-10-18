@@ -350,6 +350,32 @@ definition {
 			assigneeType = "Organizations");
 	}
 
+	@description = "This test asserts Account Administrators can view all account users"
+	@priority = "5"
+	test AdminCanSearchForAccountUsers {
+		task ("Add several users to account") {
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			for (var userNum : list "2,3,4") {
+				Accounts.addNewUserToBusinessAccount(
+					accountName = "Account Name",
+					assigneeName = "userfn${userNum}",
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+		}
+
+		task ("Assert all users can be viewed") {
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			for (var userNum : list "2,3,4") {
+				LexiconEntry.viewEntryName(rowEntry = "userfn${userNum} userln${userNum}");
+			}
+		}
+	}
+
 	@description = "This test checks that the size of the pagination list can be changed."
 	@priority = "4"
 	test CanChangePaginationInAccounts {
