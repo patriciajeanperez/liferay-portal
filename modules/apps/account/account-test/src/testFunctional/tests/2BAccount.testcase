@@ -378,6 +378,56 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that account users can be filtered by status."
+	@priority = "4"
+	test CanFilterAccountUsersByStatus {
+		task ("Add new user to account") {
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addNewUserToBusinessAccount(
+				accountName = "Account Name",
+				assigneeName = "userfn2",
+				userEmailAddress = "userea2@liferay.com",
+				userFirstName = "userfn2",
+				userLastName = "userln2",
+				userScreenName = "usersn2");
+		}
+
+		task ("Deactivate new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			AccountUsers.openAccountUsersAdmin();
+
+			AccountUsers.deactivateUser(userFirstName = "userfn2");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert users can be filtered by status") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+		}
+	}
+
 	@description = "This test asserts that an Account Admin cannot view accounts not assigned to him."
 	@priority = "5"
 	test CannotViewOtherAccounts {
