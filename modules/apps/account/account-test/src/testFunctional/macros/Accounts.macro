@@ -1179,7 +1179,10 @@ definition {
 	}
 
 	macro tearDownCP {
-		Accounts.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		PortletEntry.selectAll();
 

@@ -108,7 +108,10 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test Test");
 
-		Accounts.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Test Test");
 

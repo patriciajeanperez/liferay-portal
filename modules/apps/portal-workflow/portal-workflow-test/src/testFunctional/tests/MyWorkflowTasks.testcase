@@ -56,7 +56,10 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		Accounts.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Test",
@@ -445,7 +448,10 @@ definition {
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		Accounts.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Test",

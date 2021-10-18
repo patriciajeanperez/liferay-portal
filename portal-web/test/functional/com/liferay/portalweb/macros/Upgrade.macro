@@ -38,7 +38,10 @@ definition {
 	}
 
 	macro addAndViewAccountGroup {
-		AccountGroups.openAccountGroupsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Groups");
 
 		AccountGroups.addCP(
 			accountGroupDescription = "${accountGroupDescription}",
@@ -50,14 +53,20 @@ definition {
 	}
 
 	macro addAndViewBusinessAccount {
-		Accounts.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		Accounts.addBusinessAccount(
 			accountDescription = "${accountDescription}",
 			accountName = "${accountName}",
 			accountTaxID = "${accountTaxID}");
 
-		Accounts.openAccountsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		LexiconEntry.viewEntryName(rowEntry = "${accountName}");
 	}
@@ -651,7 +660,10 @@ definition {
 	}
 
 	macro addUserToBusinessAccount {
-		AccountUsers.openAccountUsersAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
 
 		AccountUsers.addUser(
 			accountName = "${accountName}",
