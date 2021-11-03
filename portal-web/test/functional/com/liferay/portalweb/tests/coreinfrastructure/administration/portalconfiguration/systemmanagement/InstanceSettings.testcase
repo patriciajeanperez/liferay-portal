@@ -399,14 +399,16 @@ definition {
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret}",
-			providerName = "Google");
+			providerName = "Google",
+			registeredIdToken = "RS256");
 
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID1}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret1}",
-			providerName = "New Entry 1");
+			providerName = "New Entry 1",
+			registeredIdToken = "RS256");
 
 		LexiconEntry.viewEntryName(rowEntry = "New Entry 1");
 	}
@@ -858,7 +860,8 @@ definition {
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret}",
-			providerName = "Google");
+			providerName = "Google",
+			registeredIdToken = "RS256");
 
 		LexiconEntry.gotoEntry(rowEntry = "Google");
 
@@ -927,7 +930,8 @@ definition {
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret}",
-			providerName = "Google");
+			providerName = "Google",
+			registeredIdToken = "RS256");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -970,7 +974,8 @@ definition {
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret}",
-			providerName = "Google");
+			providerName = "Google",
+			registeredIdToken = "RS256");
 
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 
@@ -1007,7 +1012,8 @@ definition {
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret}",
-			providerName = "Google");
+			providerName = "Google",
+			registeredIdToken = "RS256");
 
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 
@@ -1091,7 +1097,8 @@ definition {
 		OpenIDConnect.addProvider(
 			openIDConnectClientID = "${openIDConnectClientID}",
 			openIDConnectClientSecret = "${openIDConnectClientSecret}",
-			providerName = "Google");
+			providerName = "Google",
+			registeredIdToken = "RS256");
 
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 
