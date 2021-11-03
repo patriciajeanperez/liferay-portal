@@ -981,6 +981,8 @@ definition {
 	@description = "This test adds more than 3 Owned Roles to an account and asserts correct pagination in the Roles list."
 	@priority = "3"
 	test CanChangePaginationInRolesList {
+		property test.name.skip.portal.instance = "Accounts#CanChangePaginationInRolesList";
+
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with Role",
 			accountEntryType = "Business");
