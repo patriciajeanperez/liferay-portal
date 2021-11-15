@@ -78,6 +78,7 @@ definition {
 	@uitest
 	test EnabledOpenIDConnectOnSystemLevel {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "Login#EnabledOpenIDConnectOnSystemLevel";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
@@ -257,6 +258,7 @@ definition {
 	@priority = "4"
 	test MultipleOpenIDConnectProvider {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "Login#MultipleOpenIDConnectProvider";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.2");
@@ -378,6 +380,7 @@ definition {
 	@uitest
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "Login#OpenIDConnectOnInstanceLevelSmoke";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
@@ -457,6 +460,7 @@ definition {
 	@uitest
 	test OpenIDConnectSmoke {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "Login#OpenIDConnectSmoke";
 
 		// LRQA-43729

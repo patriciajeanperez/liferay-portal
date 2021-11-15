@@ -386,6 +386,8 @@ definition {
 	@description = "This test asserts that a user can create multi factory configurations."
 	@priority = "4"
 	test CanCreateTwoFactoryConfigurations {
+		property portal.acceptance = "patty";
+
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientID1 = PropsUtil.get("google.client.id.2");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -843,7 +845,7 @@ definition {
 
 	@priority = "4"
 	test ExportedFactoryConfigurationCanBeImported {
-		property portal.acceptance = "true";
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "InstanceSettings#ExportedFactoryConfigurationCanBeImported";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
@@ -916,6 +918,7 @@ definition {
 
 	@priority = "4"
 	test FactoryConfigurationAreInTheirProperScope {
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "InstanceSettings#FactoryConfigurationAreInTheirProperScope";
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
@@ -961,6 +964,8 @@ definition {
 
 	@priority = "4"
 	test FactoryConfigurationCanBeDeleted {
+		property portal.acceptance = "patty";
+
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
 
@@ -998,6 +1003,8 @@ definition {
 
 	@priority = "4"
 	test FactoryConfigurationCanBeEdited {
+		property portal.acceptance = "patty";
+
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
 
@@ -1081,6 +1088,8 @@ definition {
 
 	@priority = "4"
 	test SingleFactoryConfigurationCanBeExported {
+		property portal.acceptance = "patty";
+
 		var openIDConnectClientID = PropsUtil.get("google.client.id.1");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.1");
 

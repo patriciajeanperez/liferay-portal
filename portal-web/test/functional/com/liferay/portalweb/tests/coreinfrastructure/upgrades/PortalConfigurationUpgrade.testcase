@@ -1,9 +1,9 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property database.types = "mysql";
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.acceptance = "patty";
 	property testray.main.component.name = "Upgrades User and System Management";
 
 	setUp {
