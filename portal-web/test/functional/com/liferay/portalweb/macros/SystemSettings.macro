@@ -316,8 +316,8 @@ definition {
 		}
 		else {
 			AssertTextEquals.assertValue(
-				key_fieldName = "${fieldName}",
-				locator1 = "FormFields#TEXT_MULTILINE_FIELD",
+				key_text = "${fieldName}",
+				locator1 = "TextArea#ANY",
 				value1 = "${fieldValue}");
 		}
 	}

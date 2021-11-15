@@ -57,25 +57,30 @@ definition {
 	macro addProvider {
 		Button.clickAdd();
 
-		FormFields.editTextMultiline(
-			fieldName = "providerName",
-			fieldValue = "${providerName}");
+		Type(
+			key_text = "providerName",
+			locator1 = "TextArea#ANY",
+			value1 = "${providerName}");
 
-		FormFields.editTextMultiline(
-			fieldName = "openIdConnectClientId",
-			fieldValue = "${openIDConnectClientID}");
+		Type(
+			key_text = "openIdConnectClientId",
+			locator1 = "TextArea#ANY",
+			value1 = "${openIdConnectClientId}");
 
-		FormFields.editTextMultiline(
-			fieldName = "openIdConnectClientSecret",
-			fieldValue = "${openIDConnectClientSecret}");
+		Type(
+			key_text = "openIdConnectClientSecret",
+			locator1 = "TextArea#ANY",
+			value1 = "${openIdConnectClientSecret}");
 
-		FormFields.editTextMultiline(
-			fieldName = "discoveryEndPoint",
-			fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
+		Type(
+			key_text = "discoveryEndPoint",
+			locator1 = "TextArea#ANY",
+			value1 = "https://accounts.google.com/.well-known/openid-configuration");
 
-		FormFields.editTextMultiline(
-			fieldName = "registeredIdTokenSigningAlg",
-			fieldValue = "RS256");
+		Type(
+			key_text = "registeredIdTokenSigningAlg",
+			locator1 = "TextArea#ANY",
+			value1 = "RS256");
 
 		PortletEntry.save();
 	}
