@@ -2297,9 +2297,10 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		SystemSettings.viewTextareaValue(
-			fieldName = "blockedEmailDomains",
-			fieldValue = "blocked.com");
+		AssertTextEquals.assertValue(
+			key_fieldName = "blockedEmailDomains",
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD_1",
+			value1 = "blocked.com");
 	}
 
 	@description = "This test removes an organization as an assignee of a business account."

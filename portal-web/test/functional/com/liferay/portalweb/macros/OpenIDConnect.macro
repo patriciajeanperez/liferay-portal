@@ -55,23 +55,23 @@ definition {
 	macro addProvider {
 		Button.clickAdd();
 
-		FormFields.editTextMultiline(
+		FormFields.editTextMultilineSecond(
 			fieldName = "providerName",
 			fieldValue = "${providerName}");
 
-		FormFields.editTextMultiline(
+		FormFields.editTextMultilineSecond(
 			fieldName = "openIdConnectClientId",
 			fieldValue = "${openIDConnectClientID}");
 
-		FormFields.editTextMultiline(
+		FormFields.editTextMultilineSecond(
 			fieldName = "openIdConnectClientSecret",
 			fieldValue = "${openIDConnectClientSecret}");
 
-		FormFields.editTextMultiline(
+		FormFields.editTextMultilineSecond(
 			fieldName = "discoveryEndPoint",
 			fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
 
-		FormFields.editTextMultiline(
+		FormFields.editTextMultilineSecond(
 			fieldName = "registeredIdTokenSigningAlg",
 			fieldValue = "RS256");
 

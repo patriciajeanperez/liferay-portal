@@ -580,6 +580,15 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editTextMultilineSecond {
+		Pause(locator1 = "1000");
+
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD_1",
+			value1 = "${fieldValue}");
+	}
+
 	macro editTextWithBackspace {
 		Pause(locator1 = "1000");
 
