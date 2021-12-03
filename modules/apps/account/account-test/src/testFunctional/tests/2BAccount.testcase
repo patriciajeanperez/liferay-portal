@@ -1,6 +1,7 @@
 @component-name = "portal-user-management-and-portal-configuration"
 definition {
 
+	property portal.acceptance = "melody";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Account";
@@ -32,9 +33,8 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "userfn",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -132,13 +132,14 @@ definition {
 	@description = "This test asserts that an Account Admin can add a new user to an account"
 	@priority = "5"
 	test AccountAdminCanAddNewUserToAccount {
+		property portal.acceptance = "melody";
+
 		Navigator.gotoPage(pageName = "2B Account Page");
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "userfn1",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
@@ -190,14 +191,15 @@ definition {
 	@description = "This test asserts that an Account Admin can assign roles to users."
 	@priority = "5"
 	test AccountAdminCanAssignRolesToUsers {
+		property portal.acceptance = "melody";
+
 		task ("Add a new user into the 'Account Name' account") {
 			LexiconEntry.gotoEntryMenuItemNoError(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "user1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user1",
 				userLastName = "user1",
@@ -279,9 +281,8 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
 				userLastName = "userln1",
@@ -607,6 +608,8 @@ definition {
 	@description = "This test asserts that account users can be ordered by First Name, Last Name, Email."
 	@priority = "4"
 	test AdminCanOrderUsers {
+		property portal.acceptance = "melody";
+
 		task ("Add new users to account") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -616,17 +619,15 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
 				userLastName = "userln5",
 				userScreenName = "usersn1");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn5",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea3@liferay.com",
 				userFirstName = "userfn5",
 				userLastName = "userln2",
@@ -716,9 +717,8 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -777,9 +777,8 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -967,9 +966,8 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -1261,9 +1259,8 @@ definition {
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "user1",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",
 			userLastName = "user1",
@@ -1279,9 +1276,8 @@ definition {
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "user2",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "user2@liferay.com",
 			userFirstName = "user2",
 			userLastName = "user2",
