@@ -1,0 +1,31 @@
+definition {
+
+	macro addAccountEntryUser {
+		Variables.assertDefined(parameterList = "${accountEntryName},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
+
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		if (!(isSet(accountEntryDescription))) {
+			var accountEntryDescription = "Account Entry Description";
+		}
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+
+		JSONAccountEntryUserAPI._addAccountEntryUser(
+			accountEntryId = "${accountEntryId}",
+			accountEntryName = "${accountEntryName}",
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+	}
+
+}
