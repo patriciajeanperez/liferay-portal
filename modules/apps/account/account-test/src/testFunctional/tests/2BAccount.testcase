@@ -32,9 +32,8 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "userfn",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -136,9 +135,8 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "userfn1",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
@@ -195,9 +193,8 @@ definition {
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "user1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user1",
 				userLastName = "user1",
@@ -279,9 +276,8 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
 				userLastName = "userln1",
@@ -616,17 +612,15 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn1",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea1@liferay.com",
 				userFirstName = "userfn1",
 				userLastName = "userln5",
 				userScreenName = "usersn1");
 
-			Accounts.addNewUserToBusinessAccount(
-				accountName = "Account Name",
-				assigneeName = "userfn5",
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
 				userEmailAddress = "userea3@liferay.com",
 				userFirstName = "userfn5",
 				userLastName = "userln2",
@@ -716,9 +710,8 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -777,9 +770,8 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -967,9 +959,8 @@ definition {
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
 			for (var userNum : list "2,3,4") {
-				Accounts.addNewUserToBusinessAccount(
-					accountName = "Account Name",
-					assigneeName = "userfn${userNum}",
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
 					userEmailAddress = "userea${userNum}@liferay.com",
 					userFirstName = "userfn${userNum}",
 					userLastName = "userln${userNum}",
@@ -1261,9 +1252,8 @@ definition {
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "user1",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",
 			userLastName = "user1",
@@ -1279,9 +1269,8 @@ definition {
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
-		Accounts.addNewUserToBusinessAccount(
-			accountName = "Account Name",
-			assigneeName = "user2",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Account Name",
 			userEmailAddress = "user2@liferay.com",
 			userFirstName = "user2",
 			userLastName = "user2",
