@@ -783,6 +783,8 @@ definition {
 		}
 
 		task ("Remove all users from Account so they can later be assigned") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
 			PortletEntry.selectAll();
 
 			ClickNoError(
@@ -1203,6 +1205,8 @@ definition {
 		}
 
 		task ("Open and click into the Assign Users Modal") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
 			LexiconEntry.gotoAdd();
 
 			WaitForElementPresent(
@@ -2056,6 +2060,8 @@ definition {
 		}
 
 		task ("Open and click into the Assign Users Modal") {
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
 			LexiconEntry.gotoAdd();
 
 			WaitForElementPresent(

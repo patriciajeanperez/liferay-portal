@@ -200,6 +200,8 @@ definition {
 				userLastName = "user1",
 				userScreenName = "user1");
 
+			Refresh();
+
 			WaitForElementPresent(
 				key_rowEntry = "user1 user1",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
