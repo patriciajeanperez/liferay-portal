@@ -167,15 +167,15 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Person Account");
 
-		JSONAccountEntryUser.addAccountEntryUser(
-			accountEntryName = "Person Account",
+		Accounts.addNewUserToPersonAccount(
+			accountName = "Person Account",
 			userEmailAddress = "userfn1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
-		JSONAccountEntryUser.addAccountEntryUser(
-			accountEntryName = "Person Account",
+		Accounts.addNewUserToPersonAccount(
+			accountName = "Person Account",
 			userEmailAddress = "userfn2@liferay.com",
 			userFirstName = "userfn2",
 			userLastName = "userln2",
@@ -770,10 +770,6 @@ definition {
 				accountEntryName = "Business Account",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
 			for (var userNum : list "1,2,3,4") {
 				JSONAccountEntryUser.addAccountEntryUser(
 					accountEntryName = "Business Account",
@@ -785,6 +781,12 @@ definition {
 		}
 
 		task ("Remove all users from Account so they can later be assigned") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
 			PortletEntry.selectAll();
 
 			ClickNoError(
@@ -1190,10 +1192,6 @@ definition {
 				accountEntryName = "Business Account",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
 			for (var userNum : list "1,2,3,4,5") {
 				JSONAccountEntryUser.addAccountEntryUser(
 					accountEntryName = "Business Account",
@@ -1205,6 +1203,12 @@ definition {
 		}
 
 		task ("Open and click into the Assign Users Modal") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
 			LexiconEntry.gotoAdd();
 
 			WaitForElementPresent(
@@ -2028,10 +2032,6 @@ definition {
 				accountEntryName = "Business Account",
 				accountEntryType = "Business");
 
-			Accounts.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Business Account");
-
 			JSONAccountEntryUser.addAccountEntryUser(
 				accountEntryName = "Business Account",
 				userEmailAddress = "Z-ea@liferay.com",
@@ -2055,6 +2055,12 @@ definition {
 		}
 
 		task ("Open and click into the Assign Users Modal") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Business Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
 			LexiconEntry.gotoAdd();
 
 			WaitForElementPresent(
@@ -2421,16 +2427,20 @@ definition {
 			accountEntryName = "Person Account",
 			accountEntryType = "Person");
 
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "Person Account");
-
 		JSONAccountEntryUser.addAccountEntryUser(
 			accountEntryName = "Person Account",
 			userEmailAddress = "userfn1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");
+
+		Accounts.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Person Account");
+
+		AssertElementPresent(
+			key_userName = "userfn1",
+			locator1 = "Account#USER_TABLE_NAME");
 
 		Click(
 			key_text = "times-circle",
