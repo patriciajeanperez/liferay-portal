@@ -1788,14 +1788,10 @@ definition {
 					for (var unlistedEntries : list "Announcements,Blogs,Contacts Center,Documents and Media") {
 						LexiconEntry.viewNoEntry(rowEntry = "${unlistedEntries}");
 					}
+
+					Click(locator1 = "Pagination#PREVIOUS_LINK");
 				}
 				else if ("${listEntries}" == "8") {
-					if (!(
-
-					Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");)) {
-						Click(locator1 = "Pagination#PREVIOUS_LINK");
-					}
-
 					Pagination.viewResults(results = "Showing 1 to 8 of 8 entries.");
 
 					for (var listedEntries : list "Announcements,Blogs,Contacts Center,Documents and Media,Forms,Web Content,Message Boards,Wiki") {
