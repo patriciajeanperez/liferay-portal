@@ -531,6 +531,11 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_ORGANIZATIONS",
+			resourceName = "com.liferay.account.model.AccountEntry",
+			roleTitle = "Account Administrator");
+
 		for (var organizationNumber : list "1,2,3,4") {
 			JSONOrganization.addOrganization(
 				organizationName = "Organization ${organizationNumber}",
@@ -570,6 +575,11 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_ORGANIZATIONS",
+			resourceName = "com.liferay.account.model.AccountEntry",
+			roleTitle = "Account Administrator");
 
 		JSONOrganization.addOrganization(
 			organizationName = "Organization for Account",
