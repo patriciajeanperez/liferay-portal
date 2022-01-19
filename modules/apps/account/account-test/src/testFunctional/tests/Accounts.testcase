@@ -1425,6 +1425,10 @@ definition {
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
 
+			Click(
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM",
+				navItem = "Applications");
+
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
 
 			Check(locator1 = "RolesPermissions#ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL");
@@ -1458,6 +1462,10 @@ definition {
 			var key_subItem = "Account Management";
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED");
+
+			Click.clickAt(
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM",
+				navItem = "Applications");
 
 			Click.clickAt(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_SUBITEM");
 
