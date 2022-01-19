@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>PERMISSIONS_NAVITEM</td>
-	<td>//div[contains(@class,'lfr-permission-navigation')]//li[contains(@class,'permission-navigation-section')]//a[contains(.,'${key_navItem}')]</td>
+	<td>//div[contains(@class,'permission-navigation-section')]/a[contains(.,'${navItem}') and contains(@class,'collapse-icon')]</td>
 	<td></td>
 </tr>
 <tr>
