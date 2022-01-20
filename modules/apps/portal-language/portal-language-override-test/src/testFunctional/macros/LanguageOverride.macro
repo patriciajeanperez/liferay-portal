@@ -1,0 +1,21 @@
+definition {
+
+	macro addLanguageKey {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputText(
+			fieldLabel = "Key",
+			text = "${languageKey}");
+
+		for (var translationOverride : list "${translationOverrideList}") {
+			PortletEntry.inputText(
+				fieldLabel = "${translationOverride}",
+				text = "${translationOverrideValue}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

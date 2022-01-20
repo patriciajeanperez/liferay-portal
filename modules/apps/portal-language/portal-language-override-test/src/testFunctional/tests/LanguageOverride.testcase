@@ -1,0 +1,147 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Language Override";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Language Override");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Accounts.tearDownCP();
+		}
+	}
+
+	@description = "This test adds a new language key via the Language Override portlet"
+	@priority = "5"
+	test CanAddLanguageKey {
+		/* task ("Given that a user is in the Language Override portlet") {
+
+		} */
+
+		task ("When a user clicks on the plus button, fills out the form, and saves it") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "this-is-a-lang-key",
+				translationOverrideList = "en-US,ca-ES,fr-FR,es-ES",
+				translationOverrideValue = "this is a lang key");
+		}
+
+		/* task ("Then the language key is saved successfully") {
+
+		} */
+	}
+
+	@description = "This test asserts that an Account Admin can assign roles to users."
+	@priority = "5"
+	test AccountAdminCanAssignRolesToUsers {
+		task ("Add a new user into the 'Account Name' account") {
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			WaitForElementPresent(
+				key_rowEntry = "user1 user1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+
+		task ("Assign new user the role of 'Account Administrator'") {
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "user1 user1");
+		}
+
+		task ("Assert that the new user has 'Account Administator' listed in their role") {
+			AssertTextEquals(
+				key_columnName = "lfr-account-roles-column",
+				key_rowEntry = "user1 user1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Account Administrator");
+		}
+	}
+
+	@description = "This test asserts that account users can be filtered by status."
+	@priority = "4"
+	test CanFilterAccountUsersByStatus {
+		task ("Add new users to account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			for (var userNum : list "2,3,4") {
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
+					userEmailAddress = "userea${userNum}@liferay.com",
+					userFirstName = "userfn${userNum}",
+					userLastName = "userln${userNum}",
+					userScreenName = "usersn${userNum}");
+			}
+		}
+
+		task ("Deactivate some users") {
+			AccountUsers.openAccountUsersAdmin();
+
+			for (var userNum : list "3,4") {
+				AccountUsers.deactivateUser(userFirstName = "userfn${userNum}");
+			}
+		}
+
+		task ("Sign back in as Account Administrator and view account users") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+		}
+
+		task ("Assert users can be filtered by Active status") {
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+			for (var userNum : list "3,4") {
+				LexiconEntry.viewNoEntry(rowEntry = "userfn${userNum} userln${userNum}");
+			}
+		}
+
+		task ("Asser users can be filtered by Inactive status") {
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			for (var userNum : list "3,4") {
+				LexiconEntry.viewEntryName(rowEntry = "userfn${userNum} userln${userNum}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+		}
+	}
+
+}
