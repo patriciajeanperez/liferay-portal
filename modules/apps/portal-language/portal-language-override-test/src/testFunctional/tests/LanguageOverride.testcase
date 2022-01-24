@@ -78,7 +78,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "No language entries were found");
+				value1 = "No language entries were found.");
 		}
 	}
 
@@ -133,7 +133,7 @@ definition {
 			LanguageOverride.goToLanguageKey(languageKey = "text-contains-error");
 		}
 
-		task ("When the user clicks on Clear All Overrides") {
+		task ("When the user clicks on Clear All Overrides.") {
 			LanguageOverride.clearAllOverridesViaEditPage();
 		}
 
@@ -186,7 +186,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
-				value1 = "No language entries were found");
+				value1 = "No language entries were found.");
 		}
 
 		task ("Then all the overrides are reset. The existing language key does not get deleted.") {
