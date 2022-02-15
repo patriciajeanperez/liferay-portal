@@ -10,6 +10,7 @@ definition {
 	@priority = "4"
 	test AdminIsRequiredToChangePasswordWithSetupWizardDisabled {
 		property custom.properties = "setup.wizard.enabled=false${line.separator}passwords.default.policy.change.required=true";
+		property portal.acceptance = "patty";
 		property test.prepare.bundle.properties = "true";
 		property database.types = "mysql";
 		property testray.main.component.name = "Users and Organizations";
@@ -166,7 +167,7 @@ definition {
 
 		SetupWizard.configurePortalNamePG(portalName = "Custom");
 
-		SetupWizard.configureDefaultLanguagePG(defaultLanguage = "español (España)");
+		SetupWizard.configureDefaultLanguagePG(defaultLanguage = "espaÃƒÂ±ol (EspaÃƒÂ±a)");
 
 		SetupWizard.configureDatabasePG(
 			databasePassword = PropsUtil.get("database.mysql.password"),
