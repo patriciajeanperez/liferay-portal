@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
-	@priority = "4"
+	@priority = "5"
 	test AccountGroupsAreDisplayedInAccountDetailsPage {
 		property portal.acceptance = "true";
 
