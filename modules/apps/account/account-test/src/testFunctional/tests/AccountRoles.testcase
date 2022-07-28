@@ -19,6 +19,94 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142654. This test asserts that a user with the correct permissions is able to assign a user to an account role."
+	@priority = "3"
+	test CanAssignUsersToAccountRolesWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given an account and two account users are created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			for (var userNumber : list "1,2") {
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
+					userEmailAddress = "user${userNumber}@liferay.com",
+					userFirstName = "user${userNumber}",
+					userLastName = "user${userNumber}",
+					userScreenName = "user${userNumber}");
+			}
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+
+			task ("And given that an account role is created with permissions to assign and view account roles and entries is assigned to a user") {
+				Role.openRolesAdmin();
+
+				Navigator.gotoNavTab(navTab = "Account Roles");
+
+				Role.add(roleTitle = "Assign Account Roles");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ASSIGN_USERS",
+					resourceName = "com.liferay.account.model.AccountRole",
+					roleTitle = "Assign Account Roles",
+					roleType = "account");
+
+				for (var resourceActionIndex : list "UPDATE,MANAGE_USERS,VIEW,VIEW_ACCOUNT_ROLES,VIEW_USERS") {
+					Permissions.definePermissionViaJSONAPI(
+						resourceAction = "${resourceActionIndex}",
+						resourceName = "com.liferay.account.model.AccountEntry",
+						roleTitle = "Assign Account Roles",
+						roleType = "account");
+				}
+
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+				Accounts.addAssigneeToRoleViaUsersTab(
+					accountRoleTitle = "Assign Account Roles",
+					accountUserName = "user1 user1");
+
+				JSONRole.addRegularRole(roleTitle = "Access to Accounts");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet",
+					roleTitle = "Access to Accounts");
+
+				JSONRole.assignRoleToUser(
+					roleTitle = "Access to Accounts",
+					userEmailAddress = "user1@liferay.com");
+
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "user1@liferay.com",
+					userLoginFullName = "user1 user1");
+			}
+		}
+
+		task ("When a user with this account role and permissions assigns an account role to another user") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Assign Account Roles",
+				accountUserName = "user2 user2");
+		}
+
+		task ("Then that user will have the account role and the role is shown in the Users table") {
+			LexiconTable.viewTableEntryInfo(
+				columnName = "lfr-account-roles",
+				tableEntry = "user2",
+				tableEntryInfo = "Assign Account Roles");
+		}
+	}
+
 	@description = "This is a use case for LPS-151552. This asserts saving edits in one permissions tab in Account Roles does not clear related permissions from the other tab."
 	@priority = "4"
 	test CanSavePermissionsWithoutDeletingOthers {
