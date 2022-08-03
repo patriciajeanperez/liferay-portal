@@ -21,6 +21,28 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that error message when importing a language key with overlength value."
+	@priority = "3"
+	test CanViewErrorMessageWhenImportLongValue {
+		task ("Given go to the Import Translations page") {
+			Portlet.gotoPortletOptions(portletOption = "Import Translations");
+		}
+
+		task ("When upload a language key with overlength value") {
+			UploadDependencyFile.uploadFile(fileName = "language_key_with_overlength.properties");
+
+			Button.clickSave();
+		}
+
+		task ("Then assert the failed request and the error message") {
+			Alert.viewRequestFailedToComplete();
+
+			Alert.viewErrorMessage(errorMessage = "Error: Keys longer than 1000 characters are not allowed.");
+
+			AssertConsoleTextNotPresent(value1 = "Data truncation");
+		}
+	}
+
 	@description = "This test asserts that the Export option only displays when we have language key with override."
 	@priority = "5"
 	test CanViewExportOptionWhenHasOverride {
