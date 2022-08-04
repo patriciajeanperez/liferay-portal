@@ -34,6 +34,21 @@
 <!--ACCOUNTS-->
 
 <tr>
+	<td>ACCOUNTS_ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_UPDATE</td>
+	<td>//h5[contains(.,'Account Entry')]//following::tbody[contains(@class,'table-data')]//tr[contains(.,'Update')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_VIEW</td>
+	<td>//h5[contains(.,'Account Entry')]//following::tbody[contains(@class,'table-data')]//tr[contains(.,'View')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_ACCOUNTS_RESOURCE_PERMISSIONS_ACCOUNT_ENTRY_VIEW_ACCOUNT_ROLES</td>
+	<td>//h5[contains(.,'Account Entry')]//following::tbody[contains(@class,'table-data')]//tr[contains(.,'View Account Roles')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNTS_APPLICATION_PERMISSIONS_SELECT_ALL</td>
 	<td>//h4[contains(.,'Application Permissions')]//following::input[contains(@name,'allRowIds')][1]</td>
 	<td></td>
