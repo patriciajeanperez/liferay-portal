@@ -75,4 +75,94 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142654. This asserts user can view account roles tab with permissions."
+	@priority = "4"
+	test CanViewAccountRolesWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add a user with permission of view CP and accounts and add an account role with Account Entry permissions") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONRole.addRegularRole(roleTitle = "View Account Permission");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "View Account Permission");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet",
+				roleTitle = "View Account Permission");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "View Account Permission",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONRole.addAccountRole(roleTitle = "Account Specific Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_ACCOUNT_ROLES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+		}
+
+		task ("When add an account with Account Entry Update View and View Account Roles permissions") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn1");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Specific Role",
+				accountUserName = "userfn1 userln1");
+		}
+
+		task ("Then the user can view the Roles tab in Account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Specific Role");
+		}
+	}
+
 }
