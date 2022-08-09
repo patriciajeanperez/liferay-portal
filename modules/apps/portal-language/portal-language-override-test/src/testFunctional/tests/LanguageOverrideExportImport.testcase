@@ -76,19 +76,7 @@ definition {
 		}
 
 		task ("Then a user can successfully export these keys as a property file") {
-			Portlet.gotoPortletOptions(portletOption = "Export Overridden Translations");
-
-			var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
-			var tempFileDirectory = selenium.getOutputDirName();
-
-			var exportedZipFile = FileUtil.exists("${tempFileDirectory}/${tempFileName}");
-
-			if ("${exportedZipFile}" == "true") {
-				echo("Language key exported as zip successfully");
-			}
-			else {
-				fail("FAIL! Cannot find the exported zip file for language key");
-			}
+			LanguageOverride.exportOverriddenTranslations();
 
 			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
 
