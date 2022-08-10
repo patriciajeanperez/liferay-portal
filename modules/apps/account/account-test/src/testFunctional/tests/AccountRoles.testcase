@@ -120,6 +120,115 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142654. This asserts user can delete account roles with permissions."
+	@priority = "4"
+	test CanDeleteAccountRoleWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add a user with permission of view CP and accounts and add account with owoned role") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONRole.addRegularRole(roleTitle = "View Account Permission");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "View Account Permission");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet",
+				roleTitle = "View Account Permission");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "View Account Permission",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			Accounts.addOwnedAccountRole(accountRoleTitle = "Roles Regrole Name");
+		}
+
+		task ("When add an account role with delete account role permissions and assign to account") {
+			JSONRole.addSharedAccountRole(roleTitle = "Account Specific Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_ACCOUNT_ROLES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "userfn1");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Specific Role",
+				accountUserName = "userfn1 userln1");
+		}
+
+		task ("Then the user can delete the account roles in Account") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			Role.deleteCP(roleTitle = "Roles Regrole Name");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Roles Regrole Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-151552. This asserts saving edits in one permissions tab in Account Roles does not clear related permissions from the other tab."
 	@priority = "4"
 	test CanSavePermissionsWithoutDeletingOthers {
