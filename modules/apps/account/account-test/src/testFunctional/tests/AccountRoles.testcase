@@ -75,4 +75,135 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-142654. This asserts user can view account roles tab with permissions."
+	@priority = "4"
+	test CanViewAccountRolesWithPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add new accounts, add a user with permission of view CP") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			Accounts.assignAccessAccountRoleToUser();
+
+			for (var accountNum : list "1,2,3") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account Name ${accountNum}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("When add a share account role with view account role permissions, assign it to account1") {
+			JSONRole.addSharedAccountRole(roleTitle = "Account Shared Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Shared Role",
+				roleType = "account");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_ACCOUNT_ROLES",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Shared Role",
+				roleType = "account");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
+
+			Accounts.assignUsers(
+				accountName = "Account Name 1",
+				assigneeName = "userfn1");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Shared Role",
+				accountUserName = "userfn1 userln1");
+
+			task ("And add a owned account role with view account role permissions assign it to account2") {
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
+
+				Accounts.addOwnedAccountRole(accountRoleTitle = "Account Specific Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "UPDATE",
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Account Specific Role",
+					roleType = "account");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW_ACCOUNT_ROLES",
+					resourceName = "com.liferay.account.model.AccountEntry",
+					roleTitle = "Account Specific Role",
+					roleType = "account");
+
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
+
+				Accounts.assignUsers(
+					accountName = "Account Name 2",
+					assigneeName = "userfn1");
+
+				Accounts.addAssigneeToRoleViaUsersTab(
+					accountRoleTitle = "Account Specific Role",
+					accountUserName = "userfn1 userln1");
+
+				Accounts.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account Name 3");
+
+				Accounts.assignUsers(
+					accountName = "Account Name 3",
+					assigneeName = "userfn1");
+			}
+		}
+
+		task ("Then the user can view the share roles in all Account, can view owned roles only to the account the user belongs to.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name 1");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Shared Role");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Specific Role");
+
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+
+			LexiconEntry.viewNoEntryMenu(rowEntry = "Account Shared Role");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name 2");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Roles");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Specific Role");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Shared Role");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name 3");
+
+			LexiconEntry.viewNoEntryMenu(rowEntry = "Account Name 3");
+		}
+	}
+
 }
