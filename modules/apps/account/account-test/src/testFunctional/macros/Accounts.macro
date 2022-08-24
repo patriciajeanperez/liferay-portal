@@ -692,6 +692,26 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro definePermission {
+		var permissionKey = "${permissionKey}";
+		var permissionNavigationKey = "${permissionNavigationKey}";
+		var key_navItem = "${key_navItem}";
+
+		if (isSet(key_subItem)) {
+			var key_subItem = "${key_subItem}";
+		}
+
+		Type(
+			locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+			value1 = "${key_navItem}");
+
+		Click.clickAt(locator1 = "RolesPermissionsNavigation#${permissionNavigationKey}");
+
+		Check(locator1 = "RolesPermissions#${permissionKey}");
+
+		Button.clickSave();
+	}
+
 	macro deleteAccount {
 		if (IsElementPresent(locator1 = "Account#2B_ACCOUNT_MANAGEMENT_HEADING")) {
 			Search.searchPG(
