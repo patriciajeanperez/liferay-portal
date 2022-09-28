@@ -69,8 +69,6 @@ definition {
 	}
 
 	macro activateCountry {
-		Search.searchCP(searchTerm = "${countryName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Activate",
 			rowEntry = "${countryName}");
@@ -87,8 +85,6 @@ definition {
 	}
 
 	macro activateRegion {
-		Search.searchCP(searchTerm = "${regionName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Activate",
 			rowEntry = "${regionName}");
@@ -165,8 +161,6 @@ definition {
 	}
 
 	macro deactivateCountry {
-		Search.searchCP(searchTerm = "${countryName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Deactivate",
 			rowEntry = "${countryName}");
@@ -187,8 +181,6 @@ definition {
 	}
 
 	macro deactivateRegion {
-		Search.searchCP(searchTerm = "${regionName}");
-
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Deactivate",
 			rowEntry = "${regionName}");
@@ -199,8 +191,6 @@ definition {
 	}
 
 	macro deleteCountry {
-		Search.searchCP(searchTerm = "${countryName}");
-
 		if ("${deleteType}" == "Delete Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${countryName}");
 
@@ -235,8 +225,6 @@ definition {
 	}
 
 	macro deleteRegion {
-		Search.searchCP(searchTerm = "${regionName}");
-
 		if ("${deleteType}" == "Delete Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = "${regionName}");
 
@@ -316,8 +304,6 @@ definition {
 	}
 
 	macro goToRegions {
-		Search.searchCP(searchTerm = "${countryName}");
-
 		LexiconEntry.gotoEntry(rowEntry = "${countryName}");
 
 		Navigator.gotoNavTab(navTab = "Regions");
