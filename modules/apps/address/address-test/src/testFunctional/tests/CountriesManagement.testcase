@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "address";
 	property testray.main.component.name = "Address";
 
 	setUp {
