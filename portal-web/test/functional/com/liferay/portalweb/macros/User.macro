@@ -946,8 +946,9 @@ definition {
 			assigneeName = "${userGroupName}");
 
 		AssertElementPresent(
-			key_userGroupName = "${userGroupName}",
-			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_REMOVE");
+			key_assetType = "User Groups",
+			key_assigneeName = "${userGroupName}",
+			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_REMOVE_ASSIGNEE_ICON");
 
 		PortletEntry.save();
 	}
