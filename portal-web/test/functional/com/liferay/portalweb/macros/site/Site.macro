@@ -499,11 +499,7 @@ definition {
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
 			value1 = "${userScreenName}");
 
-		UserNavigator.gotoMemberships();
-
-		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#SITES_SELECT_LINK",
-			value1 = "Select");
+		User.selectMembership(assetType = "Sites");
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_SITES");
 
