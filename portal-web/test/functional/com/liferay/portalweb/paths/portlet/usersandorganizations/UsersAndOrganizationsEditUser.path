@@ -217,8 +217,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
+	<td>MEMBERSHIPS_TABLE_ENTRY_ROLE</td>
+	<td>//table[contains(@data-searchcontainerid,'${key_assetType}')]//tr[contains(.,'${key_assigneeName}')]//td[contains(@class,'roles') and contains(.,'${key_roleName}')]</td>
 	<td></td>
 </tr>
 
