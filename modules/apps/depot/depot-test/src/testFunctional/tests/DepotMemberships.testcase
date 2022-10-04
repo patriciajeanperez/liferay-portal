@@ -222,16 +222,17 @@ definition {
 
 		UserNavigator.gotoMemberships();
 
-		AssertTextEquals.assertPartialText(
-			key_siteName = "Test Depot Name",
-			locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
-			value1 = "Test Depot Name");
+		User.viewMemberships(
+			assetType = "Asset Libraries",
+			assigneeName = "Test Depot Name");
 
 		Navigator.ensureLocaleURL(locale = "es");
 
-		AssertTextEquals.assertPartialText(
-			key_siteName = "título",
-			locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
+		var key_assetType = "depotGroups";
+		var key_assigneeName = "título";
+
+		AssertTextEquals(
+			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_NAME",
 			value1 = "título");
 	}
 
@@ -295,12 +296,9 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		UserNavigator.gotoMemberships();
-
-		AssertTextEquals(
-			key_depotName = "Test Depot Name",
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_TABLE_NAME",
-			value1 = "Test Depot Name");
+		User.viewMemberships(
+			assetType = "Asset Libraries",
+			assigneeName = "Test Depot Name");
 
 		User.openUsersAdmin();
 

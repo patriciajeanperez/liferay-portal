@@ -938,10 +938,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_GROUP");
 
-		AssertTextEquals(
-			key_userGroupName = "${userGroupName}",
-			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_NAME",
-			value1 = "${userGroupName}");
+		AssertVisible(
+			key_rowEntry = "${userGroupName}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 		AssertClick(
 			key_dmDocumentTypeName = "${userGroupName}",
@@ -950,10 +949,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals(
-			key_userGroupName = "${userGroupName}",
-			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_NAME",
-			value1 = "${userGroupName}");
+		User.viewMemberships(
+			assetType = "User Groups",
+			assigneeName = "${userGroupName}");
 
 		AssertElementPresent(
 			key_userGroupName = "${userGroupName}",
@@ -1575,10 +1573,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals.assertPartialText(
-			key_siteName = "${depotName}",
-			locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
-			value1 = "${depotName}");
+		User.viewMemberships(
+			assetType = "Asset Libraries",
+			assigneeName = "${depotName}");
 
 		PortletEntry.save();
 	}
@@ -1732,9 +1729,9 @@ definition {
 				locator1 = "TextInput#SEARCH",
 				value1 = "\RETURN");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
-				value1 = "${siteName}");
+			AssertVisible(
+				key_rowEntry = "${siteName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
 			Click(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 		}
@@ -1744,9 +1741,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
-			value1 = "${siteName}");
+		User.viewMemberships(
+			assetType = "Sites",
+			assigneeName = "${siteName}");
 
 		PortletEntry.save();
 	}
