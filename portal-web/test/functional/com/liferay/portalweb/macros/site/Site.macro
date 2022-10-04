@@ -516,7 +516,7 @@ definition {
 		AssertVisible(
 			key_rowEntry = "${siteName}",
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		
+
 		Click(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 
 		SelectFrame(value1 = "relative=top");

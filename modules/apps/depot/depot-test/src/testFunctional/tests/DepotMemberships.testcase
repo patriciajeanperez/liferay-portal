@@ -228,10 +228,9 @@ definition {
 
 		Navigator.ensureLocaleURL(locale = "es");
 
-		var key_assetType = "depotGroups";
-		var key_assigneeName = "título";
-
 		AssertTextEquals(
+			key_assetType = "depotGroups",
+			key_assigneeName = "título",
 			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_NAME",
 			value1 = "título");
 	}

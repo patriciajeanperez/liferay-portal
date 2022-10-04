@@ -95,10 +95,9 @@ definition {
 
 		UserNavigator.gotoMemberships();
 
-		var key_assetType = "depotGroups";
-		var key_assigneeName = "Test Depot Name";
-
 		AssertElementNotPresent(
+			key_assetType = "depotGroups",
+			key_assigneeName = "Test Depot Name",
 			locator1 = "UsersAndOrganizationsEditUser#MEMBERSHIPS_TABLE_ENTRY_NAME",
 			value1 = "Test Depot Name");
 
