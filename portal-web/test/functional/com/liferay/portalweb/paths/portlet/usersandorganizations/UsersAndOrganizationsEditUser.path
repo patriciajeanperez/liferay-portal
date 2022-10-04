@@ -11,19 +11,6 @@
 
 <tbody>
 
-<!--Accounts-->
-
-<tr>
-	<td>ACCOUNTS_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectAccountLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACCOUNTS_TABLE_ACCOUNT_ROLES</td>
-	<td>//div[contains(.,'Accounts')]//td[contains(@class,'lfr-roles-column') and contains(.,'${key_accountRole}')]</td>
-	<td></td>
-</tr>
-
 <!--DETAILS-->
 
 <tr>
@@ -140,39 +127,8 @@
 	<td></td>
 </tr>
 
-<!--ORGANIZATIONS-->
-
-<tr>
-	<td>ORGANIZATIONS_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectOrganizationLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-
-<!--SITES-->
-
-<tr>
-	<td>SITES_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectSiteLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-
 <!--DEPOT-->
 
-<tr>
-	<td>DEPOT_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectDepotGroupLink')]/span</td>
-	<td></td>
-</tr>
 <tr>
 	<td>DEPOT_ROLES_SELECT_BUTTON</td>
 	<td>//button[contains(@data-rolename,'${roleTitle}')]</td>
@@ -208,7 +164,7 @@
 
 <tr>
 	<td>MEMBERSHIPS_SELECT_ASSET_BUTTON</td>
-	<td>//a[contains(@id,'${selectId}')]/span</td>
+	<td>//a[contains(@id,'${key_selectId}')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,22 +177,22 @@
 	<td>//table[contains(@data-searchcontainerid,'${key_assetType}')]//tr[contains(.,'${key_assigneeName}')]//td[contains(@class,'roles') and contains(.,'${key_roleName}')]</td>
 	<td></td>
 </tr>
-
-<!--USER_GROUPS-->
-
 <tr>
 	<td>MEMBERSHIPS_TABLE_ENTRY_REMOVE_ASSIGNEE_ICON</td>
 	<td>//table[contains(@data-searchcontainerid,'${key_assetType}')]//tr[contains(.,'${key_assigneeName}')]//*[*[name()='svg'][contains(@class,'times-circle')]]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>USER_GROUPS_CHOOSE_BUTTON</td>
-	<td>//*[*[normalize-space(text())='${key_userGroupName}']]/..//following-sibling::td/*[contains(.,'Choose')]</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+
+<!--USER_GROUPS-->
+
 <tr>
-	<td>USER_GROUPS_SELECT_LINK</td>
-	<td>//a[contains(@id,'openUserGroupsLink')]/span</td>
+	<td>USER_GROUPS_CHOOSE_BUTTON</td>
+	<td>//*[*[normalize-space(text())='${key_userGroupName}']]/..//following-sibling::td/*[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
