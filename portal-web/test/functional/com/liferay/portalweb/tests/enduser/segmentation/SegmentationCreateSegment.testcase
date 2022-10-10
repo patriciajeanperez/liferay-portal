@@ -69,12 +69,9 @@ definition {
 		}
 
 		task ("Select country for the organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			Organization.openOrganizationsAdmin();
 
-			Organization.editOrganizationCP(orgName = "Organization Name");
+			Organization.gotoEdit(orgName = "Organization Name");
 
 			Select(
 				locator1 = "Select#COUNTRY",
@@ -409,12 +406,9 @@ definition {
 		}
 
 		task ("Select region for the organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			Organization.openOrganizationsAdmin();
 
-			Organization.editOrganizationCP(orgName = "Organization Name");
+			Organization.gotoEdit(orgName = "Organization Name");
 
 			Select(
 				locator1 = "Select#COUNTRY",
@@ -484,12 +478,9 @@ definition {
 		}
 
 		task ("Select tag for the organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			Organization.openOrganizationsAdmin();
 
-			Organization.editOrganizationCP(orgName = "Organization Name");
+			Organization.gotoEdit(orgName = "Organization Name");
 
 			AssetCategorization.addTag(tagName = "tagName");
 
