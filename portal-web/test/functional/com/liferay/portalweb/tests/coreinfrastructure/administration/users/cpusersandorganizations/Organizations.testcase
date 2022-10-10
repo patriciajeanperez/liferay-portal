@@ -1350,7 +1350,7 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.assignOrgRoleCP(
+		Organization.assignOrgRole(
 			orgName = "Organization Name",
 			roleTitle = "Organization Administrator",
 			userFirstName = "userfn1",
