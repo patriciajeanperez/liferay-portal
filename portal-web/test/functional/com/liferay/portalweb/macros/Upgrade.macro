@@ -624,7 +624,7 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Organization1");
 
 		Organization.viewCP(
-			orgName = "Sub-organization-Pre1",
+			orgName = "Sub-organization-Pre",
 			orgType = "Organization");
 
 		Organization.gotoCP(
