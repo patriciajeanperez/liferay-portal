@@ -1115,17 +1115,9 @@ public class PortalImpl implements Portal {
 		Layout layout = null;
 
 		if (Validator.isNull(friendlyURL)) {
+			layout = _getLayout(groupId, privateLayout);
 
-			// We need to ensure that virtual layouts are merged
-
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
-
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
-			}
-			else {
+			if (layout == null) {
 				throw new NoSuchLayoutException(
 					StringBundler.concat(
 						"{groupId=", groupId, ", privateLayout=", privateLayout,
@@ -8358,6 +8350,38 @@ public class PortalImpl implements Portal {
 		return _LOCALHOST;
 	}
 
+	private Layout _getFirstPublishedLayout(
+		long groupId, boolean privateLayout) {
+
+		boolean hasNext = true;
+
+		int start = 1;
+		int end = 0;
+		int interval = 20;
+
+		while (hasNext) {
+			end = start + interval;
+
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				groupId, privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, start, end);
+
+			for (Layout layout : layouts) {
+				if (layout.isPublished()) {
+					return layout;
+				}
+			}
+
+			start = start + interval;
+
+			if (layouts.size() < interval) {
+				hasNext = false;
+			}
+		}
+
+		return null;
+	}
+
 	private String _getGroupFriendlyURL(
 			Group group, LayoutSet layoutSet, ThemeDisplay themeDisplay,
 			boolean canonicalURL, boolean controlPanel)
@@ -8537,6 +8561,27 @@ public class PortalImpl implements Portal {
 		}
 
 		return sb.toString();
+	}
+
+	private Layout _getLayout(long groupId, boolean privateLayout) {
+
+		// We need to ensure that virtual layouts are merged
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			true, 0, 1);
+
+		if (layouts.isEmpty()) {
+			return null;
+		}
+
+		Layout layout = layouts.get(0);
+
+		if (layout.isPublished()) {
+			return layout;
+		}
+
+		return _getFirstPublishedLayout(groupId, privateLayout);
 	}
 
 	private String _getPortalURL(

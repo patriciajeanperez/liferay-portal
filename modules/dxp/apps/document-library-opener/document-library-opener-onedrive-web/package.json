@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"@liferay/frontend-icons-web": "*",
+		"frontend-js-web": "*"
+	},
 	"name": "document-library-opener-onedrive-web",
 	"private": true,
 	"scripts": {

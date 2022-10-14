@@ -1,4 +1,9 @@
 {
+	"dependencies": {
+		"data-engine-js-components-web": "*",
+		"dynamic-data-mapping-form-field-type": "*",
+		"frontend-js-web": "*"
+	},
 	"name": "@liferay/object-dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {

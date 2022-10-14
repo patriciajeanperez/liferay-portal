@@ -168,9 +168,10 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 
 										<liferay-portlet:renderURL varImpl="rowURL">
 											<portlet:param name="mvcPath" value="/admin/view_kb_folders.jsp" />
+											<portlet:param name="redirect" value="<%= currentURL %>" />
 											<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
 											<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
-											<portlet:param name="redirect" value="<%= currentURL %>" />
+											<portlet:param name="selectedItemId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 										</liferay-portlet:renderURL>
 
 										<h2 class="h5">
@@ -278,9 +279,10 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 										<c:if test="<%= childKBArticlesCount > 0 %>">
 											<liferay-portlet:renderURL varImpl="childKBArticlesURL">
 												<portlet:param name="mvcPath" value="/admin/view_kb_articles.jsp" />
+												<portlet:param name="redirect" value="<%= currentURL %>" />
 												<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 												<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-												<portlet:param name="redirect" value="<%= currentURL %>" />
+												<portlet:param name="selectedItemId" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 											</liferay-portlet:renderURL>
 
 											<span class="kb-descriptive-details">

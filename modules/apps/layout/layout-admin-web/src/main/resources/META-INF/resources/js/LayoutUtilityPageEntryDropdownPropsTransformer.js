@@ -12,7 +12,11 @@
  * details.
  */
 
-import {openConfirmModal, openSimpleInputModal} from 'frontend-js-web';
+import {
+	openConfirmModal,
+	openModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 
@@ -49,6 +53,13 @@ const ACTIONS = {
 		}
 	},
 
+	permissionsLayoutUtilityPageEntry({permissionsLayoutUtilityPageEntryURL}) {
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: permissionsLayoutUtilityPageEntryURL,
+		});
+	},
+
 	renameLayoutUtilityPageEntry(
 		{
 			layoutUtilityPageEntryId,
@@ -67,6 +78,21 @@ const ACTIONS = {
 			mainFieldPlaceholder: Liferay.Language.get('name'),
 			mainFieldValue: layoutUtilityPageEntryName,
 			namespace,
+		});
+	},
+
+	unmarkAsDefaultLayoutUtilityPageEntry({
+		unmarkAsDefaultLayoutUtilityPageEntryURL,
+	}) {
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-unmark-this'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					send(unmarkAsDefaultLayoutUtilityPageEntryURL);
+				}
+			},
 		});
 	},
 };

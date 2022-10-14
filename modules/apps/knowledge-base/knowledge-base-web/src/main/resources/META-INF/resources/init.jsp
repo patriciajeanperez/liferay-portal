@@ -97,6 +97,7 @@ page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBAdminNavigationDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBAdminViewDisplayContext" %><%@
+page import="com.liferay.knowledge.base.web.internal.display.context.KBArticleConfigurationDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBNavigationDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSearchDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSelectParentDisplayContext" %><%@

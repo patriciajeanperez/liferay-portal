@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
@@ -52,9 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -63,7 +62,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	property = "resource.locator.key=/headless-commerce-machine-learning/v1.0/SkuForecast",
 	service = SkuForecastResource.Factory.class
 )
@@ -140,16 +139,6 @@ public class SkuForecastResourceFactoryImpl
 		};
 	}
 
-	@Activate
-	protected void activate() {
-		SkuForecastResource.FactoryHolder.factory = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		SkuForecastResource.FactoryHolder.factory = null;
-	}
-
 	private static Function<InvocationHandler, SkuForecastResource>
 		_getProxyProviderFunction() {
 
@@ -222,6 +211,7 @@ public class SkuForecastResourceFactoryImpl
 		skuForecastResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
 		skuForecastResource.setRoleLocalService(_roleLocalService);
+		skuForecastResource.setSortParserProvider(_sortParserProvider);
 
 		try {
 			return method.invoke(skuForecastResource, arguments);
@@ -270,6 +260,9 @@ public class SkuForecastResourceFactoryImpl
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

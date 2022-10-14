@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_INFO_MESSAGE</td>
+	<td>//*[contains(@class, 'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBTITLE_SUPPORT</td>
 	<td>//p[contains(@class, 'text-paragraph-sm')]</td>
 	<td></td>
@@ -338,6 +343,11 @@
 <tr>
 	<td>ALERT_NOTIFICATIONS</td>
 	<td>//*[contains(@class, 'alert-notifications')]//*[text()='${key_alertText}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_INFO</td>
+	<td>//*[contains(@class, 'alert-info')]//*[text()='${key_alertText}']</td>
 	<td></td>
 </tr>
 <tr>

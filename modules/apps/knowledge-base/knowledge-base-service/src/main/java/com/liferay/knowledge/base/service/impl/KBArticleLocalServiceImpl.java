@@ -28,6 +28,7 @@ import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
@@ -82,6 +83,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -129,6 +132,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -256,9 +263,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Workflow
 
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), groupId, userId, KBArticle.class.getName(),
-			resourcePrimKey, kbArticle, serviceContext, Collections.emptyMap());
+		_startWorkflowInstance(userId, kbArticle, serviceContext);
+
+		return kbArticle;
 	}
 
 	@Override
@@ -1221,10 +1228,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			user.getCompanyId(), kbArticle.getGroupId(), userId,
-			KBArticle.class.getName(), resourcePrimKey, kbArticle,
-			serviceContext);
+		_startWorkflowInstance(userId, kbArticle, serviceContext);
 
 		return kbArticle;
 	}
@@ -1635,6 +1639,30 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return emailKBArticleDiffs;
 	}
 
+	private String _getEntryURL(
+		KBArticle kbArticle, ServiceContext serviceContext) {
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/knowledge_base/view_article"
+		).setParameter(
+			"resourceClassNameId", kbArticle.getClassNameId()
+		).setParameter(
+			"resourcePrimKey", kbArticle.getResourcePrimKey()
+		).setParameter(
+			"selectedItemId", kbArticle.getKbArticleId()
+		).buildString();
+	}
+
 	private KBGroupServiceConfiguration _getKBGroupServiceConfiguration(
 			long groupId)
 		throws ConfigurationException {
@@ -1642,6 +1670,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return _configurationProvider.getConfiguration(
 			KBGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
+	}
+
+	private int _getNotificationType(ServiceContext serviceContext) {
+		if (serviceContext.isCommandAdd()) {
+			return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+		}
+
+		return UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
 	}
 
 	private double _getPriority(long groupId, long parentResourcePrimKey)
@@ -1837,6 +1873,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				kbArticle, serviceContext);
 
 		subscriptionSender.setBody(body);
+		subscriptionSender.setClassName(kbArticle.getModelClassName());
+		subscriptionSender.setClassPK(kbArticle.getClassPK());
 		subscriptionSender.setCompanyId(kbArticle.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", kbArticleContent, false);
@@ -1849,12 +1887,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
 		subscriptionSender.setCreatorUserId(kbArticle.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
+		subscriptionSender.setEntryURL(_getEntryURL(kbArticle, serviceContext));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("kb_article", kbArticle.getKbArticleId());
+		subscriptionSender.setNotificationType(
+			_getNotificationType(serviceContext));
 		subscriptionSender.setPortletId(serviceContext.getPortletId());
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(kbArticle.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 
 		subscriptionSender.addAssetEntryPersistedSubscribers(
@@ -1889,6 +1931,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		for (long removeFileEntryId : removeFileEntryIds) {
 			_portletFileRepository.deletePortletFileEntry(removeFileEntryId);
 		}
+	}
+
+	private void _startWorkflowInstance(
+			long userId, KBArticle kbArticle, ServiceContext serviceContext)
+		throws PortalException {
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			kbArticle.getCompanyId(), kbArticle.getGroupId(), userId,
+			KBArticle.class.getName(), kbArticle.getResourcePrimKey(),
+			kbArticle, serviceContext, Collections.emptyMap());
 	}
 
 	private void _updatePermissionFields(

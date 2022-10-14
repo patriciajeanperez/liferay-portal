@@ -53,10 +53,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
@@ -221,29 +219,23 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build());
-
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-158482"))) {
-
-				_bundleContext.registerService(
-					NotificationTermContributor.class,
-					new ObjectDefinitionNotificationTermContributor(
-						objectDefinition, _objectFieldLocalService,
-						_userLocalService),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"notification.term.contributor.key",
-						objectDefinition.getClassName()
-					).put(
-						"notification.type.key", objectDefinition.getClassName()
-					).build());
-				_bundleContext.registerService(
-					NotificationType.class,
-					new ObjectDefinitionNotificationType(objectDefinition),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"notification.type.key", objectDefinition.getClassName()
-					).build());
-			}
-
+			_bundleContext.registerService(
+				NotificationTermContributor.class,
+				new ObjectDefinitionNotificationTermContributor(
+					objectDefinition, _objectFieldLocalService,
+					_userLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"notification.term.contributor.key",
+					objectDefinition.getClassName()
+				).put(
+					"notification.type.key", objectDefinition.getClassName()
+				).build());
+			_bundleContext.registerService(
+				NotificationType.class,
+				new ObjectDefinitionNotificationType(objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"notification.type.key", objectDefinition.getClassName()
+				).build());
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new SystemObject1toMObjectRelatedModelsProviderImpl(

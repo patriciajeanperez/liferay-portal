@@ -413,7 +413,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addAccounts(serviceContext));
 
 			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues =
-				_invoke(() -> _addDDMStructures(serviceContext));
+				_invoke(() -> _addOrUpdateDDMStructures(serviceContext));
 
 			_invoke(() -> _addExpandoColumns(serviceContext));
 
@@ -648,39 +648,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_bundle, documentsStringUtilReplaceValues,
 			objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 			serviceContext, _servletContext);
-	}
-
-	private Map<String, String> _addDDMStructures(ServiceContext serviceContext)
-		throws Exception {
-
-		Map<String, String> ddmStructuresIdsStringUtilReplaceValues =
-			new HashMap<>();
-
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/ddm-structures");
-
-		if (SetUtil.isEmpty(resourcePaths)) {
-			return ddmStructuresIdsStringUtilReplaceValues;
-		}
-
-		for (String resourcePath : resourcePaths) {
-			_defaultDDMStructureHelper.addDDMStructures(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class), _classLoader,
-				resourcePath, serviceContext);
-		}
-
-		List<DDMStructure> ddmStructures =
-			_ddmStructureLocalService.getStructures(
-				serviceContext.getScopeGroupId());
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			ddmStructuresIdsStringUtilReplaceValues.put(
-				"DDM_STRUCTURE_ID:" + ddmStructure.getStructureKey(),
-				String.valueOf(ddmStructure.getStructureId()));
-		}
-
-		return ddmStructuresIdsStringUtilReplaceValues;
 	}
 
 	private void _addExpandoColumns(ServiceContext serviceContext)
@@ -1440,6 +1407,40 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return clientExtensionEntryIdsStringUtilReplaceValues;
+	}
+
+	private Map<String, String> _addOrUpdateDDMStructures(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, String> ddmStructuresIdsStringUtilReplaceValues =
+			new HashMap<>();
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/ddm-structures");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return ddmStructuresIdsStringUtilReplaceValues;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			_defaultDDMStructureHelper.addOrUpdateDDMStructures(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_portal.getClassNameId(JournalArticle.class), _classLoader,
+				resourcePath, serviceContext);
+		}
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getStructures(
+				serviceContext.getScopeGroupId());
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			ddmStructuresIdsStringUtilReplaceValues.put(
+				"DDM_STRUCTURE_ID:" + ddmStructure.getStructureKey(),
+				String.valueOf(ddmStructure.getStructureId()));
+		}
+
+		return ddmStructuresIdsStringUtilReplaceValues;
 	}
 
 	private void _addOrUpdateDDMTemplates(

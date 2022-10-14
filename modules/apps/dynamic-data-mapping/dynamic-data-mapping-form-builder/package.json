@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"@liferay/eslint-plugin": "*"
+	},
 	"jest": {
 		"collectCoverageFrom": [
 			"src/main/resources/META-INF/resources/js/**/*.es.js"

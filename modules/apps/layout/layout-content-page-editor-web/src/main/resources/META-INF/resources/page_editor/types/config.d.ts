@@ -116,7 +116,7 @@ export interface Config {
 			label: string;
 			name: string;
 			value: string;
-		};
+		} | string;
 	};
 	getAvailableTemplatesURL: string;
 	getCollectionConfigurationURL: string;
