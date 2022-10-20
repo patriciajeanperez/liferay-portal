@@ -391,12 +391,7 @@ definition {
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.assignUser(
 			orgName = "Organization Name",
@@ -432,12 +427,7 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.searchCP(
 			orgName = "Organization Name",
@@ -447,23 +437,13 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Suborganization.addCP(
 			orgName = "Organization Name",
 			suborgName = "Suborganization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Suborganization.viewCP(
 			orgName = "Organization Name",
@@ -681,12 +661,7 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.assignUser(
 			orgName = "Organization Name",
@@ -695,12 +670,7 @@ definition {
 			userName = "userfn userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.gotoCP(
 			orgName = "Organization Name",
@@ -1019,21 +989,11 @@ definition {
 			orgName = "Organization Name",
 			orgType = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.deleteCP(orgName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.viewNoOrganizationsFoundCP();
 	}
@@ -1102,23 +1062,17 @@ definition {
 			siteName = "Organization Name",
 			siteType = "Private");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.editSiteCP(
 			orgName = "Organization Name",
 			orgNameEdit = "Organization Name Edit");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Organization Name Edit");
 
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.searchCP(
 			orgName = "Organization Name Edit",
@@ -1543,34 +1497,19 @@ definition {
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.assignUser(
 			orgName = "Organization Name",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.removeMemberCP(
 			orgName = "Organization Name",
 			userFullName = "userfn userln");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
+		Organization.openOrganizationsAdmin();
 
 		Organization.viewRemoveMemberCP(
 			orgName = "Organization Name",
