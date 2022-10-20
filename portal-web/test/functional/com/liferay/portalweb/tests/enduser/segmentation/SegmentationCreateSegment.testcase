@@ -461,12 +461,9 @@ definition {
 		}
 
 		task ("Select tag for the organization") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			Organization.openOrganizationsAdmin();
 
-			Organization.editOrganizationCP(orgName = "Organization Name");
+			Organization.gotoEdit(orgName = "Organization Name");
 
 			AssetCategorization.addTag(tagName = "tagName");
 
@@ -643,6 +640,7 @@ definition {
 	}
 
 	@description = "Test Automation for LPS-130347: Segments editor displays a warning if an entity name is not found"
+	@ignore = "true"
 	@priority = "5"
 	@uitest
 	test AddSegmentByOtherSegmentsWarning {
