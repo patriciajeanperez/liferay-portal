@@ -2296,7 +2296,9 @@ definition {
 		Button.clickSave();
 
 		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
-			Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
+			AssertTextEquals(
+				locator1 = "Message#REQUIRED_INFO",
+				value1 = "The ${fieldFieldLabel} field is required.");
 		}
 	}
 
