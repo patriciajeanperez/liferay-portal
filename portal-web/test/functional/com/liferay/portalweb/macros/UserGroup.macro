@@ -36,7 +36,9 @@ definition {
 			Alert.viewDuplicateErrorMessage();
 		}
 		else if ("${userGroupNameVariation}" == "Null") {
-			Alert.viewRequiredField();
+			AssertTextEquals(
+				locator1 = "Message#REQUIRED_INFO",
+				value1 = "The Name field is required.");
 		}
 		else {
 			Alert.viewSuccessMessage();

@@ -1138,7 +1138,9 @@ definition {
 
 			Button.clickSave();
 
-			Alert.viewRequiredField();
+			AssertTextEquals(
+				locator1 = "Message#REQUIRED_INFO",
+				value1 = "The Current Password field is required.");
 
 			User.logoutPG();
 
