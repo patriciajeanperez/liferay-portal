@@ -503,6 +503,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			SelectFrame(
 				key_title = "Assign Users to New Instance Account",
 				locator1 = "IFrame#MODAL_ANY");
@@ -982,6 +984,8 @@ definition {
 		task ("Open and click into the Assign Users Modal") {
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			WaitForElementPresent(
 				key_title = "Assign Users to Business Account",
 				locator1 = "IFrame#MODAL_ANY");
@@ -1394,6 +1398,8 @@ definition {
 				rowEntry = "Business Account");
 
 			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Assign Users");
 
 			WaitForElementPresent(
 				key_title = "Assign Users to Business Account",
@@ -2264,6 +2270,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			WaitForElementPresent(
 				key_title = "Assign Users to Business Account",
 				locator1 = "IFrame#MODAL_ANY");
@@ -2618,6 +2626,34 @@ definition {
 				rowEntry = "AM Account");
 
 			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+		}
+	}
+
+	@description = "This tests that a user cannot invite a user with a different domain"
+	@priority = "4"
+	test CannotInviteUserWithDifferentDomain {
+		task ("Given an account with a domain set") {
+			AccountConfiguration.enableAccountEmailDomain();
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.addAccountWithDomain(
+				accountName = "S Auto Service",
+				domainNames = "liferay.com");
+		}
+
+		task ("When admin invites a user with a different domain") {
+			Accounts._goToInviteUsers(accountName = "S Auto Service");
+
+			Type(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "john.doe@liferay1.com");
+
+			Button.click(button = "Invite");
+		}
+
+		task ("Then the user is not invited") {
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 		}
 	}
 
@@ -3202,6 +3238,8 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
+			MenuItem.click(menuItem = "Assign Users");
+
 			SelectFrame(
 				key_title = "Assign Users to Account Name",
 				locator1 = "IFrame#MODAL_ANY");
@@ -3637,6 +3675,8 @@ definition {
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
 		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Assign Users");
 
 		SelectFrame(
 			key_title = "Assign Users to Business Account",
@@ -4172,6 +4212,8 @@ definition {
 			rowEntry = "Account with Domain");
 
 		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Assign Users");
 
 		SelectFrame(
 			key_title = "Assign Users to Account with Domain",
