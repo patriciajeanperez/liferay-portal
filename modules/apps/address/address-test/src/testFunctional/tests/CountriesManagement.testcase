@@ -458,13 +458,13 @@ definition {
 		}
 
 		task ("Then error validation displays for required fields, Key and Region Code") {
-			AssertElementPresent(
-				key_fieldFieldLabel = "Key",
-				locator1 = "Message#ERROR_FIELD_REQUIRED");
+			AssertTextEquals(
+				locator1 = "Message#REQUIRED_INFO",
+				value1 = "The Key field is required.");
 
-			AssertElementPresent(
-				key_fieldFieldLabel = "Region Code",
-				locator1 = "Message#ERROR_FIELD_REQUIRED");
+			AssertTextEquals(
+				locator1 = "Message#REQUIRED_INFO",
+				value1 = "The Region Code field is required.");
 		}
 	}
 
