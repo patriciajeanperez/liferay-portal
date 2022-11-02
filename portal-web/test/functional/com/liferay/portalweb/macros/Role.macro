@@ -501,6 +501,8 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "${rowEntry}");
 
 		if (isSet(toolTip)) {
+			MouseOver(locator1 = "UserBar#USER_AVATAR_IN_CONTROL_MENU");
+
 			MouseOver(locator1 = "Icon#TOOLTIP");
 
 			AssertTextEquals.assertPartialText(
