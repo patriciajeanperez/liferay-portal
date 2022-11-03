@@ -2947,14 +2947,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		Organization.addCP(
-			orgName = "Organization Name",
-			orgType = "Organization");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2980,15 +2973,11 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.gotoCP(
-			orgName = "Organization Name",
-			searchToken = "Organization Name");
+		Organization.gotoCP(orgName = "Organization Name");
 
 		User.searchCP(searchTerm = "usersn");
 
-		Organization.viewAssignMemberCP(
-			userName = "userfn userln",
-			userScreenName = "usersn");
+		Organization.viewUser(userName = "userfn userln");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
 
