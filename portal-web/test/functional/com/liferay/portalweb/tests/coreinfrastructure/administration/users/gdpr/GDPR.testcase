@@ -1959,7 +1959,7 @@ definition {
 	@description = "This test changes pagination and assert export processes display properly."
 	@priority = "2"
 	test PaginationWorksInExportPersonalData {
-		task ("Log in as new user and create data across several different applications") {
+		task ("Given Log in as new user and create data across several different applications") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -2016,7 +2016,7 @@ definition {
 				wikiPageTitle = "Wiki Page Title");
 		}
 
-		task ("Log back in as super user to begin data export process on new user") {
+		task ("When Log back in as super user to begin data export process on new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
@@ -2032,13 +2032,38 @@ definition {
 				userLastName = "userln");
 		}
 
-		task ("Order by Name in descending order") {
+		task ("And Assert entries are listed when order by Name in descending order") {
 			ManagementBar.setFilterAndOrder(orderBy = "Name");
 
 			ManagementBar.toggleViewOrder(order = "list-down");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Blogs");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Documents and Media");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Message Boards");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "4",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Web Content");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "5",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Wiki");
 		}
 
-		task ("Assert pagination can be changed and correct number of entries are listed") {
+		task ("Then Assert pagination can be changed and correct number of entries are listed") {
 			for (var listEntries : list "4,8,20,40,60") {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
@@ -2075,7 +2100,7 @@ definition {
 	@description = "This test changes pagination and assert entries display properly."
 	@priority = "2"
 	test PaginationWorksInNewDataExport {
-		task ("Bring up the New Data Export page") {
+		task ("When Log back in as super user to begin data export process on new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
@@ -2096,7 +2121,7 @@ definition {
 
 		// Assert the application com.liferay.portal.tools.service.builder.test.uad specific for upstream bundle,there isn't the app in release bundle.
 
-		task ("Assert pagination can be changed and correct number of entries are listed") {
+		task ("Then Assert pagination can be changed and correct number of entries are listed") {
 			for (var listEntries : list "4,8,20,40,60") {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
