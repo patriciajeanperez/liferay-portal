@@ -56,11 +56,11 @@ definition {
 
 		task ("And Channel Account Managers entries are created for Account A and Account B") {
 			for (var account : list "A,B") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Account ${account}");
 
-				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+				Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 				for (var user : list "1,2") {
 					CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
@@ -148,11 +148,11 @@ definition {
 		}
 
 		task ("And the admin user navigates to the account Channel Defaults tab") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 		}
 
 		task ("When the admin user tries to create a new Channel Account Managers entry") {
@@ -200,11 +200,11 @@ definition {
 		}
 
 		task ("And a Channel Account Managers entry is created for Commerce Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
@@ -223,7 +223,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			Account.gotoAssigneeTab(assigneeTab = "Users");
 		}
 
 		task ("And create a new user by clicking on the + button") {
@@ -248,9 +248,9 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+			Account.gotoAssigneeTab(assigneeTab = "Users");
 
-			Accounts.viewAssignee(assigneeName = "Buyer User");
+			Account.viewAssignee(assigneeName = "Buyer User");
 		}
 	}
 
@@ -287,11 +287,11 @@ definition {
 
 		task ("And Channel Account Managers entries are created for Account A and Account B") {
 			for (var account : list "A,B") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Account ${account}");
 
-				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+				Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 				CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 					channelName = "Minium Portal",
@@ -300,11 +300,11 @@ definition {
 		}
 
 		task ("And assert a Channel Account Managers entry is not created for Account C") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account C");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			AssertElementNotPresent(
 				key_firstColumnValue = "Minium Portal",
@@ -383,11 +383,11 @@ definition {
 
 		task ("And Channel Account Managers entries are created for Account A and Account B") {
 			for (var account : list "A,B") {
-				Accounts.openAccountsAdmin();
+				Account.openAccountsAdmin();
 
 				LexiconEntry.gotoEntry(rowEntry = "Account ${account}");
 
-				Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+				Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 				CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 					channelName = "Minium Portal",
@@ -506,11 +506,11 @@ definition {
 		}
 
 		task ("And a Channel Account Managers entry is created for Commerce Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
@@ -529,9 +529,9 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Test Address",
 				addressCountry = "United States",
 				addressName = "Test Name",
@@ -541,7 +541,7 @@ definition {
 		}
 
 		task ("When the user goes into the Details tab of the Commerce Account") {
-			Accounts.gotoAssigneeTab(assigneeTab = "Details");
+			Account.gotoAssigneeTab(assigneeTab = "Details");
 		}
 
 		task ("And edit the fields: ACCOUNT NAME, TAX ID, DESCRIPTION, SET A DEFAULT SHIPPING AND BILLING ADDRESS And clicks on the Save button") {
@@ -590,12 +590,12 @@ definition {
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-			Accounts.viewAccountDetails(
+			Account.viewAccountDetails(
 				accountDescription = "Commerce Account Edit Description",
 				accountName = "Commerce Account Edit",
 				accountTaxId = "123456");
 
-			Accounts.viewDefaultBillingAddress(
+			Account.viewDefaultBillingAddress(
 				addressCity = "Test Address",
 				addressCountry = "United States",
 				addressName = "Test Name",
@@ -603,7 +603,7 @@ definition {
 				addressRegion = "California",
 				addressStreet1 = "Test Street");
 
-			Accounts.viewDefaultShippingAddress(
+			Account.viewDefaultShippingAddress(
 				addressCity = "Test Address",
 				addressCountry = "United States",
 				addressName = "Test Name",
@@ -638,11 +638,11 @@ definition {
 		}
 
 		task ("And a Channel Account Managers entry is created for Commerce Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
@@ -684,11 +684,11 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.editChannelAccountManagersEntry(
 				channelName = "Minium Portal",
@@ -755,11 +755,11 @@ definition {
 		}
 
 		task ("And a Channel Account Managers entry is created for Commerce Account") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.addChannelAccountManagersEntry(
 				channelName = "Minium Portal",
@@ -788,11 +788,11 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
-			Accounts.gotoAssigneeTab(assigneeTab = "Channel Defaults");
+			Account.gotoAssigneeTab(assigneeTab = "Channel Defaults");
 
 			CommerceAccountChannelDefaults.deleteAccountChannelDefaultsEntry(
 				channelName = "Minium Portal",

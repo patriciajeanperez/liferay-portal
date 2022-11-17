@@ -322,7 +322,7 @@ definition {
 		}
 
 		task ("And given a default billing address for the Commerce Account is set") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
@@ -334,7 +334,7 @@ definition {
 				key_title = "Set Default Billing Address",
 				locator1 = "IFrame#MODAL_ANY");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
@@ -481,7 +481,7 @@ definition {
 		}
 
 		task ("And given a default billing address for the Commerce Account is set") {
-			Accounts.openAccountsAdmin();
+			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
@@ -493,7 +493,7 @@ definition {
 				key_title = "Set Default Billing Address",
 				locator1 = "IFrame#MODAL_ANY");
 
-			Accounts.addAddressViaSetDefaultAddress(
+			Account.addAddressViaSetDefaultAddress(
 				addressCity = "Diamond Bar",
 				addressCountry = "United States",
 				addressName = "Liferay, Inc.",
