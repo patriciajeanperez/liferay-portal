@@ -264,6 +264,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(25, 2, 0),
 			new CTModelUpgradeProcess("LayoutPrototype"));
+
+		upgradeVersionTreeMap.put(new Version(25, 3, 0), new UpgradeUserType());
 	}
 
 }
