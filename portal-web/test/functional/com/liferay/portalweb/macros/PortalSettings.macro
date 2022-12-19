@@ -371,9 +371,7 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		if (isSet(orgName)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
-				value1 = "Organization Sites");
+			SystemSettings.viewTextLabel(fieldLabel = "Organization Sites");
 
 			Type(
 				key_text = "organization.group.names",
@@ -389,9 +387,7 @@ definition {
 		}
 
 		if (isSet(roleTitle)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
-				value1 = "Roles");
+			SystemSettings.viewTextLabel(fieldLabel = "Roles");
 
 			Type(
 				key_text = "role.names",
@@ -407,9 +403,7 @@ definition {
 		}
 
 		if (isSet(userGroupName)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
-				value1 = "User Groups");
+			SystemSettings.viewTextLabel(fieldLabel = "User Groups");
 
 			Type(
 				key_text = "user.group.names",
@@ -425,9 +419,7 @@ definition {
 		}
 
 		if (isSet(siteName)) {
-			AssertTextEquals.assertPartialText(
-				locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
-				value1 = "Organization Sites");
+			SystemSettings.viewTextLabel(fieldLabel = "Organization Sites");
 
 			Type(
 				key_text = "group.names",
@@ -598,9 +590,7 @@ definition {
 			configurationName = "Reserved Credentials",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
-			value1 = "Email Addresses");
+		SystemSettings.viewTextLabel(fieldLabel = "Email Addresses");
 
 		Type(
 			key_text = "admin.reserved.email.addresses",
@@ -626,9 +616,7 @@ definition {
 			configurationName = "Reserved Credentials",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
-			value1 = "Screen Names");
+		SystemSettings.viewTextLabel(fieldLabel = "Screen Names");
 
 		Type(
 			key_text = "admin.reserved.screen.names",
@@ -1027,36 +1015,28 @@ definition {
 			checkboxName = "Apply to Existing Users",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER",
-			value1 = "Sites");
+		SystemSettings.viewTextLabel(fieldLabel = "Sites");
 
 		AssertTextEquals(
 			key_text = "group.names",
 			locator1 = "TextArea#ANY",
 			value1 = "");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER",
-			value1 = "Organization Sites");
+		SystemSettings.viewTextLabel(fieldLabel = "Organization Sites");
 
 		AssertTextEquals(
 			key_text = "organization.group.names",
 			locator1 = "TextArea#ANY",
 			value1 = "");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER",
-			value1 = "Roles");
+		SystemSettings.viewTextLabel(fieldLabel = "Roles");
 
 		Type.clickAtType(
 			key_text = "role.names",
 			locator1 = "TextArea#ANY",
 			value1 = "Power User\nUser");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER",
-			value1 = "User Groups");
+		SystemSettings.viewTextLabel(fieldLabel = "User Groups");
 
 		AssertTextEquals(
 			key_text = "user.group.names",
@@ -1175,18 +1155,14 @@ definition {
 			configurationName = "Reserved Credentials",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER",
-			value1 = "Screen Names");
+		SystemSettings.viewTextLabel(fieldLabel = "Screen Names");
 
 		AssertTextEquals(
 			key_text = "admin.reserved.screen.names",
 			locator1 = "TextArea#ANY",
 			value1 = "");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER",
-			value1 = "Email Addresses");
+		SystemSettings.viewTextLabel(fieldLabel = "Email Addresses");
 
 		AssertTextEquals(
 			key_text = "admin.reserved.email.addresses",
