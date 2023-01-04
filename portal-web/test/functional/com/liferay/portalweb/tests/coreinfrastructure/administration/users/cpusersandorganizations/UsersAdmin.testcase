@@ -1650,6 +1650,8 @@ definition {
 
 	@priority = "4"
 	test ImpersonatingAdministratorandOwner {
+		property portal.acceptance = "patty";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONRole.addRegularRole(roleTitle = "Impersonating Role Name");
@@ -2727,6 +2729,8 @@ definition {
 
 	@priority = "4"
 	test ViewUpdateUserViaJSONWS {
+		property portal.acceptance = "patty";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
