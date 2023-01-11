@@ -1484,6 +1484,52 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
 	}
 
+	@description = "This is a use case for LPS-155553. This test asserts that Account Modals can be custom styled."
+	@priority = "3"
+	test CanCustomizeStylingForAccountModals {
+		task ("Given the Account Page with Account Management is created and a new account is created") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Account Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Account Page",
+				widgetName = "Account Management");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("When change theme to Dialect in page configuration") {
+			Navigator.openSpecificURL(url = "${portalURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
+
+			Portlet.gotoPortletOptions(portletOption = "Configuration");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Theme.changeCurrentTheme(themeName = "Dialect");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the background color of the new button in Accounts' Users Tab is #5924eb") {
+			Navigator.gotoPage(pageName = "Account Page");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			AssertCssValue(
+				locator1 = "Button#PLUS",
+				locator2 = "background-color",
+				value1 = "rgba(89, 36, 235, 1)");
+		}
+	}
+
 	@description = "This test deactivates an active account and asserts account displays in correct filter."
 	@priority = "4"
 	test CanDeactivateAccount {
