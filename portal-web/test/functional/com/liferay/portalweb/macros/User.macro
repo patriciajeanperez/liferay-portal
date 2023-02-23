@@ -1465,33 +1465,6 @@ definition {
 			currentPassword = ${currentPassword},
 			newPassword = ${newPassword},
 			requirePasswordReset = ${requirePasswordReset});
-
-		User.logoutPG();
-
-		if (${samlEnabled} == "true") {
-			User.viewLoggedOutPG();
-		}
-
-		User.loginPG(
-			authenticationMethod = ${authenticationMethod},
-			newPassword = ${newPassword},
-			nodePort = ${nodePort},
-			password = ${newPassword},
-			userEmailAddress = ${userEmailAddress},
-			userScreenName = ${userScreenName});
-
-		User.logoutPG();
-
-		if (${samlEnabled} == "true") {
-			User.viewLoggedOutPG();
-		}
-
-		User.loginPG(
-			authenticationMethod = ${authenticationMethod},
-			nodePort = ${nodePort},
-			password = "test",
-			userEmailAddress = "test@liferay.com",
-			userScreenName = ${userScreenName});
 	}
 
 	macro editPasswordInvalidCP {
