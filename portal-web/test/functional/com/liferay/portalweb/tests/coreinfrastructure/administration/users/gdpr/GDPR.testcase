@@ -681,6 +681,8 @@ definition {
 	@description = "This test covers LPS-168719. It ensures that changing the password length does not affect anonymization"
 	@priority = 3
 	test CanAnonymizeWithPasswordLengthChange {
+		property portal.acceptance = "editpass";
+
 		task ("Given publish the document entry as the new admin user") {
 			var portalURL = PropsUtil.get("portal.url");
 

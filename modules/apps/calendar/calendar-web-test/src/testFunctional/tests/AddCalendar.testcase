@@ -508,6 +508,8 @@ definition {
 	@description = "This is a use case for LPS-56229."
 	@priority = 3
 	test ViewUserCanAddSiteCalendarsWithCalendarPermissions {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

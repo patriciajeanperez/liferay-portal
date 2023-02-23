@@ -948,6 +948,7 @@ definition {
 	@description = "Sites created from templates should only be editable by connecting users with admin rights."
 	@priority = 4
 	test OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate {
+		property portal.acceptance = "editpass";
 		property portal.acceptance = "true";
 
 		task ("Given: User adds new site template and a new site based on this site template") {

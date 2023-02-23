@@ -418,6 +418,8 @@ definition {
 	@description = "This is a use case for LPS-57830."
 	@priority = 4
 	test UpdateDocumentWithCustomField {
+		property portal.acceptance = "editpass";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

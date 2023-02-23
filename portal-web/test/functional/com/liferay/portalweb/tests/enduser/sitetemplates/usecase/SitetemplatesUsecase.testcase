@@ -400,6 +400,7 @@ definition {
 	@priority = 4
 	test SitesDynamicTemplateInheritance {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "editpass";
 		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

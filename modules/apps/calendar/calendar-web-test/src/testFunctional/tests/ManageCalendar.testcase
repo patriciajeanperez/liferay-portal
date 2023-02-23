@@ -161,6 +161,8 @@ definition {
 
 	@priority = 3
 	test ChangeColorCalendarSiteCalendarsEventRegular {
+		property portal.acceptance = "editpass";
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		CalendarNavigator.gotoAddEvent();

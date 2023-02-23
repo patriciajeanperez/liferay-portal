@@ -475,6 +475,7 @@ definition {
 	@priority = 4
 	test StagingLocalLiveWebContent {
 		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingLocalLiveWebContent";
+		property portal.acceptance = "editpass";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -591,6 +592,7 @@ definition {
 	@priority = 4
 	test StagingLocalLiveWorkflow {
 		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingLocalLiveWorkflow";
+		property portal.acceptance = "editpass";
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",

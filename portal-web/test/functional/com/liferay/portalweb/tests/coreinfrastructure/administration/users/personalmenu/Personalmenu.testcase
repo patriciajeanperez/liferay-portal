@@ -321,6 +321,8 @@ definition {
 
 	@priority = 4
 	test ViewMyAccountUser {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -410,6 +412,8 @@ definition {
 
 	@priority = 4
 	test ViewMyOrganizations {
+		property portal.acceptance = "editpass";
+
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",

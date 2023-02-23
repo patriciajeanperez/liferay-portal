@@ -786,6 +786,8 @@ definition {
 
 	@priority = 4
 	test SearchDynamicDataListsRecordsAsUserWithNoPermissions {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

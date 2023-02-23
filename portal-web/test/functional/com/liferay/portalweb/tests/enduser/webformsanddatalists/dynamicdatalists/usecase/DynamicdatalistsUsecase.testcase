@@ -693,6 +693,8 @@ definition {
 	@description = "This is a use case for LPS-69273."
 	@priority = 4
 	test AddRepeatableFieldAsNonAdminUser {
+		property portal.acceptance = "editpass";
+
 		JSONRole.addRegularRole(
 			roleKey = "DDMRegRole Name",
 			roleTitle = "DDMRegRole Name");

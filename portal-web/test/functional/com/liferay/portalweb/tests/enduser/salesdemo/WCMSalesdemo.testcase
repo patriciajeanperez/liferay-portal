@@ -97,6 +97,7 @@ definition {
 
 	@priority = 4
 	test SalesDemo {
+		property portal.acceptance = "editpass";
 		property testray.component.names = "Web Content Administration,Web Content Display";
 
 		JSONLayout.addPublicLayout(

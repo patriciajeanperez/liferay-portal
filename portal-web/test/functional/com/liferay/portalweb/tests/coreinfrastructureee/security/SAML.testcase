@@ -1573,6 +1573,7 @@ definition {
 	@priority = 4
 	test ConfigureSAMLToImportUsersFromLDAP {
 		property apacheds.enabled = "true";
+		property portal.acceptance = "editpass";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SAML#ConfigureSAMLToImportUsersFromLDAP";
 
@@ -2269,6 +2270,7 @@ definition {
 	@priority = 5
 	test CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs {
 		property app.server.bundles.size = "0";
+		property portal.acceptance = "editpass";
 		property test.name.skip.portal.instance = "SAML#CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs";
 
 		task ("Given: User adds 2 virtual instance") {

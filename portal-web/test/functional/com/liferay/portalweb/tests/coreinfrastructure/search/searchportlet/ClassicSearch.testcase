@@ -134,6 +134,8 @@ definition {
 
 	@priority = 4
 	test SearchByPermission {
+		property portal.acceptance = "editpass";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");
@@ -187,6 +189,8 @@ definition {
 
 	@priority = 4
 	test SearchByUserFacet {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

@@ -973,6 +973,7 @@ definition {
 
 	@priority = 5
 	test ChangeUserPassword {
+		property portal.acceptance = "editpass";
 		property portal.acceptance = "true";
 
 		JSONUser.addUser(
@@ -998,6 +999,8 @@ definition {
 
 	@priority = 4
 	test ChangeUserPasswordInvalid {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1651,6 +1654,8 @@ definition {
 
 	@priority = 4
 	test ImpersonatingAdministratorandOwner {
+		property portal.acceptance = "editpass";
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONRole.addRegularRole(roleTitle = "Impersonating Role Name");
@@ -1875,6 +1880,8 @@ definition {
 
 	@priority = 4
 	test LoginUser {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

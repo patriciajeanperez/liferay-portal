@@ -988,6 +988,8 @@ definition {
 	@description = "This is a use case for LPS-75084."
 	@priority = 5
 	test NoPermissionUserCannotAddOrganizationViaURL {
+		property portal.acceptance = "editpass";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONOrganization.addOrganization(organizationName = "Organization for Test");
@@ -1026,6 +1028,7 @@ definition {
 
 	@priority = 5
 	test OrganizationAdministratorActivate {
+		property portal.acceptance = "editpass";
 		property testray.component.names = "Training";
 
 		Permissions.definePermissionViaJSONAPI(

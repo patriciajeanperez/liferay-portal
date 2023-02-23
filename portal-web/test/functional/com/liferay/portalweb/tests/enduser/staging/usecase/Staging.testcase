@@ -1221,6 +1221,8 @@ definition {
 	@description = "This is a use case for LPS-96155."
 	@priority = 4
 	test PublishReviewedPageRevision {
+		property portal.acceptance = "editpass";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page 1");
@@ -2588,6 +2590,7 @@ definition {
 
 	@priority = 4
 	test ViewHistoryVersionWithDeletedUser {
+		property portal.acceptance = "editpass";
 		property test.name.skip.portal.instance = "Staging#ViewHistoryVersionWithDeletedUser";
 
 		JSONUser.addUser(

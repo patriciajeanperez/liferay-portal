@@ -2147,6 +2147,7 @@ definition {
 	@description = "This is a use case for LPS-88498. Verify if a Guest is able to export files."
 	@priority = 5
 	test ExportViaGuest {
+		property portal.acceptance = "editpass";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExportImport#ExportViaGuest";
 

@@ -237,6 +237,8 @@ definition {
 
 	@priority = 4
 	test EditTeamPermissions {
+		property portal.acceptance = "editpass";
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = 90,
@@ -646,6 +648,7 @@ definition {
 	@priority = 4
 	test SiteRoleBookmarksInlinePermissions {
 		property osgi.app.includes = "bookmarks";
+		property portal.acceptance = "editpass";
 		property portal.release = "false";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -753,6 +756,8 @@ definition {
 
 	@priority = 4
 	test TeamPermissionsSite {
+		property portal.acceptance = "editpass";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -1254,6 +1259,7 @@ definition {
 
 	@priority = 4
 	test ViewPrivatePageSiteMemberRole {
+		property portal.acceptance = "editpass";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -1313,6 +1319,7 @@ definition {
 
 	@priority = 4
 	test ViewRegRolePermissionsDefaultView {
+		property portal.acceptance = "editpass";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		JSONRole.addRegularRole(

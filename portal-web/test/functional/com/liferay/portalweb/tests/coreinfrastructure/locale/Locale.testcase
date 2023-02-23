@@ -845,6 +845,7 @@ definition {
 
 	@priority = 5
 	test ViewUserPreferredLocale {
+		property portal.acceptance = "editpass";
 		property portal.acceptance = "true";
 
 		User.firstLoginPG();
