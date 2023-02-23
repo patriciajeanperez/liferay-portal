@@ -699,9 +699,9 @@ definition {
 
 			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
-			UserNavigator.gotoUser(userScreenName = "usersn");
-
-			User.editPassword(newPassword = "test");
+			User.editPasswordCP(
+				newPassword = "test",
+				userScreenName = "usersn");
 
 			PasswordPolicies.openPasswordPoliciesAdmin();
 
@@ -754,9 +754,9 @@ definition {
 
 			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet");
 
-			UserNavigator.gotoUser(userScreenName = "usersn");
-
-			User.editPassword(newPassword = "test");
+			User.editPasswordCP(
+				newPassword = "test",
+				userScreenName = "usersn");
 
 			PasswordPolicies.openPasswordPoliciesAdmin();
 

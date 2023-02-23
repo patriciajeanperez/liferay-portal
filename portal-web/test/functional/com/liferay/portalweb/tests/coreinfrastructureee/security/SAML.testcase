@@ -2513,9 +2513,9 @@ definition {
 
 			User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
 
-			UserNavigator.gotoUser(userScreenName = "usera");
-
-			User.editPassword(newPassword = "test");
+			User.editPasswordCP(
+				newPassword = "test",
+				userScreenName = "usera");
 
 			User.logoutPG(specificURL = "http://www.baker.com:8080");
 		}

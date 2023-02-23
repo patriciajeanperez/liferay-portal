@@ -46,9 +46,9 @@ definition {
 		task ("Then: As On-Demand Admin, it is possible to change the information of the instance admin") {
 			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
-			UserNavigator.gotoUser(userScreenName = "test");
-
-			User.editPassword(newPassword = "tester");
+			User.editPasswordCP(
+				newPassword = "tester",
+				userScreenName = "test");
 
 			User.logoutPG(specificURL = "www.able.com:8080");
 

@@ -2411,9 +2411,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		UserNavigator.gotoUser(userScreenName = "test1");
-
-		User.editPassword(newPassword = "tryingHARD");
+		User.editPasswordCP(
+			newPassword = "tryingHARD",
+			userScreenName = "test1");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -2429,18 +2429,18 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		UserNavigator.gotoUser(userScreenName = "test1");
-
-		User.editPassword(newPassword = "abcABC");
+		User.editPasswordCP(
+			newPassword = "abcABC",
+			userScreenName = "test1");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		UserNavigator.gotoUser(userScreenName = "test1");
-
-		User.editPassword(newPassword = "123ABC");
+		User.editPasswordCP(
+			newPassword = "123ABC",
+			userScreenName = "test1");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2489,9 +2489,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		UserNavigator.gotoUser(userScreenName = "test1");
-
-		User.editPassword(newPassword = "12ABcd");
+		User.editPasswordCP(
+			newPassword = "12ABcd",
+			userScreenName = "test1");
 	}
 
 	@description = "This is a use case for LPS-111656"
