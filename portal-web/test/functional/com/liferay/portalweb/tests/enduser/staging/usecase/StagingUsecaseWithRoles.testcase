@@ -569,9 +569,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -725,9 +723,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "contentcreator@liferay.com",
-			userScreenName = "contentcreator");
+		User.editPasswordCP(userScreenName = "contentcreator");
 
 		JSONUser.addUser(
 			userEmailAddress = "contentapprover@liferay.com",
@@ -746,9 +742,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "contentapprover@liferay.com",
-			userScreenName = "contentapprover");
+		User.editPasswordCP(userScreenName = "contentapprover");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "contentcreator@liferay.com",
@@ -997,9 +991,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

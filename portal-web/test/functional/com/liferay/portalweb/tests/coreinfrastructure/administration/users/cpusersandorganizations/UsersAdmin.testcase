@@ -983,9 +983,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		User.logoutPG();
 
@@ -1016,9 +1014,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		User.logoutPG();
 
@@ -1707,9 +1703,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1");
+		User.editPasswordCP(userScreenName = "usersn1");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Impersonating Role Name",
@@ -1724,18 +1718,14 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2");
+		User.editPasswordCP(userScreenName = "usersn2");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea3@liferay.com",
-			userScreenName = "usersn3");
+		User.editPasswordCP(userScreenName = "usersn3");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",
@@ -1901,9 +1891,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		User.logoutPG();
 
@@ -2595,9 +2583,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2630,9 +2616,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		User.openUsersAdmin();
 

@@ -2162,9 +2162,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			User.editPasswordCP(userScreenName = "usersn");
 		}
 
 		task ("When: Default site is exported and the download URL is hit by the new guest user") {

@@ -60,7 +60,6 @@ definition {
 
 		User.editPasswordCP(
 			password = "password",
-			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
 		JSONOrganization.assignUserToOrganization(
@@ -78,7 +77,6 @@ definition {
 
 		User.editPasswordCP(
 			password = "password",
-			userEmailAddress = "usereacr@liferay.com",
 			userScreenName = "usersncr");
 
 		JSONOrganization.assignUserToOrganization(
@@ -100,7 +98,6 @@ definition {
 
 		User.editPasswordCP(
 			password = "password",
-			userEmailAddress = "usereaoa@liferay.com",
 			userScreenName = "usersnoa");
 
 		JSONOrganization.assignUserToOrganization(

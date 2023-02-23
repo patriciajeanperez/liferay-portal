@@ -1264,9 +1264,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea1@liferay.com",
-			userScreenName = "usersn1");
+		User.editPasswordCP(userScreenName = "usersn1");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1293,9 +1291,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea2@liferay.com",
-			userScreenName = "usersn2");
+		User.editPasswordCP(userScreenName = "usersn2");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2609,7 +2605,6 @@ definition {
 
 		User.editPasswordCP(
 			password = "password",
-			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
 		JSONGroup.assignUserToGroup(

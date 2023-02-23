@@ -33,7 +33,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = ${currentPassword},
 			newPassword = ${newPassword},
-			userEmailAddress = ${userEmailAddress},
 			userScreenName = ${userScreenName});
 
 		JSONOrganization.addOrganization(
@@ -75,7 +74,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = ${currentPassword},
 			newPassword = ${newPassword},
-			userEmailAddress = ${userEmailAddress},
 			userScreenName = ${userScreenName});
 
 		JSONOrganization.addOrganization(
@@ -185,7 +183,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = ${currentPassword},
 			newPassword = ${newPassword},
-			userEmailAddress = ${userEmailAddress},
 			userScreenName = ${userScreenName});
 
 		JSONRole.addRegularRole(roleTitle = ${roleTitle});
@@ -249,7 +246,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = ${currentPassword},
 			newPassword = ${newPassword},
-			userEmailAddress = ${userEmailAddress},
 			userScreenName = ${userScreenName});
 
 		JSONGroup.addGroup(groupName = ${siteName});

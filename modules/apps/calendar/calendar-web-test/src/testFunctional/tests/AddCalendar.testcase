@@ -546,9 +546,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "usersn@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		for (var siteName : list "Site A,Site B,Site C") {
 			ApplicationsMenu.gotoPortlet(

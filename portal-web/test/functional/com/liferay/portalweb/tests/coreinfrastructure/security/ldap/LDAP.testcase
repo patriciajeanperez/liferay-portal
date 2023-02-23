@@ -277,9 +277,7 @@ definition {
 		task ("Edit user password") {
 			Navigator.gotoBack();
 
-			User.editPasswordCP(
-				userEmailAddress = "ldapuseremail@liferay.com",
-				userScreenName = "ldapusercn");
+			User.editPasswordCP(userScreenName = "ldapusercn");
 		}
 
 		task ("Logout, login and assert configurations persisted") {

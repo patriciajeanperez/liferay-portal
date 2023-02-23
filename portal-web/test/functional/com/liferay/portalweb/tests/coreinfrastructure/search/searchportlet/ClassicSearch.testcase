@@ -164,7 +164,6 @@ definition {
 
 		User.editPasswordCP(
 			password = "password",
-			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
@@ -206,7 +205,6 @@ definition {
 
 		User.editPasswordCP(
 			password = "password",
-			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
 		ApplicationsMenu.gotoPortlet(

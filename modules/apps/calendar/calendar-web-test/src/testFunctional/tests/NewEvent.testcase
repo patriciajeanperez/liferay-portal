@@ -182,9 +182,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -248,9 +246,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		Navigator.openURL();
 
@@ -435,9 +431,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -673,9 +667,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -1229,9 +1221,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.editPasswordCP(
-				userEmailAddress = "${userScreenName}@liferay.com",
-				userScreenName = ${userScreenName});
+			User.editPasswordCP(userScreenName = ${userScreenName});
 		}
 
 		Navigator.gotoPage(pageName = "Calendar Page");

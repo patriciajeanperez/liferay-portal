@@ -1659,7 +1659,6 @@ definition {
 
 			User.editPasswordCP(
 				samlEnabled = "true",
-				userEmailAddress = "ldapuseremail@liferay.com",
 				userScreenName = "ldapusercn");
 		}
 

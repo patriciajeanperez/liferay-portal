@@ -1514,9 +1514,7 @@ definition {
 
 		User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		User.editPasswordCP(userScreenName = "usersn");
 
 		MockMock.viewMail(
 			asset = "${portalURL}: Dear user, your Password Has Been Changed",

@@ -3827,7 +3827,6 @@ definition {
 
 		User.editPasswordCP(
 			requirePasswordReset = "true",
-			userEmailAddress = "user@liferay.com",
 			userScreenName = "usersn");
 
 		User.logoutPG();
