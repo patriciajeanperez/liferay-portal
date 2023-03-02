@@ -1808,23 +1808,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	}
 
-	private User _addDefaultServiceAccountUser(Company company)
-		throws PortalException {
-
-		String userName = "default-service-account";
-
-		User defaultServiceAccountUser = _userLocalService.addDefaultAdminUser(
-			company.getCompanyId(), userName,
-			userName + StringPool.AT + company.getMx(),
-			LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
-			userName, StringPool.BLANK, userName);
-
-		defaultServiceAccountUser.setDefaultUser(true);
-		defaultServiceAccountUser.setType(UserConstants.TYPE_SERVICE_ACCOUNT);
-
-		return _userPersistence.updateImpl(defaultServiceAccountUser);
-	}
-
 	private User _addDefaultUser(Company company) throws PortalException {
 		Date date = new Date();
 
@@ -1998,16 +1981,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
 					PropsValues.DEFAULT_ADMIN_LAST_NAME);
-			}
-
-			// Default service account
-
-			User defaultServiceAccountUser = _userPersistence.fetchByC_DU_T(
-				company.getCompanyId(), true,
-				UserConstants.TYPE_SERVICE_ACCOUNT);
-
-			if (defaultServiceAccountUser == null) {
-				_addDefaultServiceAccountUser(company);
 			}
 
 			// Portlets
