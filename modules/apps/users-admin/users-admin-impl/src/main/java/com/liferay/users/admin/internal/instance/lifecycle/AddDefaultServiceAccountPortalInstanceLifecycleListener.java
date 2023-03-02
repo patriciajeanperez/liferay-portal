@@ -15,6 +15,7 @@
 package com.liferay.users.admin.internal.instance.lifecycle;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
@@ -54,30 +55,40 @@ public class AddDefaultServiceAccountPortalInstanceLifecycleListener
 			return;
 		}
 
-		Role adminRole = _roleLocalService.getRole(
-			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+		boolean upgrading = StartupHelperUtil.isUpgrading();
 
-		String userName = "default-service-account";
+		try {
+			StartupHelperUtil.setUpgrading(false);
 
-		defaultServiceAccountUser = _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
-			PropsValues.DEFAULT_ADMIN_PASSWORD,
-			PropsValues.DEFAULT_ADMIN_PASSWORD, false, userName,
-			userName + StringPool.AT + company.getMx(),
-			LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
-			userName, StringPool.BLANK, userName, 0, 0, true, Calendar.JANUARY,
-			1, 1970, StringPool.BLANK, UserConstants.TYPE_SERVICE_ACCOUNT, null,
-			null, new long[] {adminRole.getRoleId()}, null, false,
-			new ServiceContext());
+			Role adminRole = _roleLocalService.getRole(
+				company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-		defaultServiceAccountUser.setDefaultUser(true);
+			String userName = "default-service-account";
 
-		_userLocalService.updateUser(defaultServiceAccountUser);
+			defaultServiceAccountUser = _userLocalService.addUser(
+				UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
+				PropsValues.DEFAULT_ADMIN_PASSWORD,
+				PropsValues.DEFAULT_ADMIN_PASSWORD, false, userName,
+				userName + StringPool.AT + company.getMx(),
+				LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
+				userName, StringPool.BLANK, userName, 0, 0, true,
+				Calendar.JANUARY, 1, 1970, StringPool.BLANK,
+				UserConstants.TYPE_SERVICE_ACCOUNT, null, null,
+				new long[] {adminRole.getRoleId()}, null, false,
+				new ServiceContext());
 
-		_userLocalService.updateEmailAddressVerified(
-			defaultServiceAccountUser.getUserId(), true);
+			defaultServiceAccountUser.setDefaultUser(true);
 
-		_indexer.reindex(defaultServiceAccountUser);
+			_userLocalService.updateUser(defaultServiceAccountUser);
+
+			_userLocalService.updateEmailAddressVerified(
+				defaultServiceAccountUser.getUserId(), true);
+
+			_indexer.reindex(defaultServiceAccountUser);
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(upgrading);
+		}
 	}
 
 	@Reference(
