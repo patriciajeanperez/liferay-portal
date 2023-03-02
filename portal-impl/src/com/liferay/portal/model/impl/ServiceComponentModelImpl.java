@@ -210,84 +210,66 @@ public class ServiceComponentModelImpl
 	public Map<String, Function<ServiceComponent, Object>>
 		getAttributeGetterFunctions() {
 
-		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
+		return _attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ServiceComponent, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
+		return _attributeSetterBiConsumers;
 	}
 
-	private static class AttributeGetterFunctionsHolder {
+	private static final Map<String, Function<ServiceComponent, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ServiceComponent, Object>>
+		_attributeSetterBiConsumers;
 
-		private static final Map<String, Function<ServiceComponent, Object>>
-			_attributeGetterFunctions;
+	static {
+		Map<String, Function<ServiceComponent, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap<String, Function<ServiceComponent, Object>>();
+		Map<String, BiConsumer<ServiceComponent, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<ServiceComponent, ?>>();
 
-		static {
-			Map<String, Function<ServiceComponent, Object>>
-				attributeGetterFunctions =
-					new LinkedHashMap
-						<String, Function<ServiceComponent, Object>>();
+		attributeGetterFunctions.put(
+			"mvccVersion", ServiceComponent::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ServiceComponent, Long>)
+				ServiceComponent::setMvccVersion);
+		attributeGetterFunctions.put(
+			"serviceComponentId", ServiceComponent::getServiceComponentId);
+		attributeSetterBiConsumers.put(
+			"serviceComponentId",
+			(BiConsumer<ServiceComponent, Long>)
+				ServiceComponent::setServiceComponentId);
+		attributeGetterFunctions.put(
+			"buildNamespace", ServiceComponent::getBuildNamespace);
+		attributeSetterBiConsumers.put(
+			"buildNamespace",
+			(BiConsumer<ServiceComponent, String>)
+				ServiceComponent::setBuildNamespace);
+		attributeGetterFunctions.put(
+			"buildNumber", ServiceComponent::getBuildNumber);
+		attributeSetterBiConsumers.put(
+			"buildNumber",
+			(BiConsumer<ServiceComponent, Long>)
+				ServiceComponent::setBuildNumber);
+		attributeGetterFunctions.put(
+			"buildDate", ServiceComponent::getBuildDate);
+		attributeSetterBiConsumers.put(
+			"buildDate",
+			(BiConsumer<ServiceComponent, Long>)ServiceComponent::setBuildDate);
+		attributeGetterFunctions.put("data", ServiceComponent::getData);
+		attributeSetterBiConsumers.put(
+			"data",
+			(BiConsumer<ServiceComponent, String>)ServiceComponent::setData);
 
-			attributeGetterFunctions.put(
-				"mvccVersion", ServiceComponent::getMvccVersion);
-			attributeGetterFunctions.put(
-				"serviceComponentId", ServiceComponent::getServiceComponentId);
-			attributeGetterFunctions.put(
-				"buildNamespace", ServiceComponent::getBuildNamespace);
-			attributeGetterFunctions.put(
-				"buildNumber", ServiceComponent::getBuildNumber);
-			attributeGetterFunctions.put(
-				"buildDate", ServiceComponent::getBuildDate);
-			attributeGetterFunctions.put("data", ServiceComponent::getData);
-
-			_attributeGetterFunctions = Collections.unmodifiableMap(
-				attributeGetterFunctions);
-		}
-
-	}
-
-	private static class AttributeSetterBiConsumersHolder {
-
-		private static final Map<String, BiConsumer<ServiceComponent, Object>>
-			_attributeSetterBiConsumers;
-
-		static {
-			Map<String, BiConsumer<ServiceComponent, ?>>
-				attributeSetterBiConsumers =
-					new LinkedHashMap
-						<String, BiConsumer<ServiceComponent, ?>>();
-
-			attributeSetterBiConsumers.put(
-				"mvccVersion",
-				(BiConsumer<ServiceComponent, Long>)
-					ServiceComponent::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"serviceComponentId",
-				(BiConsumer<ServiceComponent, Long>)
-					ServiceComponent::setServiceComponentId);
-			attributeSetterBiConsumers.put(
-				"buildNamespace",
-				(BiConsumer<ServiceComponent, String>)
-					ServiceComponent::setBuildNamespace);
-			attributeSetterBiConsumers.put(
-				"buildNumber",
-				(BiConsumer<ServiceComponent, Long>)
-					ServiceComponent::setBuildNumber);
-			attributeSetterBiConsumers.put(
-				"buildDate",
-				(BiConsumer<ServiceComponent, Long>)
-					ServiceComponent::setBuildDate);
-			attributeSetterBiConsumers.put(
-				"data",
-				(BiConsumer<ServiceComponent, String>)
-					ServiceComponent::setData);
-
-			_attributeSetterBiConsumers = Collections.unmodifiableMap(
-				(Map)attributeSetterBiConsumers);
-		}
-
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -677,8 +659,7 @@ public class ServiceComponentModelImpl
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<ServiceComponent, Object> function =
-			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
-				columnName);
+			_attributeGetterFunctions.get(columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

@@ -213,75 +213,55 @@ public class BrowserTrackerModelImpl
 	public Map<String, Function<BrowserTracker, Object>>
 		getAttributeGetterFunctions() {
 
-		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
+		return _attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<BrowserTracker, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
+		return _attributeSetterBiConsumers;
 	}
 
-	private static class AttributeGetterFunctionsHolder {
+	private static final Map<String, Function<BrowserTracker, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<BrowserTracker, Object>>
+		_attributeSetterBiConsumers;
 
-		private static final Map<String, Function<BrowserTracker, Object>>
-			_attributeGetterFunctions;
+	static {
+		Map<String, Function<BrowserTracker, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<BrowserTracker, Object>>();
+		Map<String, BiConsumer<BrowserTracker, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<BrowserTracker, ?>>();
 
-		static {
-			Map<String, Function<BrowserTracker, Object>>
-				attributeGetterFunctions =
-					new LinkedHashMap
-						<String, Function<BrowserTracker, Object>>();
+		attributeGetterFunctions.put(
+			"mvccVersion", BrowserTracker::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<BrowserTracker, Long>)BrowserTracker::setMvccVersion);
+		attributeGetterFunctions.put(
+			"browserTrackerId", BrowserTracker::getBrowserTrackerId);
+		attributeSetterBiConsumers.put(
+			"browserTrackerId",
+			(BiConsumer<BrowserTracker, Long>)
+				BrowserTracker::setBrowserTrackerId);
+		attributeGetterFunctions.put("companyId", BrowserTracker::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<BrowserTracker, Long>)BrowserTracker::setCompanyId);
+		attributeGetterFunctions.put("userId", BrowserTracker::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<BrowserTracker, Long>)BrowserTracker::setUserId);
+		attributeGetterFunctions.put(
+			"browserKey", BrowserTracker::getBrowserKey);
+		attributeSetterBiConsumers.put(
+			"browserKey",
+			(BiConsumer<BrowserTracker, Long>)BrowserTracker::setBrowserKey);
 
-			attributeGetterFunctions.put(
-				"mvccVersion", BrowserTracker::getMvccVersion);
-			attributeGetterFunctions.put(
-				"browserTrackerId", BrowserTracker::getBrowserTrackerId);
-			attributeGetterFunctions.put(
-				"companyId", BrowserTracker::getCompanyId);
-			attributeGetterFunctions.put("userId", BrowserTracker::getUserId);
-			attributeGetterFunctions.put(
-				"browserKey", BrowserTracker::getBrowserKey);
-
-			_attributeGetterFunctions = Collections.unmodifiableMap(
-				attributeGetterFunctions);
-		}
-
-	}
-
-	private static class AttributeSetterBiConsumersHolder {
-
-		private static final Map<String, BiConsumer<BrowserTracker, Object>>
-			_attributeSetterBiConsumers;
-
-		static {
-			Map<String, BiConsumer<BrowserTracker, ?>>
-				attributeSetterBiConsumers =
-					new LinkedHashMap<String, BiConsumer<BrowserTracker, ?>>();
-
-			attributeSetterBiConsumers.put(
-				"mvccVersion",
-				(BiConsumer<BrowserTracker, Long>)
-					BrowserTracker::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"browserTrackerId",
-				(BiConsumer<BrowserTracker, Long>)
-					BrowserTracker::setBrowserTrackerId);
-			attributeSetterBiConsumers.put(
-				"companyId",
-				(BiConsumer<BrowserTracker, Long>)BrowserTracker::setCompanyId);
-			attributeSetterBiConsumers.put(
-				"userId",
-				(BiConsumer<BrowserTracker, Long>)BrowserTracker::setUserId);
-			attributeSetterBiConsumers.put(
-				"browserKey",
-				(BiConsumer<BrowserTracker, Long>)
-					BrowserTracker::setBrowserKey);
-
-			_attributeSetterBiConsumers = Collections.unmodifiableMap(
-				(Map)attributeSetterBiConsumers);
-		}
-
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -615,8 +595,7 @@ public class BrowserTrackerModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<BrowserTracker, Object> function =
-			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
-				columnName);
+			_attributeGetterFunctions.get(columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

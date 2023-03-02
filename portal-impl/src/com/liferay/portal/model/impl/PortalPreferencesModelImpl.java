@@ -216,80 +216,62 @@ public class PortalPreferencesModelImpl
 	public Map<String, Function<PortalPreferences, Object>>
 		getAttributeGetterFunctions() {
 
-		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
+		return _attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<PortalPreferences, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
+		return _attributeSetterBiConsumers;
 	}
 
-	private static class AttributeGetterFunctionsHolder {
+	private static final Map<String, Function<PortalPreferences, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PortalPreferences, Object>>
+		_attributeSetterBiConsumers;
 
-		private static final Map<String, Function<PortalPreferences, Object>>
-			_attributeGetterFunctions;
+	static {
+		Map<String, Function<PortalPreferences, Object>>
+			attributeGetterFunctions =
+				new LinkedHashMap
+					<String, Function<PortalPreferences, Object>>();
+		Map<String, BiConsumer<PortalPreferences, ?>>
+			attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<PortalPreferences, ?>>();
 
-		static {
-			Map<String, Function<PortalPreferences, Object>>
-				attributeGetterFunctions =
-					new LinkedHashMap
-						<String, Function<PortalPreferences, Object>>();
+		attributeGetterFunctions.put(
+			"mvccVersion", PortalPreferences::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<PortalPreferences, Long>)
+				PortalPreferences::setMvccVersion);
+		attributeGetterFunctions.put(
+			"portalPreferencesId", PortalPreferences::getPortalPreferencesId);
+		attributeSetterBiConsumers.put(
+			"portalPreferencesId",
+			(BiConsumer<PortalPreferences, Long>)
+				PortalPreferences::setPortalPreferencesId);
+		attributeGetterFunctions.put(
+			"companyId", PortalPreferences::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<PortalPreferences, Long>)
+				PortalPreferences::setCompanyId);
+		attributeGetterFunctions.put("ownerId", PortalPreferences::getOwnerId);
+		attributeSetterBiConsumers.put(
+			"ownerId",
+			(BiConsumer<PortalPreferences, Long>)PortalPreferences::setOwnerId);
+		attributeGetterFunctions.put(
+			"ownerType", PortalPreferences::getOwnerType);
+		attributeSetterBiConsumers.put(
+			"ownerType",
+			(BiConsumer<PortalPreferences, Integer>)
+				PortalPreferences::setOwnerType);
 
-			attributeGetterFunctions.put(
-				"mvccVersion", PortalPreferences::getMvccVersion);
-			attributeGetterFunctions.put(
-				"portalPreferencesId",
-				PortalPreferences::getPortalPreferencesId);
-			attributeGetterFunctions.put(
-				"companyId", PortalPreferences::getCompanyId);
-			attributeGetterFunctions.put(
-				"ownerId", PortalPreferences::getOwnerId);
-			attributeGetterFunctions.put(
-				"ownerType", PortalPreferences::getOwnerType);
-
-			_attributeGetterFunctions = Collections.unmodifiableMap(
-				attributeGetterFunctions);
-		}
-
-	}
-
-	private static class AttributeSetterBiConsumersHolder {
-
-		private static final Map<String, BiConsumer<PortalPreferences, Object>>
-			_attributeSetterBiConsumers;
-
-		static {
-			Map<String, BiConsumer<PortalPreferences, ?>>
-				attributeSetterBiConsumers =
-					new LinkedHashMap
-						<String, BiConsumer<PortalPreferences, ?>>();
-
-			attributeSetterBiConsumers.put(
-				"mvccVersion",
-				(BiConsumer<PortalPreferences, Long>)
-					PortalPreferences::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"portalPreferencesId",
-				(BiConsumer<PortalPreferences, Long>)
-					PortalPreferences::setPortalPreferencesId);
-			attributeSetterBiConsumers.put(
-				"companyId",
-				(BiConsumer<PortalPreferences, Long>)
-					PortalPreferences::setCompanyId);
-			attributeSetterBiConsumers.put(
-				"ownerId",
-				(BiConsumer<PortalPreferences, Long>)
-					PortalPreferences::setOwnerId);
-			attributeSetterBiConsumers.put(
-				"ownerType",
-				(BiConsumer<PortalPreferences, Integer>)
-					PortalPreferences::setOwnerType);
-
-			_attributeSetterBiConsumers = Collections.unmodifiableMap(
-				(Map)attributeSetterBiConsumers);
-		}
-
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -621,8 +603,7 @@ public class PortalPreferencesModelImpl
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PortalPreferences, Object> function =
-			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
-				columnName);
+			_attributeGetterFunctions.get(columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

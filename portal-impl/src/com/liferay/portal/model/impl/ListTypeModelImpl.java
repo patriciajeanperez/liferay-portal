@@ -206,60 +206,44 @@ public class ListTypeModelImpl
 	public Map<String, Function<ListType, Object>>
 		getAttributeGetterFunctions() {
 
-		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
+		return _attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<ListType, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
+		return _attributeSetterBiConsumers;
 	}
 
-	private static class AttributeGetterFunctionsHolder {
+	private static final Map<String, Function<ListType, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ListType, Object>>
+		_attributeSetterBiConsumers;
 
-		private static final Map<String, Function<ListType, Object>>
-			_attributeGetterFunctions;
+	static {
+		Map<String, Function<ListType, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ListType, Object>>();
+		Map<String, BiConsumer<ListType, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ListType, ?>>();
 
-		static {
-			Map<String, Function<ListType, Object>> attributeGetterFunctions =
-				new LinkedHashMap<String, Function<ListType, Object>>();
+		attributeGetterFunctions.put("mvccVersion", ListType::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<ListType, Long>)ListType::setMvccVersion);
+		attributeGetterFunctions.put("listTypeId", ListType::getListTypeId);
+		attributeSetterBiConsumers.put(
+			"listTypeId", (BiConsumer<ListType, Long>)ListType::setListTypeId);
+		attributeGetterFunctions.put("name", ListType::getName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<ListType, String>)ListType::setName);
+		attributeGetterFunctions.put("type", ListType::getType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<ListType, String>)ListType::setType);
 
-			attributeGetterFunctions.put(
-				"mvccVersion", ListType::getMvccVersion);
-			attributeGetterFunctions.put("listTypeId", ListType::getListTypeId);
-			attributeGetterFunctions.put("name", ListType::getName);
-			attributeGetterFunctions.put("type", ListType::getType);
-
-			_attributeGetterFunctions = Collections.unmodifiableMap(
-				attributeGetterFunctions);
-		}
-
-	}
-
-	private static class AttributeSetterBiConsumersHolder {
-
-		private static final Map<String, BiConsumer<ListType, Object>>
-			_attributeSetterBiConsumers;
-
-		static {
-			Map<String, BiConsumer<ListType, ?>> attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<ListType, ?>>();
-
-			attributeSetterBiConsumers.put(
-				"mvccVersion",
-				(BiConsumer<ListType, Long>)ListType::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"listTypeId",
-				(BiConsumer<ListType, Long>)ListType::setListTypeId);
-			attributeSetterBiConsumers.put(
-				"name", (BiConsumer<ListType, String>)ListType::setName);
-			attributeSetterBiConsumers.put(
-				"type", (BiConsumer<ListType, String>)ListType::setType);
-
-			_attributeSetterBiConsumers = Collections.unmodifiableMap(
-				(Map)attributeSetterBiConsumers);
-		}
-
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -588,9 +572,8 @@ public class ListTypeModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<ListType, Object> function =
-			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
-				columnName);
+		Function<ListType, Object> function = _attributeGetterFunctions.get(
+			columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

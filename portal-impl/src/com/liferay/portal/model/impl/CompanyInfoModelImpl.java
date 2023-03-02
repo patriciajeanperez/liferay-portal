@@ -208,64 +208,48 @@ public class CompanyInfoModelImpl
 	public Map<String, Function<CompanyInfo, Object>>
 		getAttributeGetterFunctions() {
 
-		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
+		return _attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<CompanyInfo, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
+		return _attributeSetterBiConsumers;
 	}
 
-	private static class AttributeGetterFunctionsHolder {
+	private static final Map<String, Function<CompanyInfo, Object>>
+		_attributeGetterFunctions;
+	private static final Map<String, BiConsumer<CompanyInfo, Object>>
+		_attributeSetterBiConsumers;
 
-		private static final Map<String, Function<CompanyInfo, Object>>
-			_attributeGetterFunctions;
+	static {
+		Map<String, Function<CompanyInfo, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<CompanyInfo, Object>>();
+		Map<String, BiConsumer<CompanyInfo, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<CompanyInfo, ?>>();
 
-		static {
-			Map<String, Function<CompanyInfo, Object>>
-				attributeGetterFunctions =
-					new LinkedHashMap<String, Function<CompanyInfo, Object>>();
+		attributeGetterFunctions.put(
+			"mvccVersion", CompanyInfo::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CompanyInfo, Long>)CompanyInfo::setMvccVersion);
+		attributeGetterFunctions.put(
+			"companyInfoId", CompanyInfo::getCompanyInfoId);
+		attributeSetterBiConsumers.put(
+			"companyInfoId",
+			(BiConsumer<CompanyInfo, Long>)CompanyInfo::setCompanyInfoId);
+		attributeGetterFunctions.put("companyId", CompanyInfo::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<CompanyInfo, Long>)CompanyInfo::setCompanyId);
+		attributeGetterFunctions.put("key", CompanyInfo::getKey);
+		attributeSetterBiConsumers.put(
+			"key", (BiConsumer<CompanyInfo, String>)CompanyInfo::setKey);
 
-			attributeGetterFunctions.put(
-				"mvccVersion", CompanyInfo::getMvccVersion);
-			attributeGetterFunctions.put(
-				"companyInfoId", CompanyInfo::getCompanyInfoId);
-			attributeGetterFunctions.put(
-				"companyId", CompanyInfo::getCompanyId);
-			attributeGetterFunctions.put("key", CompanyInfo::getKey);
-
-			_attributeGetterFunctions = Collections.unmodifiableMap(
-				attributeGetterFunctions);
-		}
-
-	}
-
-	private static class AttributeSetterBiConsumersHolder {
-
-		private static final Map<String, BiConsumer<CompanyInfo, Object>>
-			_attributeSetterBiConsumers;
-
-		static {
-			Map<String, BiConsumer<CompanyInfo, ?>> attributeSetterBiConsumers =
-				new LinkedHashMap<String, BiConsumer<CompanyInfo, ?>>();
-
-			attributeSetterBiConsumers.put(
-				"mvccVersion",
-				(BiConsumer<CompanyInfo, Long>)CompanyInfo::setMvccVersion);
-			attributeSetterBiConsumers.put(
-				"companyInfoId",
-				(BiConsumer<CompanyInfo, Long>)CompanyInfo::setCompanyInfoId);
-			attributeSetterBiConsumers.put(
-				"companyId",
-				(BiConsumer<CompanyInfo, Long>)CompanyInfo::setCompanyId);
-			attributeSetterBiConsumers.put(
-				"key", (BiConsumer<CompanyInfo, String>)CompanyInfo::setKey);
-
-			_attributeSetterBiConsumers = Collections.unmodifiableMap(
-				(Map)attributeSetterBiConsumers);
-		}
-
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap(
+			(Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -575,9 +559,8 @@ public class CompanyInfoModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<CompanyInfo, Object> function =
-			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
-				columnName);
+		Function<CompanyInfo, Object> function = _attributeGetterFunctions.get(
+			columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(
