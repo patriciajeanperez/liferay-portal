@@ -61,6 +61,8 @@ definition {
 
 	@priority = 4
 	test ApproveMessageBoardsThreadPG {
+		property portal.acceptance = "pat";
+
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		MessageboardsThread.addWithWorkflowPG(
@@ -256,6 +258,7 @@ definition {
 
 	@priority = 4
 	test RejectMessageBoardsThreadPG {
+		property portal.acceptance = "pat";
 		property test.name.skip.portal.instance = "WorkflowadminPGMessageboards#RejectMessageBoardsThreadPG";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
