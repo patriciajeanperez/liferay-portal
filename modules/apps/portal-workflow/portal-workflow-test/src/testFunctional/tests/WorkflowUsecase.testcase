@@ -294,10 +294,9 @@ definition {
 		Workflow.viewCompletedTasksTaskNotPresentCP(workflowAssetTitle = "Blogs Entry Title - Site Name");
 	}
 
-	@ignore = "true"
 	@priority = 5
 	test AddDDLRecordWithDoubleApproverDefinition {
-		property portal.acceptance = "true";
+		property portal.acceptance = "runkaleo";
 		property test.name.skip.portal.instance = "WorkflowUsecase#AddDDLRecordWithDoubleApproverDefinition";
 		property testray.component.names = "Training";
 
@@ -925,9 +924,9 @@ definition {
 		Notifications.viewBadgeCount(notificationCount = 0);
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test ViewInvalidDefinitionAlert {
+		property portal.acceptance = "runkaleo";
 		property test.name.skip.portal.instance = "WorkflowUsecase#ViewInvalidDefinitionAlert";
 
 		ApplicationsMenu.gotoPortlet(
