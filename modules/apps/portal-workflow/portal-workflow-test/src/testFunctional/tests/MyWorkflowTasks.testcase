@@ -53,6 +53,7 @@ definition {
 	@priority = 5
 	test AccountUserCanApproveTask {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "patty";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
