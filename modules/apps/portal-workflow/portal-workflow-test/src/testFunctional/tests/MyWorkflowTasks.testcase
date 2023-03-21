@@ -136,8 +136,6 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Order",
 			workflowAssetType = "Commerce Order",
