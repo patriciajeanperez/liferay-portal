@@ -52,54 +52,32 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role type can Approve the task"
 	@priority = 5
 	test AccountUserCanApproveTask {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "MyWorkflowTasks#AccountUserCanApproveTask";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		Account.openAccountsAdmin();
-
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Test",
 			accountEntryType = "Business");
 
-		Refresh();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Test");
-
-		Account.addNewUserToBusinessAccount(
-			accountName = "Test",
-			assigneeName = "userfn",
+		JSONAccountEntryUser.addAccountEntryUser(
+			accountEntryName = "Test",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Account.gotoAssigneeTab(assigneeTab = "Roles");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Assign Users",
-			rowEntry = "Account Administrator");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(
-			key_title = "Assign Users to Account Administrator",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Search.searchCP(searchTerm = "userfn");
-
-		Check(
-			key_tableEntry = "userfn",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Assign");
-
-		Alert.viewSuccessMessage();
+		JSONAccountRole.associateUser(
+			accountEntryName = "Test",
+			accountRole = "Account Administrator",
+			userEmailAddress = "userea@liferay.com");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
