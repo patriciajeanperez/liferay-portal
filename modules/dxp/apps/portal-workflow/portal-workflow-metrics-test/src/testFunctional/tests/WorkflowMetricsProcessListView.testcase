@@ -55,6 +55,7 @@ definition {
 	@description = "LPS-86638 - Verify that the pagination button indicates the selected page, even when there is only 1 page"
 	@priority = 3
 	test PaginationButtonIndicatesSelectedPage {
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationButtonIndicatesSelectedPage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -109,6 +110,7 @@ definition {
 	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"
 	@priority = 3
 	test PaginationFollowsAscDescSequence {
+		property portal.acceptance = "patty";
 		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#PaginationFollowsAscDescSequence";
 
 		ApplicationsMenu.gotoPortlet(
