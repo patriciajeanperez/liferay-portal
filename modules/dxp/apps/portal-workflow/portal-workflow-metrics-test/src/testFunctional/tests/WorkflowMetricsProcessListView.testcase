@@ -103,7 +103,7 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 1);
+		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
 	}
 
 	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"
@@ -157,13 +157,13 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
+		Pagination.changePagination(itemsPerPage = 4);
 
-		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 1);
+		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
 
-		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 2);
+		Click(locator1 = "Pagination#NEXT_LINK");
 
-		WorkflowMetricsProcessListView.viewResults(results = "Showing 1 to 4 of 5 entries.");
+		Pagination.viewResults(results = "Showing 4 to 5 of 5 entries.");
 	}
 
 	@description = "LPS-86638 - Verify that the pagination component is displayed when the table has 5 items or more"
