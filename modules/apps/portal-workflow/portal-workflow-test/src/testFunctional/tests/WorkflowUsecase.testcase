@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 5
 	test AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
