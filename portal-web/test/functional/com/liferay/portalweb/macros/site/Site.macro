@@ -1629,6 +1629,10 @@ definition {
 			locator1 = "Home#PAGE",
 			value1 = ${pageName});
 
+		if (contains("${sitePageURL}", "080") && !(contains("${sitePageURL}", "/liferay"))) {
+			var sitePageURL = StringUtil.replace("${sitePageURL}", "080", "8/liferay");
+		}
+
 		AssertLocation(value1 = ${sitePageURL});
 	}
 

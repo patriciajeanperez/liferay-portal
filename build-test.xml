@@ -1855,22 +1855,21 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				<then>
 					<var name="test.url" value="${test.url}/${portal.context}" />
 				</then>
-			</if>
+				<else>
+					<if>
+						<contains string="${test.url}" substring=":8080" />
+						<then>
+							<propertyregex
+								input="${test.url}"
+								property="proxy.url"
+								regexp="(http:\/\/.*)(:[0-9]+)"
+								select="\1"
+							/>
 
-			<get-testcase-property property.name="portal.proxy.path" />
-
-			<if>
-				<isset property="portal.proxy.path" />
-				<then>
-					<propertyregex
-						input="${test.url}"
-						property="proxy.url"
-						regexp="(http:\/\/.*)(:[0-9]+)"
-						select="\1"
-					/>
-
-					<var name="test.url" value="${proxy.url}:88/${portal.proxy.path}" />
-				</then>
+							<var name="test.url" value="${proxy.url}:88/liferay" />
+						</then>
+					</if>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -2253,25 +2252,11 @@ war.path=${app.server.portal.dir}/</echo>
 							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
-						<get-testcase-property property.name="portal.proxy.path" />
-
-						<if>
-							<isset property="portal.proxy.path" />
-							<then>
-								<replace
-									file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-									token="web.server.http.port=88"
-									value="web.server.http.port=${test.app.server.leading.port.number}8"
-								/>
-							</then>
-							<else>
-								<replace
-									file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-									token="web.server.http.port=8080"
-									value="web.server.http.port=${test.app.server.leading.port.number}080"
-								/>
-							</else>
-						</if>
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="web.server.http.port=88"
+							value="web.server.http.port=${test.app.server.leading.port.number}8"
+						/>
 
 						<math
 							datatype="int"
@@ -6975,6 +6960,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<docker-execute container="${browser.host}">
 				ssh -fN -4 -L 88:${ip.address}:88 ${browser.host}
+				ssh -fN -4 -L 98:${ip.address}:98 ${browser.host}
+				ssh -fN -4 -L 108:${ip.address}:108 ${browser.host}
 				ssh -fN -4 -L 8080:${ip.address}:8080 ${browser.host}
 				ssh -fN -4 -L 8082:${ip.address}:8082 ${browser.host}
 				ssh -fN -4 -L 8282:${ip.address}:8282 ${browser.host}
@@ -7437,19 +7424,12 @@ ${docker.start.error}</fail>
 
 									<get-operating-system-property property.name="operating.system.docker.image" />
 									<get-testcase-property property.name="portal.context" />
-									<get-testcase-property property.name="portal.proxy.path" />
 
 									<if>
 										<isset property="portal.context" />
 										<then>
 											<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 										</then>
-										<elseif>
-											<isset property="portal.proxy.path" />
-											<then>
-												<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
-											</then>
-										</elseif>
 										<elseif>
 											<and>
 												<isset property="env.JENKINS_HOME" />
@@ -7462,7 +7442,7 @@ ${docker.start.error}</fail>
 											</then>
 										</elseif>
 										<else>
-											<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+											<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/liferay/web/guest" />
 										</else>
 									</if>
 
@@ -8035,19 +8015,12 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-testcase-property property.name="portal.context" />
-			<get-testcase-property property.name="portal.proxy.path" />
 
 			<if>
 				<isset property="portal.context" />
 				<then>
 					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 				</then>
-				<elseif>
-					<isset property="portal.proxy.path" />
-					<then>
-						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/${portal.proxy.path}/web/guest" />
-					</then>
-				</elseif>
 				<elseif>
 					<isset property="operating.system.docker.image" />
 					<then>
@@ -8057,7 +8030,7 @@ war.path=${app.server.portal.dir}/</echo>
 					</then>
 				</elseif>
 				<else>
-					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}8/liferay/web/guest" />
 				</else>
 			</if>
 
@@ -11554,14 +11527,16 @@ session.cookie.use.full.hostname=true
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.proxy.path" />
+		<get-testcase-property property.name="portal.context" />
 
 		<if>
-			<isset property="portal.proxy.path" />
+			<not>
+				<isset property="portal.context" />
+			</not>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
-portal.proxy.path=/${portal.proxy.path}</echo>
+portal.proxy.path=/liferay</echo>
 
 				<replace
 					file="portal-impl/src/portal-ext.properties"
@@ -12448,7 +12423,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 			<else>
 				<echo append="true" file="${test.ext.properties.file}">
-					default.portal.url=http://localhost:8080
+					default.portal.url=http://localhost:88/liferay
 					portal.hostname=localhost
 				</echo>
 			</else>
@@ -14708,7 +14683,9 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}
 
-mail.send.blacklist=</echo>
+mail.send.blacklist=
+
+portal.proxy.path=/liferay</echo>
 
 				<delete failonerror="false" file="${app.server.classes.portal.dir}/system-ext.properties" />
 			</then>
@@ -14775,17 +14752,19 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.proxy.path" />
+		<get-testcase-property property.name="portal.context" />
 
 		<if>
-			<isset property="portal.proxy.path" />
+			<not>
+				<isset property="portal.context" />
+			</not>
 			<then>
 				<ant antfile="build-test-httpd.xml" target="stop-httpd-server" />
 
 				<ant antfile="build-test-httpd.xml" target="clean-up-httpd-server" />
 
 				<ant antfile="build-test-httpd.xml" target="configure-httpd-server">
-					<property name="portal.proxy.path" value="${portal.proxy.path}" />
+					<property name="portal.proxy.path" value="liferay" />
 				</ant>
 
 				<ant antfile="build-test-httpd.xml" target="start-httpd-server" />
@@ -14937,17 +14916,6 @@ mail.send.blacklist=</echo>
 			<else>
 				<antcall inheritAll="false" target="rebuild-database" />
 			</else>
-		</if>
-
-		<get-testcase-property property.name="skip.clean-app-server-deploy-dir" />
-
-		<if>
-			<not>
-				<equals arg1="${skip.clean-app-server-deploy-dir}" arg2="true" />
-			</not>
-			<then>
-				<antcall target="clean-app-server-deploy-dir" />
-			</then>
 		</if>
 
 		<get-testcase-property property.name="apacheds.blank.user.password.enabled" />
@@ -15572,10 +15540,12 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.proxy.path" />
+		<get-testcase-property property.name="portal.context" />
 
 		<if>
-			<isset property="portal.proxy.path" />
+			<not>
+				<isset property="portal.context" />
+			</not>
 			<then>
 				<ant antfile="build-test-httpd.xml" target="stop-httpd-server" />
 

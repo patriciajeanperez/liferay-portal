@@ -877,7 +877,7 @@ definition {
 			License.deployLicenseFile();
 		}
 
-		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		Open.openInTheNewTab(locator1 = "http://localhost:88/liferay");
 
 		takeScreenshot();
 

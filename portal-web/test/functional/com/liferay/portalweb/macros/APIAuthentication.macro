@@ -5,6 +5,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		if (${portlet} == "Auto Login") {
 			var portletId = "com.liferay.portal.security.auto.login.internal.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration";
 		}

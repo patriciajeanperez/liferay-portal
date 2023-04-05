@@ -545,6 +545,8 @@ definition {
 
 	@description = "Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
 	macro executeIdPInitiatedSSO {
+		var idpInitiatedSsourl = StringUtil.replace("${idpInitiatedSsourl}", "080", "8/liferay");
+
 		if (${autoLogin} == "true") {
 			Open.openNoError(locator1 = ${idpInitiatedSsourl});
 
@@ -558,6 +560,10 @@ definition {
 		}
 
 		WaitForPageLoad();
+
+		if (contains("${spURL}", "080") && !(contains("${spURL}", "/liferay"))) {
+			var spURL = StringUtil.replace("${spURL}", "080", "8/liferay");
+		}
 
 		AssertLocation.assertPartialLocation(value1 = ${spURL});
 	}
@@ -587,6 +593,10 @@ definition {
 		}
 
 		WaitForPageLoad();
+
+		if (contains("${spURL}", "080") && !(contains("${spURL}", "/liferay"))) {
+			var spURL = StringUtil.replace("${spURL}", "080", "8/liferay");
+		}
 
 		AssertLocation.assertPartialLocation(value1 = ${spURL});
 	}
@@ -636,6 +646,10 @@ definition {
 		var userEmailAddress = ${newUserEmailAddress};
 		var creatorEmailAddress = ${creatorEmailAddress};
 		var creatorPassword = ${creatorPassword};
+
+		if (!(contains(${specificURL}, "/liferay"))) {
+			var specificURL = StringUtil.replace(${specificURL}, "080", "8/liferay");
+		}
 
 		// Get Company ID
 

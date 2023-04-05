@@ -106,13 +106,27 @@ Listen ${test.app.server.leading.port.number}8]]></echo>
 			</then>
 		</if>
 
+		<echo append="true" file="${apache.http.conf.file}">
+		
+TimeOut 2400
+ProxyTimeout 2400
+ProxyBadHeader Ignore</echo>
+
 		<print-file file.name="${apache.http.conf.file}" />
 	</target>
 
 	<target name="start-httpd-server">
-		<exec executable="systemctl">
+		<exec executable="systemctl" output="${liferay.home}/start-httpd.txt">
 			<arg line="start httpd.service" />
 		</exec>
+
+		<print-file file.name="${liferay.home}/start-httpd.txt" />
+
+		<exec executable="systemctl" output="${liferay.home}/status-httpd.txt">
+			<arg line="status httpd.service" />
+		</exec>
+
+		<print-file file.name="${liferay.home}/status-httpd.txt" />
 	</target>
 
 	<target name="stop-httpd-server">

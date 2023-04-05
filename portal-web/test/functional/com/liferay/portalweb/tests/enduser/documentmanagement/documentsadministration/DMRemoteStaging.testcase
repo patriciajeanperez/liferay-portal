@@ -73,7 +73,7 @@ definition {
 
 		Navigator.gotoLiveView(remoteStaging = "true");
 
-		AssertLocation.assertPartialLocation(value1 = "http://localhost:9080/group/remote-site");
+		AssertLocation.assertPartialLocation(value1 = "http://localhost:98/liferay/group/remote-site");
 	}
 
 	@description = "This test covers LPS-154433. It ensures that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."

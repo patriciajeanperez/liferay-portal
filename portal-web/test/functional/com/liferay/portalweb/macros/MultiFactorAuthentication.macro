@@ -223,6 +223,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		if (!(isSet(portlet))) {
 			var portlet = "Email OTP";
 		}
@@ -336,6 +340,10 @@ definition {
 			AssertElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 		else {
+			if (contains(${portalURL}, "080") && !(contains(${portalURL}, "/liferay"))) {
+				var portalURL = StringUtil.replace(${portalURL}, "080", "8/liferay");
+			}
+
 			var bodySpecificText = MockMock.getBodySpecificText(
 				asset = "${portalURL}: Your One-Time Password",
 				content = "Your one-time password is:",

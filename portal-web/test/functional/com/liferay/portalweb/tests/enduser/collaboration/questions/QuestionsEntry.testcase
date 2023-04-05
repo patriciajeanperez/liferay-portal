@@ -1958,7 +1958,7 @@ definition {
 			questionTabField = "Questions",
 			questionTitle = "Title AddQuestion");
 
-		AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category/title-addquestion");
+		AssertLocation(value1 = "http://localhost:88/liferay/web/guest/questions-page/questions/questions-test-category/title-addquestion");
 	}
 
 	@description = "Validate if the Activity tab appears"

@@ -191,11 +191,11 @@ definition {
 
 		User.firstLoginPG();
 
-		AssertLocation(value1 = "http://localhost:8080/fr/web/guest?SM_USER=test@liferay.com");
+		AssertLocation(value1 = "http://localhost:88/liferay/fr/web/guest?SM_USER=test@liferay.com");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest");
 
-		AssertLocation(value1 = "http://localhost:8080/fr/web/guest");
+		AssertLocation(value1 = "http://localhost:88/liferay/fr/web/guest");
 	}
 
 	@priority = 4
@@ -335,15 +335,15 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/site-page");
 
-		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:8080']");
+		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:88/liferay']");
 
-		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
+		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:88/liferay']");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:8080']");
+		AssertElementPresent(locator1 = "//link[@hreflang='x-default'][@href='http://www.able.com:88/liferay']");
 
-		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:8080']");
+		AssertElementPresent(locator1 = "//link[@hreflang='en-US'][@href='http://www.able.com:88/liferay']");
 	}
 
 	@priority = 4

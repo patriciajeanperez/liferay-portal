@@ -774,7 +774,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${groupId}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:98/liferay/documents/${groupId}/0/Document_2.jpg''');
 
 		User.loginPG(
 			nodePort = 8080,
@@ -1957,7 +1957,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${groupId}/0/Document_1.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:98/liferay/documents/${groupId}/0/Document_1.jpg''');
 
 		User.loginPG(
 			nodePort = 8080,
@@ -2009,7 +2009,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:9080/web/remote-site/test-page");
 
-		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:9080/documents/${groupId}/0/Document_2.jpg''');
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="http://localhost:98/liferay/documents/${groupId}/0/Document_2.jpg''');
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."

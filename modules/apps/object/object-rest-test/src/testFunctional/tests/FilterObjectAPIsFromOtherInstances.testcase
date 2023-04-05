@@ -64,7 +64,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},
-				expected = "http://www.baker.com:8080/o/c/subjects/");
+				expected = "http://www.baker.com:88/liferay/o/c/subjects/");
 		}
 
 		task ("And Then the information of www.baker.com:8080/o/c/univeristies is not found") {
@@ -94,7 +94,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},
-				expected = "http://www.able.com:8080/o/c/universities/");
+				expected = "http://www.able.com:88/liferay/o/c/universities/");
 		}
 
 		task ("And Then the information of www.able.com:8080/o/c/subjects is not found") {

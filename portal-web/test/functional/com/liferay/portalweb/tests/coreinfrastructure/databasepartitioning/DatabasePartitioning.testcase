@@ -347,7 +347,7 @@ definition {
 			baseURL = "http://www.baker.com:8080",
 			pageName = "Home");
 
-		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
+		AssertLocation(value1 = "http://www.baker.com:88/liferay/web/guest/home");
 
 		SignOut.signOut();
 
@@ -364,7 +364,7 @@ definition {
 			baseURL = "http://www.baker.com:8080",
 			pageName = "Home");
 
-		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
+		AssertLocation(value1 = "http://www.baker.com:88/liferay/web/guest/home");
 	}
 
 	@priority = 4

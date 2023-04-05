@@ -34,9 +34,9 @@ definition {
 		}
 
 		task ("Assert that audit information is present in the logs") {
-			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+			Navigator.openURL(baseURL = "http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
-			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
+			var curl = '''http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
 
 			var runGet = JSONCurlUtil.get(${curl});
 
@@ -62,7 +62,7 @@ definition {
 		}
 
 		task ("When: Trigger audit log") {
-			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+			Navigator.openURL(baseURL = "http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 		}
 
 		task ("Then: Assert the email address is present in the audit log context in a human-readable format") {
@@ -81,11 +81,11 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		task ("Assert that console outputs a different X-Request-ID than invalid inputted X-Request-ID") {
-			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+			Navigator.openURL(baseURL = "http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
 			var invalidXRequestId = "invalidXRID";
 
-			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
+			var curl = '''http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${invalidXRequestId}' ''';
 
 			var userId = JSONCurlUtil.get(${curl});
 
@@ -114,7 +114,7 @@ definition {
 		task ("When: Trigger audit log") {
 			User.logoutPG();
 
-			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+			Navigator.openURL(baseURL = "http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 		}
 
 		task ("Then: Assert that sessionId is not present in the audit log context") {
@@ -141,7 +141,7 @@ definition {
 		task ("And: Trigger audit log and assert sessionId is not present in audit log context") {
 			User.logoutPG();
 
-			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+			Navigator.openURL(baseURL = "http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
 			AssertConsoleTextNotPresent(value1 = "AuditLogContext.sessionId");
 		}
@@ -172,11 +172,11 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		task ("Assert that console outputs the same X-Request-ID as inputted X-Request-ID") {
-			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
+			Navigator.openURL(baseURL = "http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
 			var validXRequestId = StringUtil.randomString(40);
 
-			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
+			var curl = '''http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
 
 			var userId = JSONCurlUtil.get(${curl});
 
@@ -205,7 +205,7 @@ definition {
 		task ("Verify that console outputs the correct clientIP when reading of the X-Forwarded-For http header") {
 			var ipAddress = PropsUtil.get("ip.address");
 
-			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Forwarded-For: ${ipAddress}' ''';
+			var curl = '''http://localhost:88/liferay/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Forwarded-For: ${ipAddress}' ''';
 
 			echo("## * Read of the X-Forwarded-For http header:");
 

@@ -60,6 +60,10 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		if (contains(${portalURL}, "080") && !(contains(${portalURL}, "/liferay"))) {
+			var portalURL = StringUtil.replace(${portalURL}, "080", "8/liferay");
+		}
+
 		if (!(isSet(creatorEmailAddress))) {
 			if (${authenticationMethod} == "By Screen Name") {
 				if (!(isSet(userScreenName))) {
@@ -167,7 +171,11 @@ definition {
 
 		var portalInstanceName = StringUtil.replace(${portalURL}, "http://", "");
 
-		var portalInstanceName = StringUtil.replace(${portalInstanceName}, ":8080", "");
+		var portalInstanceName = StringUtil.extractFirst(${portalInstanceName}, ":");
+
+		if (contains(${portalInstanceName}, "/liferay")) {
+			var portalInstanceName = StringUtil.replace(${portalInstanceName}, "/liferay", "");
+		}
 
 		return ${portalInstanceName};
 	}

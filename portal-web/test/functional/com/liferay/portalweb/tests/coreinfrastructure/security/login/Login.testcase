@@ -30,7 +30,7 @@ definition {
 		}
 
 		task ("Assert url value") {
-			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
+			AssertLocation(value1 = "http://localhost:88/liferay/web/guest/landing");
 		}
 
 		task ("Assert no errors occurred in the console") {
@@ -300,7 +300,7 @@ definition {
 		}
 
 		task ("Assert url value") {
-			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
+			AssertLocation(value1 = "http://localhost:88/liferay/web/guest/landing");
 		}
 	}
 

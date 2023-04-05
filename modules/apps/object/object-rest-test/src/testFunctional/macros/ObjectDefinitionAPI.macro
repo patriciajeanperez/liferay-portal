@@ -809,10 +809,10 @@ definition {
 
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
-				var port = 8080;
+				var port = 88;
 			}
 
-			var portalURL = "http://${virtualHost}:${port}";
+			var portalURL = "http://${virtualHost}:${port}/liferay";
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();

@@ -513,7 +513,7 @@ definition {
 		task ("View private page in virtual host") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
 
-			AssertLocation(value1 = "http://www.able.com:8080/test-private-page");
+			AssertLocation(value1 = "http://www.able.com:88/liferay/test-private-page");
 		}
 	}
 

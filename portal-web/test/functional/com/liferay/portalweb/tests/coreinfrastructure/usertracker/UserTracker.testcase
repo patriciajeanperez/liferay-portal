@@ -31,7 +31,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Monitoring");
 
-		UserTracker.viewAccessedURL(friendlyURL = "http://localhost:8080/web/guest/home");
+		UserTracker.viewAccessedURL(friendlyURL = "http://localhost:88/liferay/web/guest/home");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -55,7 +55,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Monitoring");
 
-		UserTracker.viewAccessedURL(friendlyURL = "http://www.able.com:8080/web/guest/home");
+		UserTracker.viewAccessedURL(friendlyURL = "http://www.able.com:88/liferay/web/guest/home");
 	}
 
 	@priority = 4

@@ -214,7 +214,9 @@ definition {
 	}
 
 	macro openNodePort {
-		Open(locator1 = "http://localhost:${nodePort}");
+		var nodePort = StringUtil.replace(${nodePort}, "080", "8");
+
+		Open(locator1 = "http://localhost:${nodePort}/liferay");
 	}
 
 	macro openPrivateSitePageURL {
@@ -230,6 +232,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		Open(locator1 = "${baseURL}/group/${siteNameURL}/${pageNameURL}");
 	}
 
@@ -241,6 +247,10 @@ definition {
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
 		}
 
 		Open(locator1 = "${baseURL}/group/${siteNameURL}");
@@ -256,6 +266,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		Open(locator1 = "${baseURL}/group/${siteNameURL}-staging");
 	}
 
@@ -264,6 +278,10 @@ definition {
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
 		}
 
 		Open(locator1 = "${baseURL}/group/guest");
@@ -279,7 +297,11 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
+		var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
 
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
@@ -296,6 +318,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteNameURL}-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
 	}
 
@@ -309,11 +335,21 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		Open(locator1 = "${baseURL}/web/${siteNameURL}");
 	}
 
 	macro openSpecificURL {
-		Open(locator1 = ${url});
+		if (contains(${url}, "080") && !(contains(${url}, "/liferay"))) {
+			if (!(contains(${url}, "osbfarofrontend"))) {
+				var url = StringUtil.replace(${url}, "080", "8/liferay");
+			}
+		}
+
+		Open(locator1 = "${url}");
 
 		Alert.confirmSecurity(domain = ${domain});
 	}
@@ -326,6 +362,10 @@ definition {
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
 		}
 
 		if (isSet(defaultSite)) {
@@ -365,6 +405,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+		}
+
 		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
 	}
 
@@ -377,12 +421,22 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			if (!(contains(${baseURL}, "osbfarofrontend"))) {
+				var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
+			}
+		}
+
 		Open(locator1 = "${baseURL}/web/guest/home");
 	}
 
 	macro openWithAppendToBaseURL {
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (contains(${baseURL}, "080") && !(contains(${baseURL}, "/liferay"))) {
+			var baseURL = StringUtil.replace(${baseURL}, "080", "8/liferay");
 		}
 
 		Open(locator1 = "${baseURL}/${urlAppend}");

@@ -300,6 +300,10 @@
 			<contains>Skip com_liferay_document_library_web_portlet_DLPortlet</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-170627 - temporarily ignore until fixed">
+			<contains>its content type is not CSS or JavaScript</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-170903 - temporarily ignore until fixed">
 			<contains>SAX Security Manager could not be setup</contains>
 			<matches></matches>

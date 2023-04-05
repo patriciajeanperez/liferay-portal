@@ -732,6 +732,10 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (contains("${baseURL}", "080") && !(contains("${baseURL}", "/liferay"))) {
+			var baseURL = StringUtil.replace("${baseURL}", "080", "8/liferay");
+		}
+
 		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 

@@ -38,7 +38,7 @@ definition {
 			locator1 = "//body",
 			value1 = "Unknown Virtual Hostname: www.able.com");
 
-		AssertLocation(value1 = "http://www.able.com:8080/");
+		AssertLocation(value1 = "http://www.able.com:88/liferay/");
 
 		AssertConsoleTextPresent(value1 = "NoSuchVirtualHostException");
 	}
@@ -60,7 +60,7 @@ definition {
 			locator1 = "//body",
 			value1 = "Unknown Virtual Hostname: www.able.com");
 
-		AssertLocation(value1 = "http://www.able.com:8080/web/guest");
+		AssertLocation(value1 = "http://www.able.com:88/liferay/web/guest");
 
 		Smoke.viewWelcomeContentPage();
 	}

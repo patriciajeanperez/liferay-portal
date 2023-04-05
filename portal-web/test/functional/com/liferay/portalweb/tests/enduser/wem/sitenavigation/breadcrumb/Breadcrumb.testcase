@@ -493,7 +493,7 @@ definition {
 				pageName = "Test Page Name",
 				url = "http://127.0.0.1:8080/web/test-site-name");
 
-			AssertLocation(value1 = "http://127.0.0.1:8080/web/test-site-name");
+			AssertLocation(value1 = "http://127.0.0.1:88/liferay/web/test-site-name");
 		}
 
 		task ("View the displayed content in Breadcrumb") {
