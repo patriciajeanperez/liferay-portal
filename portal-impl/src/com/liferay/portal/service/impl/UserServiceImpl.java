@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
@@ -776,8 +777,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+			userGroupIds, sendEmail, serviceContext);
 
 		checkMembership(
 			new long[] {user.getUserId()}, groupIds, organizationIds, roleIds,
@@ -986,8 +988,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
+			userGroupIds, sendEmail, serviceContext);
 
 		checkMembership(
 			new long[] {user.getUserId()}, groupIds, organizationIds, roleIds,
@@ -3362,9 +3365,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		boolean anonymousUser = ParamUtil.getBoolean(
 			serviceContext, "anonymousUser");
 
-		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+		long guestUserId = userLocalService.getGuestUserId(companyId);
 
-		if (((creatorUserId != 0) && (creatorUserId != defaultUserId)) ||
+		if (((creatorUserId != 0) && (creatorUserId != guestUserId)) ||
 			(!company.isStrangers() && !anonymousUser)) {
 
 			PermissionChecker permissionChecker = getPermissionChecker();
@@ -3381,7 +3384,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		if (((creatorUserId == 0) || (creatorUserId == defaultUserId)) &&
+		if (((creatorUserId == 0) || (creatorUserId == guestUserId)) &&
 			!company.isStrangersWithMx() &&
 			company.hasCompanyMx(emailAddress)) {
 

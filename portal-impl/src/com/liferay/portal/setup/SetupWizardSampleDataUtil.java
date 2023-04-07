@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
@@ -83,12 +84,12 @@ public class SetupWizardSampleDataUtil {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
-		User defaultUser = company.getDefaultUser();
+		User guestUser = company.getGuestUser();
 
 		company = updateCompany(
 			company, companyName,
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-			defaultUser.getTimeZoneId());
+			guestUser.getTimeZoneId());
 
 		User adminUser = updateAdminUser(
 			company, LocaleUtil.getDefault(),
@@ -98,7 +99,7 @@ public class SetupWizardSampleDataUtil {
 
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
-				defaultUser.getUserId(),
+				guestUser.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 				company.getLegalName(), true);
 
@@ -106,7 +107,7 @@ public class SetupWizardSampleDataUtil {
 			organization.getGroupId(), "/main");
 
 		Layout extranetLayout = LayoutLocalServiceUtil.addLayout(
-			defaultUser.getUserId(), organization.getGroupId(), false,
+			guestUser.getUserId(), organization.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			company.getLegalName() + " Extranet", null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/extranet",
@@ -117,7 +118,7 @@ public class SetupWizardSampleDataUtil {
 			extranetLayout.getTypeSettings());
 
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
-			defaultUser.getUserId(), organization.getGroupId(), true,
+			guestUser.getUserId(), organization.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			company.getLegalName() + " Intranet", null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/intranet",
@@ -130,7 +131,7 @@ public class SetupWizardSampleDataUtil {
 		OrganizationLocalServiceUtil.addUserOrganization(
 			adminUser.getUserId(), organization);
 
-		addOrganizations(companyName, defaultUser, organization);
+		addOrganizations(companyName, guestUser, organization);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Finished adding data in " + stopWatch.getTime() + " ms");
@@ -227,8 +228,7 @@ public class SetupWizardSampleDataUtil {
 	}
 
 	protected static void addOrganizations(
-			String companyName, User defaultUser,
-			Organization parentOrganization)
+			String companyName, User guestUser, Organization parentOrganization)
 		throws Exception {
 
 		for (Object[] organizationArray : _ORGANIZATION_ARRAYS) {
@@ -253,7 +253,7 @@ public class SetupWizardSampleDataUtil {
 
 			Organization organization =
 				OrganizationLocalServiceUtil.addOrganization(
-					defaultUser.getUserId(),
+					guestUser.getUserId(),
 					parentOrganization.getOrganizationId(), name, type,
 					regionId, countryId,
 					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
@@ -279,12 +279,12 @@ public class SetupWizardSampleDataUtil {
 			for (int i = 1; i <= 10; i++) {
 				StringBundler sb = new StringBundler(5);
 
-				String defaultUserEmailAddress = defaultUser.getEmailAddress();
+				String guestUserEmailAddress = guestUser.getEmailAddress();
 
-				String[] defaultUserEmailAddressParts =
-					defaultUserEmailAddress.split(StringPool.AT);
+				String[] guestUserEmailAddressParts =
+					guestUserEmailAddress.split(StringPool.AT);
 
-				sb.append(defaultUserEmailAddressParts[0]);
+				sb.append(guestUserEmailAddressParts[0]);
 
 				sb.append(StringPool.PERIOD);
 				sb.append(organizationPrefix);
@@ -294,17 +294,16 @@ public class SetupWizardSampleDataUtil {
 				String screenName = sb.toString();
 
 				String emailAddress =
-					screenName + StringPool.AT +
-						defaultUserEmailAddressParts[1];
+					screenName + StringPool.AT + guestUserEmailAddressParts[1];
 
 				String lastName = organizationPrefix + StringPool.SPACE + i;
 
 				User user = UserLocalServiceUtil.addUser(
-					0, defaultUser.getCompanyId(), false, "test", "test", false,
+					0, guestUser.getCompanyId(), false, "test", "test", false,
 					screenName, emailAddress, LocaleUtil.getDefault(), "Test",
 					null, lastName, 0, 0, true, Calendar.JANUARY, 1, 1970, null,
-					groupIds, organizationIds, null, null, false,
-					new ServiceContext());
+					UserConstants.TYPE_REGULAR, groupIds, organizationIds, null,
+					null, false, new ServiceContext());
 
 				user.setPasswordReset(false);
 				user.setAgreedToTermsOfUse(true);

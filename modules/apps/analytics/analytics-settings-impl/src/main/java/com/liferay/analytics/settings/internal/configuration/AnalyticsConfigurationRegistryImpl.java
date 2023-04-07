@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -261,8 +262,8 @@ public class AnalyticsConfigurationRegistryImpl
 			AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN,
 			"analytics.administrator@" + company.getMx(),
 			LocaleUtil.getDefault(), "Analytics", "", "Administrator", 0, 0,
-			true, 0, 1, 1970, "", null, null, new long[] {role.getRoleId()},
-			null, false, new ServiceContext());
+			true, 0, 1, 1970, "", UserConstants.TYPE_REGULAR, null, null,
+			new long[] {role.getRoleId()}, null, false, new ServiceContext());
 
 		_userLocalService.updateUser(user);
 	}
@@ -316,7 +317,7 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 
 		_sapEntryLocalService.addSAPEntry(
-			_userLocalService.getDefaultUserId(companyId), _SAP_ENTRY_OBJECT[1],
+			_userLocalService.getGuestUserId(companyId), _SAP_ENTRY_OBJECT[1],
 			false, true, sapEntryName,
 			Collections.singletonMap(LocaleUtil.getDefault(), sapEntryName),
 			new ServiceContext());
@@ -858,7 +859,7 @@ public class AnalyticsConfigurationRegistryImpl
 					analyticsMessageBuilder.buildJSONString();
 
 				_analyticsMessageLocalService.addAnalyticsMessage(
-					companyId, _userLocalService.getDefaultUserId(companyId),
+					companyId, _userLocalService.getGuestUserId(companyId),
 					analyticsMessageJSON.getBytes(Charset.defaultCharset()));
 			}
 			catch (Exception exception) {
@@ -995,8 +996,6 @@ public class AnalyticsConfigurationRegistryImpl
 			"contactId", "Integer"
 		).put(
 			"createDate", "date"
-		).put(
-			"defaultUser", "boolean"
 		).put(
 			"emailAddress", "Text"
 		).put(
