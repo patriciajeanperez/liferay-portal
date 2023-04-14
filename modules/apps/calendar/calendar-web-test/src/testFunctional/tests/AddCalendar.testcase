@@ -371,7 +371,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-45062."
-	@ignore = "true"
 	@priority = 5
 	test ResizeAddedEventsViaEventBlock {
 		property portal.acceptance = "true";

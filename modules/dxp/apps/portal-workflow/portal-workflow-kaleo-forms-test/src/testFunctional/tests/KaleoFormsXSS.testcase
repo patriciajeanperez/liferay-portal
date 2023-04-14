@@ -52,9 +52,9 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test AddProcess {
+		property portal.acceptance = "runtests";
 		property test.name.skip.portal.instance = "KaleoFormsXSS#AddProcess";
 
 		KaleoFormsAdmin.addFieldSet(

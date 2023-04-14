@@ -567,9 +567,9 @@ definition {
 		PortletEntry.save();
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test ViewEmailNotificationDelivery {
+		property portal.acceptance = "runtests";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 
@@ -641,9 +641,9 @@ definition {
 		Navigator.openSpecificURL(url = ${portalURL});
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test ViewEmailRecipientDelivery {
+		property portal.acceptance = "runtests";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
 

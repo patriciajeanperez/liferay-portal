@@ -296,9 +296,10 @@ definition {
 		KaleoFormsAdmin.viewNoUnpublishedWorkflowDefinitions();
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test DeleteCreateFormViaDDL {
+		property portal.acceptance = "runtests";
+
 		var kfFieldSetName = ${kfFieldSetName};
 		var kfProcessName = "Kaleo Forms Process";
 
@@ -980,9 +981,10 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test EditFieldSetViaAddProcess {
+		property portal.acceptance = "runtests";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
