@@ -91,6 +91,8 @@ definition {
 	@description = "LRQA-72024 - Verify that the user can change the color of the Calendar"
 	@priority = 3
 	test CanChangeCalendarColor {
+		property ci.retries.disabled = "true";
+
 		Calendar.tearDownColor();
 
 		Calendar.changeColor(
@@ -132,6 +134,8 @@ definition {
 	@description = "LRQA-72024 - Verify that the user can hide Events from a specific Calendar"
 	@priority = 3
 	test CanHideEvents {
+		property ci.retries.disabled = "true";
+
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title 1");
