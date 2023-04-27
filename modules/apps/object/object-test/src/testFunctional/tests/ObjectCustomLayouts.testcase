@@ -204,6 +204,8 @@ definition {
 		}
 
 		task ("Then the new entry is saved on the Relationship Tab Parent and the entry is present on Relationship Tab Child") {
+			WaitForPageLoad();
+
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test B",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
