@@ -3109,6 +3109,8 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, Pause instead of due date, the UI will inform SLA Paused sentence next to the SLA name"
 	@priority = 4
 	test WhenSlaIsPausedSlaPausedIsDisplayedInsteadOfDueDate {
+		property portal.acceptance = "runtests";
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -3182,6 +3184,7 @@ definition {
 	@priority = 4
 	test WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer {
 		property ci.retries.disabled = "true";
+		property portal.acceptance = "runtests";
 
 		task ("Given a Single Approver SLA with a pause") {
 			WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
