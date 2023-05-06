@@ -1103,8 +1103,6 @@ definition {
 				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then all entries created show on Select Existing One and the entry selected is saved on the Relationship Tab") {
