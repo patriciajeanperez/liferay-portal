@@ -2,6 +2,7 @@
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.acceptance = "runtests";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Forms";
@@ -80,9 +81,6 @@ definition {
 	test CanSubmitFormEntryAfterUpgrade7010 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10";
 
 		ValidateFormsUpgrade.submitFormEntry7010();
@@ -92,9 +90,6 @@ definition {
 	test CanSubmitFormEntryAfterUpgrade7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		ValidateFormsUpgrade.submitFormEntry();
@@ -104,9 +99,6 @@ definition {
 	test CanSubmitFormEntryAfterUpgrade7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
 		ValidateFormsUpgrade.submitFormEntry();
@@ -116,9 +108,6 @@ definition {
 	test CanSubmitFormEntryAfterUpgrade7310 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 
 		ValidateFormsUpgrade.submitFormEntry7310();
@@ -128,9 +117,6 @@ definition {
 	test UpdateFieldNameToFieldReference7010 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10";
 
 		ValidateFormsUpgrade.viewUpdateFieldNameToFieldReference7010();
@@ -140,9 +126,6 @@ definition {
 	test UpdateFieldNameToFieldReference7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		ValidateFormsUpgrade.viewUpdateFieldNameToFieldReference();
@@ -152,9 +135,6 @@ definition {
 	test UpdateFieldNameToFieldReference7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
 		ValidateFormsUpgrade.viewUpdateFieldNameToFieldReference();
@@ -164,9 +144,6 @@ definition {
 	test UploadFieldKeepsAllFilesAfterUpgrade7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		ValidateFormsUpgrade.viewUploadFormEntry();
@@ -176,9 +153,6 @@ definition {
 	test UploadFieldKeepsAllFilesAfterUpgrade7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
 		ValidateFormsUpgrade.viewUploadFormEntry();
@@ -188,9 +162,6 @@ definition {
 	test UploadFieldKeepsAllFilesAfterUpgrade7310 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 
 		ValidateFormsUpgrade.viewUploadFormEntry();
@@ -200,9 +171,6 @@ definition {
 	test ViewAndDeleteFormEntryAfterUpgrade704 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mariadb,mysql,postgresql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.4";
 
 		ValidateFormsUpgrade.viewAndDeleteFormEntry();
@@ -212,9 +180,6 @@ definition {
 	test ViewAndDeleteFormEntryAfterUpgrade70106 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.6";
 
 		ValidateFormsUpgrade.viewAndDeleteFormEntry();
@@ -224,9 +189,6 @@ definition {
 	test ViewFormEntryAfterUpgrade7010 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10";
 
 		ValidateFormsUpgrade.viewFormEntry7010();
@@ -236,9 +198,6 @@ definition {
 	test ViewFormEntryAfterUpgrade7110 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		ValidateFormsUpgrade.viewFormEntry();
@@ -248,9 +207,6 @@ definition {
 	test ViewFormEntryAfterUpgrade7210 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10";
 
 		ValidateFormsUpgrade.viewFormEntry();
@@ -260,9 +216,6 @@ definition {
 	test ViewFormEntryAfterUpgrade7310 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mysql";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10";
 
 		ValidateFormsUpgrade.viewFormEntry7310();
