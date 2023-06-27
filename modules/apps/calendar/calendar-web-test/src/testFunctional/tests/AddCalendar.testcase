@@ -442,6 +442,8 @@ definition {
 	@description = "LPS-60800, Verify that can save individual calendar permissions."
 	@priority = 3
 	test ViewEntryPermissionsNotDefinedByRolePermissions {
+		property portal.acceptance = "runtests";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
