@@ -468,6 +468,10 @@ definition {
 			key_roleTitle = "site-member",
 			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX");
 
+		ScrollWebElementIntoView(
+			key_text = "Save",
+			locator1 = "Button#ANY");
+
 		PortletEntry.save();
 
 		Navigator.openURL();
