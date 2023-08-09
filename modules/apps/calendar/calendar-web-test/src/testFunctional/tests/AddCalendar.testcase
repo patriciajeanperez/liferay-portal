@@ -470,7 +470,7 @@ definition {
 			key_roleTitle = "site-member",
 			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX");
 
-		ScrollWebElementIntoView(
+		Click.clickNoMouseOverNoWaitForVisible(
 			key_text = "Save",
 			locator1 = "Button#ANY");
 
