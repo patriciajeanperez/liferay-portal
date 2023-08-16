@@ -11,8 +11,8 @@
 
 <tbody>
 <tr>
-	<td>DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS</td>
-	<td>//div[@class='header'][span[contains(text(),'${key_statusName}')]]/following-sibling::div[1]</td>
+	<td>PROCESS_SUMMARY_CARD_VALUE</td>
+	<td>//div[@class='header'][span[contains(text(),'${key_slaStatus}')]]/following-sibling::div[1]</td>
 	<td></td>
 </tr>
 <tr>
