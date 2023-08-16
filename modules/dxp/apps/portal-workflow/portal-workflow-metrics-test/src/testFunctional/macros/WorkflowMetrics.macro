@@ -901,9 +901,7 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 	}
 
-	macro goToWorkflowAllItemsByStatus {
-		var key_status = ${completedItemStatus};
-
+	macro goToWorkflowCompletedItemsByStatus {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = ${workflowProcessName});
 
 		Navigator.gotoNavItem(navItem = "Performance");

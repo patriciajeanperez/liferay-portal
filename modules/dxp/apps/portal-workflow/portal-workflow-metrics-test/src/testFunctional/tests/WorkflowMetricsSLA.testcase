@@ -156,7 +156,7 @@ definition {
 			slaDefinitionName = "Test1",
 			slaDefinitionStart = "Process Begins");
 
-		WorkflowMetrics.goToWorkflowAllItemsByStatus(
+		WorkflowMetrics.goToWorkflowCompletedItemsByStatus(
 			completedItemStatus = "Total Completed",
 			workflowProcessName = "Single Approver");
 
