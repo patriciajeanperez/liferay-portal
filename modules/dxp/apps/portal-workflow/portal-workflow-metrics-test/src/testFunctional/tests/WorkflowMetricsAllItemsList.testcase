@@ -339,7 +339,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
 
@@ -662,7 +664,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Workflow.assertInfoItem(
 			key_assignee = "Unassigned",
@@ -876,7 +880,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Untracked",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
 
@@ -977,7 +983,9 @@ definition {
 		task ("Then the due date should display with a hyphen and the SLA hasn't started counting") {
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-			Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+			Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 			AssertElementPresent(
 				key_columnName = "Due Date",
@@ -1393,7 +1401,9 @@ definition {
 	test FiltersDisplayedWhenReachingPageThroughDashboardTab {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		AssertElementPresent(
 			key_allItemsFilterName = "SLA Status",
@@ -1419,7 +1429,9 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		Click(locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Completed",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		AssertElementPresent(
 			key_allItemsFilterName = "SLA Status",
@@ -1718,7 +1730,9 @@ definition {
 			key_expectedValue = 0,
 			key_status = "OVERDUE");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1753,7 +1767,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		Click(locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Completed",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1799,7 +1815,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1848,7 +1866,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "30")) {
 			Refresh();
@@ -1906,7 +1926,9 @@ definition {
 			key_expectedValue = 0,
 			key_status = "OVERDUE");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -2130,7 +2152,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Untracked",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(
 			key_allItemsFilterName = "Assignee",
@@ -2503,7 +2527,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(
 			key_allItemsFilterName = "Assignee",
@@ -2769,7 +2795,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -2802,7 +2830,9 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Completed Items",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -3036,7 +3066,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		MouseOver.mouseOverNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_DROPDOWN_DISABLED");
 	}

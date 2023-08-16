@@ -446,37 +446,45 @@ definition {
 
 	macro checkCompletedWorkflowValues {
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE",
+			key_slaStatus = "Completed",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_completed});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_OVERDUE_ITEMS_VALUE",
+			key_slaStatus = "Overdue",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_overdue});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_ONTIME_ITEMS_VALUE",
+			key_slaStatus = "On Time",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_ontime});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#PERFORMANCE_TOTAL_UNTRACKED_ITEMS_VALUE",
+			key_slaStatus = "Untracked",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_untracked});
 	}
 
 	macro checkPendingWorkflowValues {
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE",
+			key_slaStatus = "Overdue",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_overdue});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE",
+			key_slaStatus = "On Time",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_ontime});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE",
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_pending});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_VALUE",
+			key_slaStatus = "Untracked",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${key_untracked});
 	}
 
@@ -898,7 +906,9 @@ definition {
 	macro goToWorkflowAllItems {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = ${workflowProcessName});
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 	}
 
 	macro goToWorkflowCompletedItemsByStatus {
@@ -906,7 +916,9 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		Click(locator1 = "WorkflowMetrics#PERFORMANCE_COMPLETED_ITEMS_BY_STATUS");
+		Click(
+			key_slaStatus = "Total Completed",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 	}
 
 	macro goToWorkflowProcessMetrics {
@@ -932,7 +944,9 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Completed",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 	}
 
 	macro goToWorkflowSLASettings {
