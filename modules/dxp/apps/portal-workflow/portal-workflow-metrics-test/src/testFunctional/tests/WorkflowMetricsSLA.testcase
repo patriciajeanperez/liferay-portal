@@ -13,7 +13,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Workflow.openWorkflowMetrics();
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 	}
 
 	tearDown {
@@ -275,10 +275,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
-			Refresh();
-		}
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = 1,
@@ -1354,10 +1350,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
-			Refresh();
-		}
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
