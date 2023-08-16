@@ -264,7 +264,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		PortletEntry.selectAll();
 
@@ -447,7 +449,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
@@ -586,7 +590,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		WorkflowMetrics.goToBulkTransitionSelectTasks();
 

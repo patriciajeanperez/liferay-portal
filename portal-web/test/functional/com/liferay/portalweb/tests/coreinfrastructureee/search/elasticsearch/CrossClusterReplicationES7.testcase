@@ -204,7 +204,8 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE",
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = 0);
 
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Metrics Instances");
@@ -212,7 +213,8 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE",
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = 1);
 	}
 
@@ -388,7 +390,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
@@ -402,7 +406,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+		Click(
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",

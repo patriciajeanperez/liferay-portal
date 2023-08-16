@@ -70,11 +70,17 @@ definition {
 	test PendingItemsCardsAreOverdueOnTimeUntracked {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		AssertElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_TITLE");
+		AssertElementPresent(
+			key_slaStatus = "Overdue",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
-		AssertElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_TITLE");
+		AssertElementPresent(
+			key_slaStatus = "On Time",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
-		AssertElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE");
+		AssertElementPresent(
+			key_slaStatus = "Untracked",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 	}
 
 	@description = "LPS-93410 - Verify that the percentage is displayed in Overdue, On Time and Untracked cards"
@@ -157,16 +163,16 @@ definition {
 			key_expectedValue = 0,
 			key_status = "OVERDUE");
 
-		var overdueItems = selenium.getText("WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE");
-		var onTimeItems = selenium.getText("WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE");
-		var untrackedItems = selenium.getText("WorkflowMetrics#DASHBOARD_TOTAL_UNTRACKED_ITEMS_VALUE");
+		var overdueItems = selenium.getText("//div[@class='header'][span[contains(text(),'Overdue')]]/following-sibling::div[1]");
+		var onTimeItems = selenium.getText("//div[@class='header'][span[contains(text(),'On Time')]]/following-sibling::div[1");
+		var untrackedItems = selenium.getText("//div[@class='header'][span[contains(text(),'Untracked')]]/following-sibling::div[1");
 		var expectedResult = ${overdueItems} + ${onTimeItems};
 
 		var expectedResultTotal = ${expectedResult} + ${untrackedItems};
 
 		AssertTextEquals(
-			key_statusName = "Total Pending",
-			locator1 = "WorkflowMetrics#DASHBOARD_AND_PERFORMANCE_CARD_BY_PROCESS_STATUS",
+			key_slaStatus = "Total Pending",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE",
 			value1 = ${expectedResultTotal});
 	}
 

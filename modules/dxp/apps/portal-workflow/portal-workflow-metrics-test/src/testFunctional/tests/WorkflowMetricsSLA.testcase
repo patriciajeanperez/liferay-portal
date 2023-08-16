@@ -156,9 +156,7 @@ definition {
 			slaDefinitionName = "Test1",
 			slaDefinitionStart = "Process Begins");
 
-		WorkflowMetrics.goToWorkflowCompletedItemsByStatus(
-			completedItemStatus = "Total Completed",
-			workflowProcessName = "Single Approver");
+		WorkflowMetrics.goToWorkflowCompletedItemsByStatus(workflowProcessName = "Single Approver");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -994,7 +992,9 @@ definition {
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-			Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+			Click(
+				key_slaStatus = "Total Pending",
+				locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 			Pause(locator1 = 80000);
 
@@ -1038,8 +1038,8 @@ definition {
 				locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 
 			Click(
-				locator1 = "WorkflowMetrics#NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE",
-				newLanguageCardName = "Total pendente");
+				key_slaStatus = "Total pendente",
+				locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 			WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
