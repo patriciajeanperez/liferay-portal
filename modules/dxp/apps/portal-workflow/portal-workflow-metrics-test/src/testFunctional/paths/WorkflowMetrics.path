@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_CLEAR_ALL</td>
-	<td>//span[contains(text(),'Clear All')] | //button[contains(text(),'Clear All')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GENERIC_TABLE_HEADER</td>
 	<td>//tr//th[text()='${key_columnName}']</td>
 	<td></td>

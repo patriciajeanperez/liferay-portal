@@ -419,7 +419,7 @@ definition {
 			overdueTaskCount = 0,
 			totalPendingTaskCount = 1);
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -446,7 +446,7 @@ definition {
 			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.viewWorkloadByAssignee(
 			assigneeName = "1user user1",
@@ -1370,7 +1370,7 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_NO_RESULTS_FOUND");
 
-		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
 		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
 			avgCompletionTimeValue = "1min",
@@ -1461,7 +1461,7 @@ definition {
 			isNotPresent = "2user user2,3user user3",
 			taskCount = 1);
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "1user");
 
@@ -1477,7 +1477,7 @@ definition {
 			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.viewPerformanceByAssignee(
 			assignee = "1user user1",

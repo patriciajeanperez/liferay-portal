@@ -586,7 +586,7 @@ definition {
 			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
 			value1 = "Review");
 
-		Click(locator1 = "WorkflowMetricsAllItemsListReassignTasks#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
 		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueAssignee(workflowAssignee = "Test Test");
 
@@ -595,7 +595,7 @@ definition {
 			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
 			value1 = "Test Test");
 
-		Click(locator1 = "WorkflowMetricsAllItemsListReassignTasks#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
 		AssertElementNotPresent(
 			key_workflowFilter = "Review",
@@ -692,7 +692,7 @@ definition {
 
 		Button.clickDone();
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
 	}

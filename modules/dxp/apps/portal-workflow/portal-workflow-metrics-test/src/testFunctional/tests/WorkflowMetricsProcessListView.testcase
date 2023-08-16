@@ -40,7 +40,15 @@ definition {
 	@description = "LPS-88573 - Verify that the Clear All option cleans the search results"
 	@priority = 3
 	test ClearAllSearchResults {
-		WorkflowMetricsProcessListView.metricsWorkflowSearchClearAll(workflowSearchName = "Test");
+		Type(
+			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
+			value1 = "Test");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+
+		ManagementBar.clearFilter();
+
+		AssertElementNotPresent(locator1 = "ManagementBar#CLEAR_FILTER");
 	}
 
 	@description = "LPS-88573 - Verify that the specific empty state is displayed when there are no metrics available"

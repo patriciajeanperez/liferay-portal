@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>FILTER_CLEAR_ALL</td>
-	<td>//div[contains(@class, 'modal-content')]//button[contains(@class, 'component-link tbar-link btn btn-sm btn-link')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>METRICS_UPDATE_DUE_DATE_CARD_FILTER_ASSIGNEE</td>
 	<td>//button[contains(@class, 'filter-dropdown-button')][contains(text(), 'Assignee')]</td>
 	<td></td>

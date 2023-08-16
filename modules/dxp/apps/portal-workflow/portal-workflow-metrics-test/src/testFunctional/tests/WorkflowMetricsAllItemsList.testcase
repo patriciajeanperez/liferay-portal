@@ -1380,7 +1380,7 @@ definition {
 			isPresent = "Blogs Entry Title 2",
 			taskName = "Review");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.verifyFiltersFromDashboardNotPresent(isNotPresent = "Pending");
 
@@ -2386,7 +2386,7 @@ definition {
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		AssertElementPresent(
 			key_order = 1,
