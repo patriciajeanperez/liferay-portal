@@ -1969,10 +1969,7 @@ definition {
 		var futureYearShort = StringUtil.substring(${futureYear}, 2, 4);
 
 		task ("Given that the Single Approver workflow is assigned to Blogs Entry") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Workflow",
-				site = ${siteName});
+			Workflow.openWorkflowProcessBuilderConfiguration();
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
@@ -1986,7 +1983,7 @@ definition {
 		}
 
 		task ("and Given that the user assigned the pending Blog Entry to himself for review") {
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+			Workflow.openMyWorkflowTasks();
 
 			Workflow.assignToMeTaskByActions(
 				workflowAssetTitle = "Blogs Entry Title",
