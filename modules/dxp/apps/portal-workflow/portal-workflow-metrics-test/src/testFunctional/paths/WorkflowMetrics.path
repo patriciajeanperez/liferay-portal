@@ -21,61 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_TITLE</td>
-	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_VALUE</td>
-	<td>xpath=(//div[@class='header'][span[contains(text(),'Total Completed')]]/following-sibling::div)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_ONTIME_ITEMS_TITLE</td>
-	<td>//div[@class='header'][span[contains(text(),'On Time')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE</td>
-	<td>xpath=(//div[@class='header'][span[contains(text(),'On Time')]]/following-sibling::div)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_TITLE</td>
-	<td>//div[@class='header'][span[contains(text(),'Overdue')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE</td>
-	<td>xpath=(//div[@class='header'][span[contains(text(),'Overdue')]]/following-sibling::div)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE</td>
-	<td>xpath=(//div[@class='header'][span[contains(text(),'Overdue')]]/following-sibling::div[contains(text(), '0')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
-	<td>//div[@class='header'][span[contains(text(),'Total Pending')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_PENDING_ITEMS_VALUE</td>
-	<td>xpath=(//div[@class='header'][span[contains(text(),'Total Pending')]]/following-sibling::div)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE</td>
-	<td>//div[@class='header'][span[contains(text(),'Untracked')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DASHBOARD_TOTAL_UNTRACKED_ITEMS_VALUE</td>
-	<td>xpath=(//div[@class='header'][span[contains(text(),'Untracked')]]/following-sibling::div)[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_MESSAGE_CUSTOM_RANGE</td>
 	<td>//div[contains(@class,'has-error')]//span[contains(text(), '${key_errorMessage}')]</td>
 	<td></td>
@@ -86,11 +31,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PERFORMANCE_COMPLETED_ITEMS_BY_STATUS</td>
-	<td>//div[@class='header'][span[contains(text(),'${key_status}')]]/following-sibling::div[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GENERIC_TABLE_HEADER</td>
 	<td>//tr//th[text()='${key_columnName}']</td>
 	<td></td>
@@ -98,26 +38,6 @@
 <tr>
 	<td>GENERIC_TABLE_HEADER_WITH_ORDER_OPTION</td>
 	<td>//tr//span[text()='${key_columnName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERFORMANCE_TOTAL_COMPLETED_ITEMS_VALUE</td>
-	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]/following-sibling::div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERFORMANCE_TOTAL_OVERDUE_ITEMS_VALUE</td>
-	<td>//div[@class='header'][span[contains(text(),'Overdue')]]//..//div[@class='body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERFORMANCE_TOTAL_ONTIME_ITEMS_VALUE</td>
-	<td>//div[@class='header'][span[contains(text(),'On Time')]]//..//div[@class='body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERFORMANCE_TOTAL_UNTRACKED_ITEMS_VALUE</td>
-	<td>//div[@class='header'][span[contains(text(),'Untracked')]]//..//div[@class='body']</td>
 	<td></td>
 </tr>
 <tr>
@@ -508,11 +428,6 @@
 <tr>
 	<td>METRICS_WORKLOAD_BY_ASSIGNEE_PERCENTAGE</td>
 	<td>//span[contains(@class, "task-count-percentage")]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NEW_LANGUAGE_DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
-	<td>//div[@class='header']//span[contains(text(),'${newLanguageCardName}')]</td>
 	<td></td>
 </tr>
 <tr>
