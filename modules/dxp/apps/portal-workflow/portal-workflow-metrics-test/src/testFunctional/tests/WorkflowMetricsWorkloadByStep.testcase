@@ -15,10 +15,7 @@ definition {
 
 		Navigator.openURL();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 	}
 
 	tearDown {
@@ -151,10 +148,6 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
-			Refresh();
-		}
-
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = 0,
 			key_overdue = 1,
@@ -216,10 +209,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		while ((IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = 1)) && (maxIterations = "45")) {
-			Refresh();
-		}
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = 1,
