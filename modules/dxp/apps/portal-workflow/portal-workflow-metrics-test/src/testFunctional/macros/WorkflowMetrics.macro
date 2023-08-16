@@ -533,10 +533,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro clearAllFilter {
-		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
-	}
-
 	macro createAlternativeBlogInstances {
 		var iterator = 1;
 		var numberOfBlogInstances = ${numberOfBlogInstances} + 1;

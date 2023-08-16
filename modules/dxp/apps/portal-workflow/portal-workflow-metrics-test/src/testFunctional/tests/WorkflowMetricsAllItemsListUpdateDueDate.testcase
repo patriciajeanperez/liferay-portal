@@ -102,7 +102,7 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_NO_RESULTS_MESSAGE");
 
-		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
 		WorkflowMetricsAllItemsListUpdateDueDate.selectUpdateDueDateTasksCardFilterValueAssignee(workflowAssignee = "Unassigned");
 
@@ -163,7 +163,7 @@ definition {
 			key_title = "Blogs Entry: Blogs Entry Title",
 			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_LIST_ORDER");
 
-		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
 		WorkflowMetricsAllItemsListUpdateDueDate.selectUpdateDueDateCardFilterValueProcessStep(workflowStep = "Update");
 
@@ -171,7 +171,7 @@ definition {
 			key_title = "Blogs Entry: Blogs Entry Title",
 			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#METRICS_UPDATE_DUE_DATE_LIST_ORDER");
 
-		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 	}
 
 	@description = "LPS-105498 - Verify that the user cannot update the due date of unassigned tasks that are also not assigned to its current role"
