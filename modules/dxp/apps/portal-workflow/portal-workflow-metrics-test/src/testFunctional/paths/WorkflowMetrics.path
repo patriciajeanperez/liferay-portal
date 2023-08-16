@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON</td>
-	<td>//div[contains(@class,'d-flex')]/a[${key_index}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_MESSAGE_CUSTOM_RANGE</td>
 	<td>//div[contains(@class,'has-error')]//span[contains(text(), '${key_errorMessage}')]</td>
 	<td></td>

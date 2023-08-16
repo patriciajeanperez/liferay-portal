@@ -984,8 +984,8 @@ definition {
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 			Click(
-			key_slaStatus = "Total Pending",
-			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
+				key_slaStatus = "Total Pending",
+				locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 			AssertElementPresent(
 				key_columnName = "Due Date",
@@ -1585,8 +1585,8 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
-			key_index = 2,
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+			key_slaStatus = "On Time",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1648,8 +1648,8 @@ definition {
 		Navigator.gotoNavItem(navItem = "Performance");
 
 		Click(
-			key_index = 4,
-			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
+			key_slaStatus = "Total Completed",
+			locator1 = "WorkflowMetrics#PROCESS_SUMMARY_CARD_VALUE");
 
 		while ((IsElementNotPresent(key_status = "Overdue", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_DEFINITION_RESOLVED")) && (maxIterations = "10")) {
 			Refresh();
