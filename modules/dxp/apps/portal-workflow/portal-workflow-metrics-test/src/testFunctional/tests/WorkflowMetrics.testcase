@@ -1960,50 +1960,60 @@ definition {
 
 		var futureYearShort = StringUtil.substring(${futureYear}, 2, 4);
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Workflow",
-			site = ${siteName});
+		task ("Given that the Single Approver workflow is assigned to Blogs Entry") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Workflow",
+				site = ${siteName});
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
+		}
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		task ("and Given a Blog Entry that is sent for publication") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		task ("and Given that the user assigned the pending Blog Entry to himself for review") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
+		}
 
-		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+		task ("When the user sets a due date for the task") {
+			WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToUpdateDueDateTasks();
+			WorkflowMetrics.goToUpdateDueDateTasks();
 
-		Type(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
-			value1 = "04/11/${futureYear}");
+			Type(
+				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+				value1 = "04/11/${futureYear}");
 
-		Type(
-			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
-			value1 = "04:30 PM");
+			Type(
+				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+				value1 = "04:30 PM");
 
-		Button.clickDone();
+			Button.clickDone();
+		}
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+		task ("Then the workflow task due date is updated") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Workflow.viewPendingTasks(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+			Workflow.viewPendingTasks(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
 
-		Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title");
+			Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title");
 
-		WorkflowAsset.assertDueDate(date = "4/11/${futureYearShort} 4:30 PM");
+			WorkflowAsset.assertDueDate(date = "4/11/${futureYearShort} 4:30 PM");
+		}
 	}
 
 	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
