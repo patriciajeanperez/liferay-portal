@@ -2691,7 +2691,7 @@ definition {
 		}
 
 		task ("Then the Join node allows the instance to proceed to the next step") {
-			WorkflowMetrics.goToWorkflowAllItemsByStatus(
+			WorkflowMetrics.goToWorkflowCompletedItemsByStatus(
 				completedItemStatus = "Total Completed",
 				workflowProcessName = "Multi Task Process");
 
