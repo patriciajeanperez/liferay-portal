@@ -1263,7 +1263,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 
@@ -2227,7 +2227,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
